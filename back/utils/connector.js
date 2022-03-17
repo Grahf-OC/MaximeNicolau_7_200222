@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('p7base', 'root', '', {
+const sequelize = new Sequelize('p7db', 'root', '', {
     dialect: 'mysql',
     host: 'localhost',
 });

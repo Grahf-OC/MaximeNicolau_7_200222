@@ -1,33 +1,30 @@
-const Sequelize = require('sequelize');
-const sequelize = ('../app');
+const { Sequelize, DataTypes } = require('sequelize');
+const sequelize = require('../utils/connector');
 
-const messageModel = sequelize.define('mess', {
-    userId: {
-        type: Sequelize.STRING,
-        allowNull: false,
-    },
-
+const Message = sequelize.define('Message', {
+  
     content: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false,
     },
 
     imageUrl: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
 
     },
 
     likes: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         allowNull: false,
     },
 
-    usersLiked: {
+
+    /*usersLiked: {
         type: Sequelize.ARRAY, //NE MARCHE PAS AVEC MYSQL, chercher autre solution
         allowNull: false,
-    },
+    },*/
 
 
 });
 
-module.exports = messageModel;
+module.exports = Message;

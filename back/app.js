@@ -1,9 +1,11 @@
 const express = require('express');
 const Sequelize = require('sequelize');
+const sequelize = require('./utils/connector');
 const app = express();
-
-
-
+require('dotenv').config()
+const path = require('path');
+const User = require('./models/User');
+const Mess = require('./models/Mess');
 
 app.use(express.json());
 
@@ -21,5 +23,10 @@ app.use((req, res, next) => {
     next();
 });
 
+const synchro = async () => {
+    await sequelize.sync({ alter: true }); 
+    console.log("tables synchronized")
+}
+synchro();
 
 module.exports = app;
