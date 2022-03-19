@@ -18,9 +18,14 @@ const User = sequelize.define('User', {
         allowNull: false,
     },
 
-    createdAt: {
-        type: DataTypes.DATE,
-    }
+    picture: {
+        type: DataTypes.STRING,
+
+    },
+
+    
+
+    
 });
 
 

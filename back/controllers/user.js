@@ -19,7 +19,7 @@ pwSchema
     .has().not().spaces()                           // Should not have spaces
     .is().not().oneOf(['Passw0rd', 'Password123']);
 
-exports.signup = (req, res, next) => {
+exports.signup = (req, res) => {
 
     if (!pwSchema.validate(req.body.password)) {
         res.status(401).json({ message: "Le mot de passe doit contenir entre 8 et 100 caractères, doit avoir des minuscules et des majuscules, ainsi qu'au moins 2 chiffres et pas d'espace." });
@@ -41,7 +41,7 @@ exports.signup = (req, res, next) => {
     }
 }
 
-exports.login = (req, res, next) => {
+exports.login = (req, res) => {
 
     User.findOne({ where: { email: req.body.email } })
         .then((user) => {
@@ -65,9 +65,46 @@ exports.login = (req, res, next) => {
         .catch((error) => res.status(500).json({ error }));
 };
 
-exports.delete = (req, res, next) => { };
+exports.delete = (req, res) => { 
 
-exports.modifyAccount = (req, res, next) => { };
+
+};
+
+exports.modifyAccount = async (req, res) => { 
+    const user = await User.findOne({
+        where : {id : req.params.id}})
+    
+        if (user.id !== req.auth.id) {
+            res.status(403).json({ error: "Unauthorized request" });
+        } else {
+            const userModified = req.file
+            ? {
+                ...Json.parse(req.body.user),
+                picture: `${req.protocol}://${req.get('host')}/images/${
+                    req.file.filename
+                }`,
+            }
+            :{...req.body};
+
+           await User.save (
+                
+                {where {id: req.params.id}},
+                
+                { ...userModified, id: req.params.id },
+                
+                
+                )
+            res.status(200).json({ message: "Profil utilisateur modifié !" })
+        .catch((error) => res.status(400).json({ error }));
+        }
+
+    
+
+
+
+};
+
+exports.modifyPassword = (req, res) => {};
 
 
 
