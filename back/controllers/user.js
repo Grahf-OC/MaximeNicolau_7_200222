@@ -2,8 +2,8 @@ const { User } = require("./models");
 const Sequelize = require("sequelize");
 const bcrypt = require("bcrypt");
 const passwordValidator = require("password-validator");
-const Op = Sequelize.Op;
 const jwt = require("jsonwebtoken");
+const { createPool } = require("mysql2");
 require("dotenv").config();
 
 // Mise en place du password validator
@@ -45,7 +45,7 @@ exports.signup = (req, res) => {
         });
         res.status(201).json({ message: "User succesfully created" });
       })
-      .catch((err) => res.status(400).json({ error }));
+      .catch((error) => res.status(400).json({ error }));
   }
 };
 
@@ -73,7 +73,22 @@ exports.login = (req, res) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
-exports.delete = (req, res) => {};
+exports.delete = async (req, res) => {
+
+  const user = await User.findOne({
+    where: { id : req.params.id },
+  });
+
+  if (user.id !== req.auth.id) {
+    res.status(403).json({ error: "Unauthorized request"});
+  } else {
+    user.destroy ({
+      where: { id: req.params.id },
+    }
+    )
+  }
+
+};
 
 exports.modifyAccount = async (req, res) => {
   const user = await User.findOne({
