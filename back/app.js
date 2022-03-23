@@ -5,7 +5,7 @@ const app = express();
 require('dotenv').config()
 const path = require('path');
 const User = require('./models/User');
-const Mess = require('./models/Mess');
+const Message = require('./models/Message');
 
 app.use(express.json());
 

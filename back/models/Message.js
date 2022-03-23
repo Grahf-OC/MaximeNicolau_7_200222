@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../utils/connector');
+const User = require('./User');
 
 const Message = sequelize.define('Message', {
   
@@ -18,6 +19,10 @@ const Message = sequelize.define('Message', {
         allowNull: false,
     },
 
+    modified: {
+        type: DataTypes.DATE,
+    }
+
 
     /*usersLiked: {
         type: Sequelize.ARRAY, //NE MARCHE PAS AVEC MYSQL, chercher autre solution
@@ -26,5 +31,6 @@ const Message = sequelize.define('Message', {
 
 
 });
+
 
 module.exports = Message;

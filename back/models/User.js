@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../utils/connector');
+const Message = require('./Message');
 
 const User = sequelize.define('User', {
     email: {
@@ -22,11 +23,11 @@ const User = sequelize.define('User', {
         type: DataTypes.STRING,
 
     },
-
-    
-
     
 });
+
+User.hasMany(Message);
+Message.belongsTo(User);
 
 
 module.exports = User;
