@@ -4,7 +4,7 @@ const User = require('./User');
 
 const Message = sequelize.define('Message', {
   
-    content: {
+    body: {
         type: DataTypes.STRING,
         allowNull: false,
     },
