@@ -19,10 +19,6 @@ const Message = sequelize.define('Message', {
         allowNull: false,
     },
 
-    modified: {
-        type: DataTypes.DATE,
-    }
-
 
     /*usersLiked: {
         type: Sequelize.ARRAY, //NE MARCHE PAS AVEC MYSQL, chercher autre solution
