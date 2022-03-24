@@ -108,6 +108,7 @@ exports.modifyAccount = async (req, res) => {
       : { ...req.body };
 
     await User.update({
+      where: { id: req.params.id},
       ...user,
     });
 

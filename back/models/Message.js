@@ -9,7 +9,7 @@ const Message = sequelize.define('Message', {
         allowNull: false,
     },
 
-    imageUrl: {
+    picture: {
         type: DataTypes.STRING,
 
     },
