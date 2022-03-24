@@ -75,3 +75,35 @@ exports.modifyMessage = async (req, res) => {
       .catch((error) => res.status(400).json({ error }));
   }
 };
+
+exports.deleteMessage = async (req, res) => {
+  const message = await Message.findOne({
+    where: { id: req.params.id },
+  });
+  if (message.userId !== req.auth.userId) {
+    res.status(400).json({
+      error: new Error("Unauthorized request"),
+    });
+  } else {
+    if (message.picture === null) {
+      await Message.destroy({
+        where: { id: req.params.id },
+      });
+      res
+        .status(200)
+        .json({ message: "Message succesfully deleted" })
+        .catch((error) => res.status(400).json({ error }));
+    } else {
+      const filename = message.picture.split("/images/")[1];
+      fs.unlink(`images/${filename}`, () => {
+        Message.destroy({
+          where: { id: req.params.id },
+        });
+        res
+          .status(200)
+          .json({ message: "Message succesfully deleted" })
+          .catch((error) => res.status(400).json({ error }));
+      });
+    }
+  }
+};
