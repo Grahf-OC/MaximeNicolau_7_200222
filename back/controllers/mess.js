@@ -85,7 +85,7 @@ exports.deleteMessage = async (req, res) => {
       error: new Error("Unauthorized request"),
     });
   } else {
-    if (message.picture === null) {
+    if (message.picture == null) {
       await Message.destroy({
         where: { id: req.params.id },
       });
@@ -107,3 +107,24 @@ exports.deleteMessage = async (req, res) => {
     }
   }
 };
+
+exports.likeMessage = async (req, res) => {
+  if (req.body.like === 1) {
+    const incrementLike = await Message.increment(
+      "like",
+      { by: 1 },
+
+      { where: { id: req.params.id } }
+    );
+    res
+      .status(200)
+      .json({ message: "Message liked" })
+      .catch((error) => res.status(400).json({ error }));
+  }
+};
+
+/* peut-être Message.update({ like: sequelize.literal('like + 1') },
+  { where: { id: req.params.id} }) */
+
+
+  //Ajouter controller trouver tous les messages d'un user.
