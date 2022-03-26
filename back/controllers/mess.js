@@ -1,6 +1,5 @@
-const Message = require("../models/Message");
-const fs = require("fs");
-const User = require("../models/User");
+const Message = require('../models/Message');
+const fs = require('fs');
 
 exports.getAllMessages = async (req, res) => {
   try {
@@ -29,11 +28,11 @@ exports.getOneMessage = async (req, res) => {
 exports.createMessage = async (req, res) => {
   const messageObject = req.file
     ? {
-        ...JSON.parse(req.body.message),
-        imageUrl: `${req.protocol}://${req.get("host")}/images/${
-          req.file.filename
-        }`,
-      }
+      ...JSON.parse(req.body.message),
+      imageUrl: `${req.protocol}://${req.get('host')}/images/${
+        req.file.filename
+      }`,
+    }
     : { ...req.body };
   console.log(messageObject);
   try {
@@ -42,7 +41,7 @@ exports.createMessage = async (req, res) => {
       likes: 0,
     });
     console.log(message);
-    res.status(201).json({ message: "Message successfully created" });
+    res.status(201).json({ message: 'Message successfully created' });
   } catch (error) {
     res.status(200).json({
       error: error,
@@ -55,15 +54,15 @@ exports.modifyMessage = async (req, res) => {
     where: { id: req.params.id },
   });
   if (message.userId !== req.auth.userId) {
-    res.status(403).json({ error: "Unauthorized request" });
+    res.status(403).json({ error: 'Unauthorized request' });
   } else {
     const messageObject = req.file
       ? {
-          ...JSON.parse(req.body.message),
-          picture: `${req.protocol}://${req.get("host")}/images/${
-            req.file.filename
-          }`,
-        }
+        ...JSON.parse(req.body.message),
+        picture: `${req.protocol}://${req.get('host')}/images/${
+          req.file.filename
+        }`,
+      }
       : { ...req.body };
     await Message.update({
       where: { id: req.params.id },
@@ -71,7 +70,7 @@ exports.modifyMessage = async (req, res) => {
     });
     res
       .status(200)
-      .json({ message: "Message modified" })
+      .json({ message: 'Message modified' })
       .catch((error) => res.status(400).json({ error }));
   }
 };
@@ -82,7 +81,7 @@ exports.deleteMessage = async (req, res) => {
   });
   if (message.userId !== req.auth.userId) {
     res.status(400).json({
-      error: new Error("Unauthorized request"),
+      error: new Error('Unauthorized request'),
     });
   } else {
     if (message.picture == null) {
@@ -91,17 +90,17 @@ exports.deleteMessage = async (req, res) => {
       });
       res
         .status(200)
-        .json({ message: "Message succesfully deleted" })
+        .json({ message: 'Message succesfully deleted' })
         .catch((error) => res.status(400).json({ error }));
     } else {
-      const filename = message.picture.split("/images/")[1];
+      const filename = message.picture.split('/images/')[1];
       fs.unlink(`images/${filename}`, () => {
         Message.destroy({
           where: { id: req.params.id },
         });
         res
           .status(200)
-          .json({ message: "Message succesfully deleted" })
+          .json({ message: 'Message succesfully deleted' })
           .catch((error) => res.status(400).json({ error }));
       });
     }
@@ -111,14 +110,14 @@ exports.deleteMessage = async (req, res) => {
 exports.likeMessage = async (req, res) => {
   if (req.body.like === 1) {
     const incrementLike = await Message.increment(
-      "like",
+      'like',
       { by: 1 },
 
       { where: { id: req.params.id } }
     );
     res
       .status(200)
-      .json({ message: "Message liked" })
+      .json({ message: 'Message liked' })
       .catch((error) => res.status(400).json({ error }));
   }
 };
@@ -127,4 +126,4 @@ exports.likeMessage = async (req, res) => {
   { where: { id: req.params.id} }) */
 
 
-  //Ajouter controller trouver tous les messages d'un user.
+//Ajouter controller trouver tous les messages d'un user.

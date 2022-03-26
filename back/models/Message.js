@@ -1,29 +1,25 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/connector');
-const User = require('./User');
+
 
 const Message = sequelize.define('Message', {
   
-    body: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
+  body: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 
-    picture: {
-        type: DataTypes.STRING,
+  picture: {
+    type: DataTypes.STRING,
 
-    },
+  },
 
-    likes: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    },
+  likes: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
 
 
-    /*usersLiked: {
-        type: Sequelize.ARRAY, //NE MARCHE PAS AVEC MYSQL, chercher autre solution
-        allowNull: false,
-    },*/
 
 
 });
