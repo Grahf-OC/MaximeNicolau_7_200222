@@ -1,5 +1,6 @@
-const Message = require('../models/Message');
+/* eslint-disable no-console */
 const fs = require('fs');
+const Message = require('../models/Message');
 
 exports.getAllMessages = async (req, res) => {
   try {
@@ -7,7 +8,7 @@ exports.getAllMessages = async (req, res) => {
     res.status(200).json(messages);
   } catch (error) {
     res.status(400).json({
-      error: error,
+      error,
     });
   }
 };
@@ -20,7 +21,7 @@ exports.getOneMessage = async (req, res) => {
     res.status(200).json(message);
   } catch (error) {
     res.status(404).json({
-      error: error,
+      error,
     });
   }
 };
@@ -28,11 +29,11 @@ exports.getOneMessage = async (req, res) => {
 exports.createMessage = async (req, res) => {
   const messageObject = req.file
     ? {
-      ...JSON.parse(req.body.message),
-      imageUrl: `${req.protocol}://${req.get('host')}/images/${
-        req.file.filename
-      }`,
-    }
+        ...JSON.parse(req.body.message),
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${
+          req.file.filename
+        }`,
+      }
     : { ...req.body };
   console.log(messageObject);
   try {
@@ -44,7 +45,7 @@ exports.createMessage = async (req, res) => {
     res.status(201).json({ message: 'Message successfully created' });
   } catch (error) {
     res.status(200).json({
-      error: error,
+      error,
     });
   }
 };
@@ -58,11 +59,11 @@ exports.modifyMessage = async (req, res) => {
   } else {
     const messageObject = req.file
       ? {
-        ...JSON.parse(req.body.message),
-        picture: `${req.protocol}://${req.get('host')}/images/${
-          req.file.filename
-        }`,
-      }
+          ...JSON.parse(req.body.message),
+          picture: `${req.protocol}://${req.get('host')}/images/${
+            req.file.filename
+          }`,
+        }
       : { ...req.body };
     await Message.update({
       where: { id: req.params.id },
@@ -83,37 +84,35 @@ exports.deleteMessage = async (req, res) => {
     res.status(400).json({
       error: new Error('Unauthorized request'),
     });
+  } else if (message.picture == null) {
+    await Message.destroy({
+      where: { id: req.params.id },
+    });
+    res
+      .status(200)
+      .json({ message: 'Message succesfully deleted' })
+      .catch((error) => res.status(400).json({ error }));
   } else {
-    if (message.picture == null) {
-      await Message.destroy({
+    const filename = message.picture.split('/images/')[1];
+    fs.unlink(`images/${filename}`, () => {
+      Message.destroy({
         where: { id: req.params.id },
       });
       res
         .status(200)
         .json({ message: 'Message succesfully deleted' })
         .catch((error) => res.status(400).json({ error }));
-    } else {
-      const filename = message.picture.split('/images/')[1];
-      fs.unlink(`images/${filename}`, () => {
-        Message.destroy({
-          where: { id: req.params.id },
-        });
-        res
-          .status(200)
-          .json({ message: 'Message succesfully deleted' })
-          .catch((error) => res.status(400).json({ error }));
-      });
-    }
+    });
   }
 };
 
-exports.likeMessage = async (req, res) => {
+/* exports.likeMessage = async (req, res) => {
   if (req.body.like === 1) {
     const incrementLike = await Message.increment(
       'like',
       { by: 1 },
 
-      { where: { id: req.params.id } }
+      { where: { id: req.params.id } },
     );
     res
       .status(200)
@@ -122,8 +121,7 @@ exports.likeMessage = async (req, res) => {
   }
 };
 
-/* peut-être Message.update({ like: sequelize.literal('like + 1') },
+peut-être Message.update({ like: sequelize.literal('like + 1') },
   { where: { id: req.params.id} }) */
 
-
-//Ajouter controller trouver tous les messages d'un user.
+// Ajouter controller trouver tous les messages d'un user.

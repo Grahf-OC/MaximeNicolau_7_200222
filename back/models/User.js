@@ -9,7 +9,12 @@ const User = sequelize.define('User', {
     unique: true,
   },
 
-  name: {
+  firstName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+
+  lastName: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -21,13 +26,16 @@ const User = sequelize.define('User', {
 
   picture: {
     type: DataTypes.STRING,
-
+    allowNull: true,
   },
-    
+
+  isAdmin: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+  },
 });
 
 User.hasMany(Message);
 Message.belongsTo(User);
-
 
 module.exports = User;

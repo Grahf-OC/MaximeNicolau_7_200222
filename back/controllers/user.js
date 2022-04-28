@@ -1,12 +1,12 @@
-const { User } = require('./models');
 const bcrypt = require('bcrypt');
-const passwordValidator = require('password-validator');
+const PasswordValidator = require('password-validator');
 const jwt = require('jsonwebtoken');
+const { User } = require('../models/index');
 require('dotenv').config();
 
 // Mise en place du password validator
 
-const pwSchema = new passwordValidator();
+const pwSchema = new PasswordValidator();
 
 pwSchema
   .is()
@@ -30,18 +30,23 @@ exports.signup = (req, res) => {
   if (!pwSchema.validate(req.body.password)) {
     res.status(401).json({
       message:
-        'Le mot de passe doit contenir entre 8 et 100 caractères, doit avoir des minuscules et des majuscules, ainsi qu\'au moins 2 chiffres et pas d\'espace.',
+        "Le mot de passe doit contenir entre 8 et 100 caractères, doit avoir des minuscules et des majuscules, ainsi qu'au moins 2 chiffres et pas d'espace.",
     });
   } else {
     bcrypt
       .hash(req.body.password, 10)
       .then((hash) => {
         const user = User.create({
-          name: req.body.name,
+          lastName: req.body.lastName,
+          firstName: req.body.firstName,
           password: hash,
           email: req.body.email,
+          isAdmin: false,
         });
-        res.status(201).json({ message: 'User succesfully created', user: user });
+        res.status(201).json({
+          message: 'User succesfully created',
+          user,
+        });
       })
       .catch((error) => res.status(400).json({ error }));
   }
@@ -59,7 +64,7 @@ exports.login = (req, res) => {
           if (!valid) {
             return res.status(401).json({ error: 'Incorrect password' });
           }
-          res.status(200).json({
+          return res.status(200).json({
             userId: user.id,
             token: jwt.sign({ userId: user.id }, process.env.TOKEN, {
               expiresIn: '24h',
@@ -72,20 +77,17 @@ exports.login = (req, res) => {
 };
 
 exports.delete = async (req, res) => {
-
   const user = await User.findOne({
-    where: { id : req.params.id },
+    where: { id: req.params.id },
   });
 
   if (user.id !== req.auth.id) {
-    res.status(403).json({ error: 'Unauthorized request'});
+    res.status(403).json({ error: 'Unauthorized request' });
   } else {
-    user.destroy ({
+    user.destroy({
       where: { id: req.params.id },
-    }
-    );
+    });
   }
-
 };
 
 exports.modifyAccount = async (req, res) => {
@@ -98,15 +100,15 @@ exports.modifyAccount = async (req, res) => {
   } else {
     const user = req.file
       ? {
-        ...JSON.parse(req.body.user),
-        picture: `${req.protocol}://${req.get('host')}/images/${
-          req.file.filename
-        }`,
-      }
+          ...JSON.parse(req.body.user),
+          picture: `${req.protocol}://${req.get('host')}/images/${
+            req.file.filename
+          }`,
+        }
       : { ...req.body };
 
     await User.update({
-      where: { id: req.params.id},
+      where: { id: req.params.id },
       ...user,
     });
 

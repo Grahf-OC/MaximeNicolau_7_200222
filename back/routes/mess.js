@@ -1,8 +1,7 @@
 const express = require('express');
+
 const router = express.Router();
 const messCtrl = require('../controllers/mess');
-
-
 
 router.get('/', messCtrl.getAllMess);
 router.get('/:id', messCtrl.getOneMess);
