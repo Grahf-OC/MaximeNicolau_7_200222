@@ -1,12 +1,13 @@
 /* eslint-disable no-console */
 import React from 'react';
 import '../styles/index.css';
-
+import { useNavigate } from 'react-router-dom';
 // import axios from 'axios';
 
 export default function Form() {
 	const urlSignup = 'http://localhost:3000/api/auth/signup';
 	// const urlLogin = 'http://localhost:3000/api/auth/login';
+	const navigate = useNavigate();
 
 	const [formData, setFormData] = React.useState({
 		email: '',
@@ -28,6 +29,7 @@ export default function Form() {
 
 	function handleSubmit(event) {
 		event.preventDefault();
+
 		if (formData.password === formData.confirmPassword) {
 			fetch(urlSignup, {
 				method: 'POST',
@@ -44,6 +46,7 @@ export default function Form() {
 		} else {
 			console.log('Passwords do not match');
 		}
+		navigate('/');
 	}
 
 	return (

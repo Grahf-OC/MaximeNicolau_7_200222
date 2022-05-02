@@ -5,9 +5,9 @@ const Message = require('../models/Message');
 exports.getAllMessages = async (req, res) => {
   try {
     const messages = await Message.findAll();
-    res.status(200).json(messages);
+    return res.status(200).json(messages);
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       error,
     });
   }
@@ -18,45 +18,47 @@ exports.getOneMessage = async (req, res) => {
     const message = await Message.findOne({
       where: { id: req.params.id },
     });
-    res.status(200).json(message);
+    return res.status(200).json(message);
   } catch (error) {
-    res.status(404).json({
+    return res.status(404).json({
       error,
     });
   }
 };
 
 exports.createMessage = async (req, res) => {
-  const messageObject = req.file
-    ? {
-        ...JSON.parse(req.body.message),
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${
-          req.file.filename
-        }`,
-      }
-    : { ...req.body };
-  console.log(messageObject);
   try {
+    const messageObject = req.file
+      ? {
+          ...JSON.parse(req.body.message),
+          imageUrl: `${req.protocol}://${req.get('host')}/images/${
+            req.file.filename
+          }`,
+        }
+      : { ...req.body };
+    console.log(messageObject);
+
     const message = await Message.create({
       ...messageObject,
       likes: 0,
     });
     console.log(message);
-    res.status(201).json({ message: 'Message successfully created' });
+    return res.status(201).json({ message: 'Message successfully created' });
   } catch (error) {
-    res.status(200).json({
+    return res.status(200).json({
       error,
     });
   }
 };
 
-exports.modifyMessage = async (req, res) => {
-  const message = await Message.findOne({
-    where: { id: req.params.id },
-  });
-  if (message.userId !== req.auth.userId) {
-    res.status(403).json({ error: 'Unauthorized request' });
-  } else {
+exports.updateMessage = async (req, res) => {
+  try {
+    const message = await Message.findOne({
+      where: { id: req.params.id },
+    });
+    if (message.userId !== req.auth.userId) {
+      res.status(403).json({ error: 'Unauthorized request' });
+    }
     const messageObject = req.file
       ? {
           ...JSON.parse(req.body.message),
@@ -69,10 +71,9 @@ exports.modifyMessage = async (req, res) => {
       where: { id: req.params.id },
       ...messageObject,
     });
-    res
-      .status(200)
-      .json({ message: 'Message modified' })
-      .catch((error) => res.status(400).json({ error }));
+    return res.status(200).json({ message: 'Message modified' });
+  } catch (error) {
+    return res.status(400).json({ error });
   }
 };
 

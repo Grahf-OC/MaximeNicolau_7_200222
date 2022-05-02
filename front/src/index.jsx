@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // import Axios from 'axios';
 import Home from './pages/Home';
 import Form from './pages/Form';
+import Profil from './pages/Profil';
 import Header from './components/Header';
 
 /* Axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -44,6 +45,7 @@ root.render(
 		<Routes>
 			<Route path="/" element={<Home />} />
 			<Route path="/Form" element={<Form />} />
+			<Route path="/Profil" element={<Profil />} />
 		</Routes>
 	</BrowserRouter>
 );
