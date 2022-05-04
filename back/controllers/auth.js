@@ -44,6 +44,7 @@ exports.signup = async (req, res) => {
     });
     return res.status(201).json({
       message: 'User succesfully created',
+      user,
       userId: user.id,
       token: jwt.sign({ userId: user.id }, process.env.TOKEN, {
         expiresIn: '24h',

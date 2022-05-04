@@ -4,10 +4,10 @@ const router = express.Router();
 const messCtrl = require('../controllers/mess');
 
 router.get('/', messCtrl.getAllMess);
-router.get('/:id', messCtrl.getOneMess);
+router.get('/:messageId', messCtrl.getOneMess);
 router.post('/', messCtrl.createMess);
-router.put('/:id', messCtrl.updateMess);
-router.delete('/:id', messCtrl.deleteMess);
-router.post('/:id/like', messCtrl.likeMess);
+router.put('/:messageId', messCtrl.updateMess);
+router.delete('/:messageId', messCtrl.deleteMess);
+router.post('/:messageId/like', messCtrl.likeMess);
 
 module.exports = router;

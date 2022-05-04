@@ -45,7 +45,7 @@ root.render(
 		<Routes>
 			<Route path="/" element={<Home />} />
 			<Route path="/Form" element={<Form />} />
-			<Route path="/Profil" element={<Profil />} />
+			<Route path="/Profil/:id" element={<Profil />} />
 		</Routes>
 	</BrowserRouter>
 );

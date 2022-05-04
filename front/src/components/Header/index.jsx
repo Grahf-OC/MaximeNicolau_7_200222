@@ -6,8 +6,8 @@ export default function Header() {
 	return (
 		<nav>
 			<Link to="/">Accueil</Link>
-			<Link to="/Form">S'inscire</Link>
-			<Link to="/Profil">Profil</Link>
+			<Link to="/Form">S'inscrire</Link>
+			<Link to="/Profil/:id">Profil</Link>
 		</nav>
 	);
 }

@@ -15,6 +15,7 @@ export default function Form() {
 		lastName: '',
 		password: '',
 		confirmPassword: '',
+		birthday: '',
 		isAdmin: false,
 		picture: '',
 	});
@@ -39,7 +40,8 @@ export default function Form() {
 				},
 				body: JSON.stringify(formData),
 			})
-				.then((data) => console.log(data)) // window.location.href
+				.then((res) => res.json())
+				.then((data) => localStorage.setItem('user', JSON.stringify(data.user)))
 				.catch((error) => error);
 
 			console.log('Successfully signed up');
@@ -54,7 +56,7 @@ export default function Form() {
 			<form className="form" onSubmit={handleSubmit}>
 				<input
 					type="email"
-					placeholder="Email adress"
+					placeholder="Adresse email"
 					className="form--input"
 					name="email"
 					onChange={handleChange}
@@ -63,7 +65,7 @@ export default function Form() {
 
 				<input
 					type="firstName"
-					placeholder="First Name"
+					placeholder="Prénom"
 					className="form--input"
 					name="firstName"
 					onChange={handleChange}
@@ -72,7 +74,7 @@ export default function Form() {
 
 				<input
 					type="lastName"
-					placeholder="Lastname"
+					placeholder="Nom de famille"
 					className="form--input"
 					name="lastName"
 					onChange={handleChange}
@@ -81,7 +83,7 @@ export default function Form() {
 
 				<input
 					type="password"
-					placeholder="Password"
+					placeholder="Mot de passe"
 					className="form--input"
 					name="password"
 					onChange={handleChange}
@@ -90,11 +92,20 @@ export default function Form() {
 
 				<input
 					type="confirmPassword"
-					placeholder="Confirm Password"
+					placeholder="Confirmer le mot de passe"
 					className="form--input"
 					name="confirmPassword"
 					onChange={handleChange}
 					value={formData.confirmPassword}
+				/>
+
+				<input
+					type="birthday"
+					placeholder="Date d'anniversaire"
+					className="form--input"
+					name="birthday"
+					onChange={handleChange}
+					value={formData.birthday}
 				/>
 
 				<button className="form--submit" type="submit">

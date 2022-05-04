@@ -30,9 +30,9 @@ export default function Header() {
 			},
 			body: JSON.stringify(formData),
 		})
-			.then((data) => console.log(data)) // window.location.href
+			.then((res) => res.json())
+			.then((data) => localStorage.setItem('user', JSON.stringify(data.user)))
 			.catch((error) => error);
-
 		console.log('Successfully signed up');
 	}
 
