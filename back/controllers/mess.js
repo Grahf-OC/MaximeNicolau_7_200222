@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const fs = require('fs');
 const Message = require('../models/Message');
 
@@ -36,13 +35,13 @@ exports.createMessage = async (req, res) => {
           }`,
         }
       : { ...req.body };
-    console.log(messageObject);
 
+    // eslint-disable-next-line no-unused-vars
     const message = await Message.create({
       ...messageObject,
       likes: 0,
     });
-    console.log(message);
+
     return res.status(201).json({ message: 'Message successfully created' });
   } catch (error) {
     return res.status(200).json({

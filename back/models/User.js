@@ -6,8 +6,10 @@ const User = sequelize.define('User', {
   email: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
+    unique: 'email',
   },
+
+  // https://github.com/sequelize/sequelize/issues/9653#issuecomment-959790249
 
   firstName: {
     type: DataTypes.STRING,
@@ -31,7 +33,7 @@ const User = sequelize.define('User', {
 
   birthday: {
     type: DataTypes.STRING,
-    allowNull: true,
+    allowNull: false,
   },
 
   isAdmin: {

@@ -44,25 +44,25 @@ exports.updateAccount = async (req, res) => {
       where: { id: req.params.id },
     });
 
-    /*  if (user.id !== req.auth.id) {
+    if (user.id !== req.auth.userId) {
       res.status(403).json({ error: 'Unauthorized request' });
-    } */
+    }
 
-    const newUser = { ...req.body };
-
-    await user.update(newUser);
-    /* req.file
+    const newUser = req.file
       ? {
           ...JSON.parse(req.body.user),
           picture: `${req.protocol}://${req.get('host')}/images/${
             req.file.filename
           }`,
         }
-      : */
+      : { ...req.body };
 
+    await user.update(newUser);
     await user.save();
 
-    return res.status(200).json({ message: 'Profil utilisateur modifié !' });
+    return res
+      .status(200)
+      .json({ message: 'Profil utilisateur modifié !', user });
   } catch (error) {
     return res.status(400).json({ error });
   }

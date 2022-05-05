@@ -7,6 +7,7 @@ export default function Header() {
 		<nav>
 			<Link to="/">Accueil</Link>
 			<Link to="/Form">S'inscrire</Link>
+			<Link to="/Membres">Liste des membres</Link>
 			<Link to="/Profil/:id">Profil</Link>
 		</nav>
 	);

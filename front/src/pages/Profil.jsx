@@ -3,12 +3,14 @@
 import React from 'react';
 import '../styles/index.css';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 
 // import EditProfil from '../components/EditProfil';
 import ProfilComponent from '../components/Profil';
 
+const axios = require('axios');
+
 export default function Profil() {
+	const authToken = localStorage.getItem('token');
 	const { id } = useParams();
 	const [user, setUser] = React.useState([]);
 	const [button, setButton] = React.useState(false);
@@ -16,7 +18,10 @@ export default function Profil() {
 
 	React.useEffect(() => {
 		async function fetchData() {
-			const result = await axios(userUrl);
+			const result = await axios(userUrl, {
+				headers: { Authorization: `Bearer ${authToken}` },
+			});
+
 			setUser(result.data);
 		}
 		fetchData();
@@ -32,20 +37,24 @@ export default function Profil() {
 		}));
 	}
 
-	function handleSubmit(event) {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
-		fetch(`http://localhost:3000/api/user/${id}`, {
-			method: 'PUT',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(user),
-		})
-			.then((res) => res.json())
-			.then((data) => localStorage.setItem('user', JSON.stringify(data.user)));
-		setButton((prevButton) => !prevButton).catch((error) => error);
-	}
+		try {
+			const result = await axios.put(
+				`http://localhost:3000/api/user/${id}`,
+				user,
+				{
+					headers: { Authorization: `Bearer ${authToken}` },
+				}
+			);
+			console.log(result.data);
+			localStorage.setItem('user', JSON.stringify(result.data.user));
+		} catch (error) {
+			console.log(error);
+		}
+
+		setButton((prevButton) => !prevButton);
+	};
 
 	return (
 		<div className="profil-container">

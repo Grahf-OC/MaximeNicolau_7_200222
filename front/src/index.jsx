@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Form from './pages/Form';
 import Profil from './pages/Profil';
 import Header from './components/Header';
+import Membres from './pages/Membres';
 
 /* Axios.defaults.headers.post['Content-Type'] = 'application/json';
 Axios.defaults.headers.common.Authorization = 'AUTH TOKEN';
@@ -45,6 +46,7 @@ root.render(
 		<Routes>
 			<Route path="/" element={<Home />} />
 			<Route path="/Form" element={<Form />} />
+			<Route path="/Membres" element={<Membres />} />
 			<Route path="/Profil/:id" element={<Profil />} />
 		</Routes>
 	</BrowserRouter>

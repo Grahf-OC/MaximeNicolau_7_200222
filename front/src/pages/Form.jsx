@@ -2,7 +2,7 @@
 import React from 'react';
 import '../styles/index.css';
 import { useNavigate } from 'react-router-dom';
-// import axios from 'axios';
+import axios from 'axios';
 
 export default function Form() {
 	const urlSignup = 'http://localhost:3000/api/auth/signup';
@@ -28,28 +28,23 @@ export default function Form() {
 		}));
 	}
 
-	function handleSubmit(event) {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
 
 		if (formData.password === formData.confirmPassword) {
-			fetch(urlSignup, {
-				method: 'POST',
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(formData),
-			})
-				.then((res) => res.json())
-				.then((data) => localStorage.setItem('user', JSON.stringify(data.user)))
-				.catch((error) => error);
-
+			try {
+				const result = await axios.post(urlSignup, formData);
+				console.log(result);
+				localStorage.setItem('token', result.data.token);
+			} catch (error) {
+				console.log(error);
+			}
 			console.log('Successfully signed up');
 		} else {
 			console.log('Passwords do not match');
 		}
 		navigate('/');
-	}
+	};
 
 	return (
 		<div className="form-container">
