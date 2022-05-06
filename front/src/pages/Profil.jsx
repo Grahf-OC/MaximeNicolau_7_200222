@@ -12,18 +12,23 @@ const axios = require('axios');
 export default function Profil() {
 	const authToken = localStorage.getItem('token');
 	const { id } = useParams();
-	const [user, setUser] = React.useState([]);
+	const [user, setUser] = React.useState({});
 	const [button, setButton] = React.useState(false);
+	const [isUser, setIsUser] = React.useState(false);
 	const userUrl = `http://localhost:3000/api/user/${id}`;
 
 	React.useEffect(() => {
-		async function fetchData() {
+		const fetchData = async () => {
 			const result = await axios(userUrl, {
 				headers: { Authorization: `Bearer ${authToken}` },
 			});
+			console.log(result);
 
-			setUser(result.data);
-		}
+			setUser(result.data.user);
+			if (result.data.user.id === result.data.userId) {
+				setIsUser(true);
+			}
+		};
 		fetchData();
 	}, []);
 
@@ -59,13 +64,15 @@ export default function Profil() {
 	return (
 		<div className="profil-container">
 			<h1>Informations Personnelles</h1>{' '}
-			<button
-				className="form--submit"
-				type="button"
-				onClick={button ? handleSubmit : editProfil}
-			>
-				{button ? 'Terminer' : 'Modifier'}
-			</button>
+			{isUser && (
+				<button
+					className="form--submit"
+					type="button"
+					onClick={button ? handleSubmit : editProfil}
+				>
+					{button ? 'Terminer' : 'Modifier'}
+				</button>
+			)}
 			{button ? (
 				<form className="form">
 					<input
