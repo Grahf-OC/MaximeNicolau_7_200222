@@ -28,6 +28,8 @@ export default function Form() {
 		}));
 	}
 
+	// TODO: refacto if/else
+
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
@@ -36,6 +38,7 @@ export default function Form() {
 				const result = await axios.post(urlSignup, formData);
 				console.log(result);
 				localStorage.setItem('token', result.data.token);
+				localStorage.setItem('myUser', JSON.stringify(result.data.user));
 			} catch (error) {
 				console.log(error);
 			}

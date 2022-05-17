@@ -4,7 +4,7 @@ import React from 'react';
 import '../styles/index.css';
 import { useParams } from 'react-router-dom';
 
-// import EditProfil from '../components/EditProfil';
+import EditProfil from '../components/EditProfil';
 import ProfilComponent from '../components/Profil';
 
 const axios = require('axios');
@@ -25,7 +25,8 @@ export default function Profil() {
 			console.log(result);
 
 			setUser(result.data.user);
-			if (result.data.user.id === result.data.userId) {
+			const myUser = JSON.parse(localStorage.getItem('myUser'));
+			if (result.data.user.id === myUser.id) {
 				setIsUser(true);
 			}
 		};
@@ -34,8 +35,8 @@ export default function Profil() {
 
 	const editProfil = () => setButton((prevButton) => !prevButton);
 
-	function handleChange(event) {
-		const { name, value } = event.target;
+	function handleChange(e) {
+		const { name, value } = e.target;
 		setUser((prevUser) => ({
 			...prevUser,
 			[name]: value,
@@ -53,7 +54,7 @@ export default function Profil() {
 				}
 			);
 			console.log(result.data);
-			localStorage.setItem('user', JSON.stringify(result.data.user));
+			localStorage.setItem('myUser', JSON.stringify(result.data.user));
 		} catch (error) {
 			console.log(error);
 		}
@@ -61,9 +62,11 @@ export default function Profil() {
 		setButton((prevButton) => !prevButton);
 	};
 
+	// TODO: composant edit profil, remonter props
+
 	return (
 		<div className="profil-container">
-			<h1>Informations Personnelles</h1>{' '}
+			<h1>Informations Personnelles</h1>
 			{isUser && (
 				<button
 					className="form--submit"
@@ -74,7 +77,39 @@ export default function Profil() {
 				</button>
 			)}
 			{button ? (
-				<form className="form">
+				<EditProfil
+					key={user.id}
+					firstName={user.firstName}
+					lastName={user.lastName}
+					email={user.email}
+					birthday={user.birthday}
+					password={user.password}
+					onChange={(e) => handleChange(e)}
+				/>
+			) : (
+				<ProfilComponent
+					key={user.id}
+					firstName={user.firstName}
+					lastName={user.lastName}
+					email={user.email}
+					birthday={user.birthday}
+				/>
+			)}
+		</div>
+	);
+}
+
+/* <EditProfil
+key={user.id}
+firstName={user.firstName}
+lastName={user.lastName}
+email={user.email}
+birthday={user.birthday}
+password={user.password}
+onChange={() => handleChange()}
+/> */
+
+/* 				<form className="form">
 					<input
 						type="email"
 						placeholder={user.email}
@@ -110,26 +145,4 @@ export default function Profil() {
 						onChange={handleChange}
 						value={user.birthday}
 					/>
-				</form>
-			) : (
-				<ProfilComponent
-					key={user.id}
-					firstName={user.firstName}
-					lastName={user.lastName}
-					email={user.email}
-					birthday={user.birthday}
-				/>
-			)}
-		</div>
-	);
-}
-
-/* <EditProfil
-key={user.id}
-firstName={user.firstName}
-lastName={user.lastName}
-email={user.email}
-birthday={user.birthday}
-password={user.password}
-onChange={() => handleChange()}
-/> */
+				</form> */

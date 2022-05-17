@@ -18,7 +18,7 @@ exports.getOneUser = async (req, res) => {
       where: { id: req.params.id },
     });
 
-    return res.status(200).json({ user, userId: req.auth.userId });
+    return res.status(200).json({ user });
   } catch (error) {
     return res.status(404).json({
       error,

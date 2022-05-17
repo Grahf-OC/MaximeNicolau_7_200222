@@ -56,26 +56,27 @@ exports.signup = async (req, res) => {
   }
 };
 
-exports.login = (req, res) => {
-  User.findOne({ where: { email: req.body.email } })
-    .then((user) => {
-      if (!user) {
-        res.status(401).json({ error: 'User does not exist!' });
-      }
-      bcrypt
-        .compare(req.body.password, user.password)
-        .then((valid) => {
-          if (!valid) {
-            res.status(401).json({ error: 'Incorrect password' });
-          }
-          res.status(200).json({
-            userId: user.id,
-            token: jwt.sign({ userId: user.id }, process.env.TOKEN, {
-              expiresIn: '24h',
-            }),
-          });
-        })
-        .catch((error) => res.status(500).json({ error }));
-    })
-    .catch((error) => res.status(500).json({ error }));
+exports.login = async (req, res) => {
+  try {
+    const user = await User.findOne({ where: { email: req.body.email } });
+
+    if (!user) {
+      return res.status(401).json({ error: 'User does not exist!' });
+    }
+    const valid = await bcrypt.compare(req.body.password, user.password);
+
+    if (!valid) {
+      return res.status(401).json({ error: 'Incorrect password' });
+    }
+    return res.status(200).json({
+      message: 'Login success',
+      user,
+      userId: user.id,
+      token: jwt.sign({ userId: user.id }, process.env.TOKEN, {
+        expiresIn: '24h',
+      }),
+    });
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
 };

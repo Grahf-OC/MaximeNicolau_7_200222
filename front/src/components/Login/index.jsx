@@ -26,7 +26,7 @@ export default function Header() {
 		try {
 			const result = await axios.post(urlLogin, formData);
 			localStorage.setItem('token', result.data.token);
-			localStorage.setItem('userId', result.data.userId);
+			localStorage.setItem('myUser', JSON.stringify(result.data.user));
 		} catch (error) {
 			console.log(error);
 		}
