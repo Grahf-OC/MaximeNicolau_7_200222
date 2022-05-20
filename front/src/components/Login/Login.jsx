@@ -3,9 +3,12 @@
 import React from 'react';
 import '../../styles/index.css';
 import axios from 'axios';
+import AuthContext from '../../context/AuthProvider';
 
 export default function Header() {
 	const urlLogin = 'http://localhost:3000/api/auth/login';
+
+	const { setAuth } = React.useContext(AuthContext);
 
 	const [formData, setFormData] = React.useState({
 		email: '',
@@ -27,6 +30,7 @@ export default function Header() {
 			const result = await axios.post(urlLogin, formData);
 			localStorage.setItem('token', result.data.token);
 			localStorage.setItem('myUser', JSON.stringify(result.data.user));
+			setAuth(formData);
 		} catch (error) {
 			console.log(error);
 		}

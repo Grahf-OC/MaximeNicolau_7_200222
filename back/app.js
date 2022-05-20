@@ -2,9 +2,9 @@
 const express = require('express');
 const path = require('path');
 const sequelize = require('./utils/connector');
-// const messRoutes = require('./routes/mess');
 const userRoutes = require('./routes/user');
 const authRoutes = require('./routes/auth');
+const messRoutes = require('./routes/message');
 
 const app = express();
 require('dotenv').config();
@@ -34,7 +34,7 @@ synchro();
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/auth', authRoutes);
-// app.use('/api/mess', messRoutes);
+app.use('/api/message', messRoutes);
 app.use('/api/user', userRoutes);
 
 module.exports = app;

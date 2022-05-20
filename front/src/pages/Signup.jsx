@@ -4,7 +4,7 @@ import '../styles/index.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-export default function Form() {
+export default function Signup() {
 	const urlSignup = 'http://localhost:3000/api/auth/signup';
 	// const urlLogin = 'http://localhost:3000/api/auth/login';
 	const navigate = useNavigate();

@@ -4,8 +4,8 @@ import React from 'react';
 import '../styles/index.css';
 import { useParams } from 'react-router-dom';
 
-import EditProfil from '../components/EditProfil';
-import ProfilComponent from '../components/Profil';
+import EditProfil from '../components/EditProfil/EditProfil';
+import ProfilComponent from '../components/Profil/Profil';
 
 const axios = require('axios');
 
@@ -62,8 +62,6 @@ export default function Profil() {
 		setButton((prevButton) => !prevButton);
 	};
 
-	// TODO: composant edit profil, remonter props
-
 	return (
 		<div className="profil-container">
 			<h1>Informations Personnelles</h1>
@@ -98,51 +96,3 @@ export default function Profil() {
 		</div>
 	);
 }
-
-/* <EditProfil
-key={user.id}
-firstName={user.firstName}
-lastName={user.lastName}
-email={user.email}
-birthday={user.birthday}
-password={user.password}
-onChange={() => handleChange()}
-/> */
-
-/* 				<form className="form">
-					<input
-						type="email"
-						placeholder={user.email}
-						className="form--input"
-						name="email"
-						onChange={handleChange}
-						value={user.email}
-					/>
-
-					<input
-						type="firstName"
-						placeholder={user.firstName}
-						className="form--input"
-						name="firstName"
-						onChange={handleChange}
-						value={user.firstName}
-					/>
-
-					<input
-						type="lastName"
-						placeholder={user.lastName}
-						className="form--input"
-						name="lastName"
-						onChange={handleChange}
-						value={user.lastName}
-					/>
-
-					<input
-						type="birthday"
-						placeholder={user.birthday}
-						className="form--input"
-						name="birthday"
-						onChange={handleChange}
-						value={user.birthday}
-					/>
-				</form> */
