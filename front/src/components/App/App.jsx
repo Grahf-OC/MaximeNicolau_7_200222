@@ -3,7 +3,9 @@ import React from 'react';
 import '../../styles/index.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // import Axios from 'axios';
+import RequireAuth from '../RequireAuth';
 import Home from '../../pages/Home';
+import Login from '../../pages/Login';
 import Signup from '../../pages/Signup';
 import Profil from '../../pages/Profil';
 import Header from '../Header/Header';
@@ -13,13 +15,19 @@ import { AuthProvider } from '../../context/AuthProvider';
 export default function App() {
 	return (
 		<BrowserRouter>
-			<Header />
 			<AuthProvider>
+				<Header />
 				<Routes>
-					<Route path="/" element={<Home />} />
+					{/* Public Routes */}
+					<Route path="/Login" element={<Login />} />
 					<Route path="/Signup" element={<Signup />} />
-					<Route path="/Membres" element={<Membres />} />
-					<Route path="/Profil/:id" element={<Profil />} />
+
+					{/* Protected Routes */}
+					<Route element={<RequireAuth />}>
+						<Route path="/" element={<Home />} />
+						<Route path="/Membres" element={<Membres />} />
+						<Route path="/Profil/:id" element={<Profil />} />
+					</Route>
 				</Routes>
 			</AuthProvider>
 		</BrowserRouter>

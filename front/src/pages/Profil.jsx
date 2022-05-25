@@ -3,6 +3,10 @@
 import React from 'react';
 import '../styles/index.css';
 import { useParams } from 'react-router-dom';
+import Container from '@mui/material/Container';
+
+import Stack from '@mui/material/Stack';
+import Header from '../components/Header/Header';
 
 import EditProfil from '../components/EditProfil/EditProfil';
 import ProfilComponent from '../components/Profil/Profil';
@@ -63,36 +67,41 @@ export default function Profil() {
 	};
 
 	return (
-		<div className="profil-container">
-			<h1>Informations Personnelles</h1>
-			{isUser && (
-				<button
-					className="form--submit"
-					type="button"
-					onClick={button ? handleSubmit : editProfil}
-				>
-					{button ? 'Terminer' : 'Modifier'}
-				</button>
-			)}
-			{button ? (
-				<EditProfil
-					key={user.id}
-					firstName={user.firstName}
-					lastName={user.lastName}
-					email={user.email}
-					birthday={user.birthday}
-					password={user.password}
-					onChange={(e) => handleChange(e)}
-				/>
-			) : (
-				<ProfilComponent
-					key={user.id}
-					firstName={user.firstName}
-					lastName={user.lastName}
-					email={user.email}
-					birthday={user.birthday}
-				/>
-			)}
-		</div>
+		<Stack direction="row" justifyContent="space-evenly">
+			<Header />
+			<Container>
+				<div className="profil-container">
+					<h1>Informations Personnelles</h1>
+					{isUser && (
+						<button
+							className="form--submit"
+							type="button"
+							onClick={button ? handleSubmit : editProfil}
+						>
+							{button ? 'Terminer' : 'Modifier'}
+						</button>
+					)}
+					{button ? (
+						<EditProfil
+							key={user.id}
+							firstName={user.firstName}
+							lastName={user.lastName}
+							email={user.email}
+							birthday={user.birthday}
+							password={user.password}
+							onChange={(e) => handleChange(e)}
+						/>
+					) : (
+						<ProfilComponent
+							key={user.id}
+							firstName={user.firstName}
+							lastName={user.lastName}
+							email={user.email}
+							birthday={user.birthday}
+						/>
+					)}
+				</div>
+			</Container>
+		</Stack>
 	);
 }

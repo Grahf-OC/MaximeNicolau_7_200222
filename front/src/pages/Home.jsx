@@ -7,7 +7,6 @@ import React from 'react';
 import '../styles/index.css';
 
 import axios from 'axios';
-import Login from '../components/Login/Login';
 
 export default function Home() {
 	const urlGetAll = 'http://localhost:3000/api/message';
@@ -22,10 +21,5 @@ export default function Home() {
 		};
 		fetchData();
 	}, []);
-	return (
-		<div className="App">
-			{' '}
-			<Login />
-		</div>
-	);
+	return <div className="App"> </div>;
 }

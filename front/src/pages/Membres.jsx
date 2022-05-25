@@ -4,6 +4,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/index.css';
 import axios from 'axios';
+import Stack from '@mui/material/Stack';
+import Container from '@mui/material/Container';
+import Header from '../components/Header/Header';
 
 export default function Membres() {
 	const authToken = localStorage.getItem('token');
@@ -30,9 +33,14 @@ export default function Membres() {
 	));
 
 	return (
-		<div className="Membres">
-			<h1>Tous les utilisateurs</h1>
-			<h2>{liste}</h2>
-		</div>
+		<Stack direction="row" justifyContent="space-evenly">
+			<Header />
+			<Container>
+				<div className="Membres">
+					<h1>Tous les utilisateurs</h1>
+					<h2>{liste}</h2>
+				</div>
+			</Container>
+		</Stack>
 	);
 }
