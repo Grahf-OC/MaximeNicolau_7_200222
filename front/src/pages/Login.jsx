@@ -5,8 +5,8 @@ import '../styles/index.css';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Container from '@mui/material/Container';
-
 import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 import Header from '../components/Header/Header';
 
 import useAuth from '../hooks/useAuth';
@@ -37,9 +37,10 @@ export default function Login() {
 		event.preventDefault();
 		try {
 			const result = await axios.post(urlLogin, formData);
-			localStorage.setItem('token', result.data.token);
-			localStorage.setItem('myUser', JSON.stringify(result.data.user));
 			const { token, user } = result.data;
+			localStorage.setItem('token', token);
+			localStorage.setItem('myUser', JSON.stringify(user));
+
 			setAuth({ token, user });
 			navigate(from, { replace: true });
 		} catch (error) {
@@ -70,10 +71,9 @@ export default function Login() {
 						onChange={handleChange}
 						value={formData.password}
 					/>
-
-					<button className="form--submit" type="submit">
-						Login
-					</button>
+					<Button variant="contained" type="submit">
+						Se connecter
+					</Button>
 				</form>
 			</Container>
 		</Stack>

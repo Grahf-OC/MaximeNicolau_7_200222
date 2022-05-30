@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import Container from '@mui/material/Container';
 
 import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 import Header from '../components/Header/Header';
 
 import EditProfil from '../components/EditProfil/EditProfil';
@@ -73,13 +74,12 @@ export default function Profil() {
 				<div className="profil-container">
 					<h1>Informations Personnelles</h1>
 					{isUser && (
-						<button
-							className="form--submit"
-							type="button"
+						<Button
+							variant="contained"
 							onClick={button ? handleSubmit : editProfil}
 						>
 							{button ? 'Terminer' : 'Modifier'}
-						</button>
+						</Button>
 					)}
 					{button ? (
 						<EditProfil

@@ -10,7 +10,7 @@ import axios from 'axios';
 
 export default function Home() {
 	const urlGetAll = 'http://localhost:3000/api/message';
-	const authToken = localStorage.getItem('token') || {};
+	const authToken = sessionStorage.getItem('token') || {};
 
 	React.useEffect(() => {
 		const fetchData = async () => {

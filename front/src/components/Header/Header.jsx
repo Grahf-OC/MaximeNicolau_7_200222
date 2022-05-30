@@ -3,78 +3,84 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-// import useAuth from '../../hooks/useAuth';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import HomeIcon from '@mui/icons-material/Home';
+import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
+import GroupsIcon from '@mui/icons-material/Groups';
+import LogoutIcon from '@mui/icons-material/Logout';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ModeNightIcon from '@mui/icons-material/ModeNight';
+import Switch from '@mui/material/Switch';
+import useAuth from '../../hooks/useAuth';
 
-const drawerWidth = 240;
-
-export default function PermanentDrawerLeft() {
-	/* const { setAuth, auth } = useAuth();
+export default function Sidebar() {
+	const { setAuth, auth } = useAuth();
 	const logout = () => {
-		setAuth(null);
+		setAuth({});
 		localStorage.clear();
-	}; */
+	};
 
 	return (
 		<Box sx={{ display: 'flex' }}>
 			<CssBaseline />
-			<AppBar
-				position="fixed"
-				sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
-			/>
 
-			<Drawer
-				sx={{
-					width: drawerWidth,
-					flexShrink: 0,
-					'& .MuiDrawer-paper': {
-						width: drawerWidth,
-						boxSizing: 'border-box',
-					},
-				}}
-				variant="permanent"
-				anchor="left"
-			>
-				<Toolbar />
-				<Divider />
-				<List>
-					<ListItem key="accueil" disablePadding>
-						<ListItemButton component={Link} to="/">
-							<ListItemText primary="Accueil" />
-						</ListItemButton>
-					</ListItem>
-					<ListItem key="liste des membres" disablePadding>
-						<ListItemButton component={Link} to="/membres">
-							<ListItemText primary="Liste des membres" />
-						</ListItemButton>
-					</ListItem>
-					{/*	<ListItem key="profil" disablePadding>
+			<List sx={{ margin: 3 }}>
+				<ListItem key="accueil" disablePadding>
+					<ListItemButton component={Link} to="/">
+						<ListItemIcon>
+							<HomeIcon />
+						</ListItemIcon>
+						<ListItemText primary="Accueil" />
+					</ListItemButton>
+				</ListItem>
+				<ListItem key="liste des membres" disablePadding>
+					<ListItemButton component={Link} to="/membres">
+						<ListItemIcon>
+							<GroupsIcon />
+						</ListItemIcon>
+						<ListItemText primary="Liste des membres" />
+					</ListItemButton>
+				</ListItem>
+				{auth.token && (
+					<ListItem key="profil" disablePadding>
 						<ListItemButton component={Link} to={`/profil/${auth.user.id}`}>
+							<ListItemIcon>
+								<AccountCircleIcon />
+							</ListItemIcon>
 							<ListItemText primary="Profil" />
 						</ListItemButton>
-					</ListItem> */}
-					<ListItem key="logout" disablePadding>
-						<ListItemButton>
-							<ListItemText primary="Se déconnecter" />
-						</ListItemButton>
 					</ListItem>
-				</List>
-				<Divider />
-			</Drawer>
-			<Box
-				component="main"
-				sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
-			>
-				<Toolbar />
-			</Box>
+				)}
+				<ListItem key="logout" disablePadding>
+					<ListItemButton onClick={logout}>
+						<ListItemIcon>
+							<LogoutIcon />
+						</ListItemIcon>
+						<ListItemText primary="Se déconnecter" />
+					</ListItemButton>
+				</ListItem>
+				<ListItem key="signup" disablePadding>
+					<ListItemButton component={Link} to="/signup">
+						<ListItemIcon>
+							<EmojiPeopleIcon />
+						</ListItemIcon>
+						<ListItemText primary="Pas encore inscrit? C'est par ici!" />
+					</ListItemButton>
+				</ListItem>
+				<ListItem key="nightMode" disablePadding>
+					<ListItemButton>
+						<ListItemIcon>
+							<ModeNightIcon />
+						</ListItemIcon>
+						<Switch />
+					</ListItemButton>
+				</ListItem>
+			</List>
 		</Box>
 	);
 }

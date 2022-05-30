@@ -8,7 +8,6 @@ import Home from '../../pages/Home';
 import Login from '../../pages/Login';
 import Signup from '../../pages/Signup';
 import Profil from '../../pages/Profil';
-import Header from '../Header/Header';
 import Membres from '../../pages/Membres';
 import { AuthProvider } from '../../context/AuthProvider';
 
@@ -16,7 +15,6 @@ export default function App() {
 	return (
 		<BrowserRouter>
 			<AuthProvider>
-				<Header />
 				<Routes>
 					{/* Public Routes */}
 					<Route path="/Login" element={<Login />} />
