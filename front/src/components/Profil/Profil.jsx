@@ -17,6 +17,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function ProfilComponent({
+	picture,
 	firstName,
 	lastName,
 	email,
@@ -25,6 +26,13 @@ export default function ProfilComponent({
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<Grid container spacing={2}>
+				<Grid item xs={8}>
+					<Item>
+						<div className="profil-info">
+							<img src={picture} alt="profile" />
+						</div>
+					</Item>
+				</Grid>
 				<Grid item xs={8}>
 					<Item>
 						<div className="profil-info">

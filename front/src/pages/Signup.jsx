@@ -5,14 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-
 import Stack from '@mui/material/Stack';
 import Header from '../components/Header/Header';
+import useAuth from '../hooks/useAuth';
 
 export default function Signup() {
 	const urlSignup = 'http://localhost:3000/api/auth/signup';
-	// const urlLogin = 'http://localhost:3000/api/auth/login';
 	const navigate = useNavigate();
+	const { setAuth } = useAuth();
 
 	const [formData, setFormData] = React.useState({
 		email: '',
@@ -22,7 +22,6 @@ export default function Signup() {
 		confirmPassword: '',
 		birthday: '',
 		isAdmin: false,
-		picture: '',
 	});
 
 	function handleChange(event) {
@@ -42,8 +41,10 @@ export default function Signup() {
 			try {
 				const result = await axios.post(urlSignup, formData);
 				console.log(result);
-				localStorage.setItem('token', result.data.token);
-				localStorage.setItem('myUser', JSON.stringify(result.data.user));
+				const { token, user } = result.data;
+				localStorage.setItem('token', token);
+				localStorage.setItem('myUser', JSON.stringify(user));
+				setAuth({ token, user });
 			} catch (error) {
 				console.log(error);
 			}
@@ -97,7 +98,7 @@ export default function Signup() {
 						/>
 
 						<input
-							type="confirmPassword"
+							type="password"
 							placeholder="Confirmer le mot de passe"
 							className="form--input"
 							name="confirmPassword"
@@ -115,7 +116,7 @@ export default function Signup() {
 						/>
 
 						<Button variant="contained" type="submit">
-							S`&apos;`inscrire
+							S&apos;inscrire
 						</Button>
 					</form>
 				</div>

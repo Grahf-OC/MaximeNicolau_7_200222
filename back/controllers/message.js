@@ -1,9 +1,12 @@
+/* eslint-disable no-console */
 const fs = require('fs');
+const User = require('../models/User');
 const Message = require('../models/Message');
+const Comment = require('../models/Comment');
 
 exports.getAllMessages = async (req, res) => {
   try {
-    const messages = await Message.findAll();
+    const messages = await Message.findAll({ include: User });
     return res.status(200).json(messages);
   } catch (error) {
     return res.status(400).json({
@@ -16,6 +19,7 @@ exports.getOneMessage = async (req, res) => {
   try {
     const message = await Message.findOne({
       where: { id: req.params.id },
+      include: User,
     });
     return res.status(200).json(message);
   } catch (error) {
@@ -24,6 +28,8 @@ exports.getOneMessage = async (req, res) => {
     });
   }
 };
+
+// https://sequelize.org/docs/v6/advanced-association-concepts/eager-loading/
 
 exports.createMessage = async (req, res) => {
   try {
@@ -36,11 +42,45 @@ exports.createMessage = async (req, res) => {
         }
       : { ...req.body };
 
-    // eslint-disable-next-line no-unused-vars
+    const user = await User.findOne({
+      where: { id: req.auth.userId },
+    });
+
     const message = await Message.create({
+      include: [
+        {
+          model: User,
+          attributes: [
+            'id',
+            'firstname',
+            'lastname',
+            'email',
+            'picture',
+            'birthday',
+          ],
+        },
+        {
+          model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: [
+                'id',
+                'firstname',
+                'lastname',
+                'email',
+                'picture',
+                'birthday',
+              ],
+            },
+          ],
+        },
+      ],
       ...messageObject,
+      UserId: user.id,
       likes: 0,
     });
+    console.log(message);
 
     return res.status(201).json({ message: 'Message successfully created' });
   } catch (error) {

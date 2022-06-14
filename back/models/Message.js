@@ -13,7 +13,7 @@ const Message = sequelize.define('Message', {
 
   likes: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
   },
 });
 

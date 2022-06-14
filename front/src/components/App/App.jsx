@@ -17,14 +17,14 @@ export default function App() {
 			<AuthProvider>
 				<Routes>
 					{/* Public Routes */}
-					<Route path="/Login" element={<Login />} />
-					<Route path="/Signup" element={<Signup />} />
+					<Route path="/login" element={<Login />} />
+					<Route path="/signup" element={<Signup />} />
 
 					{/* Protected Routes */}
 					<Route element={<RequireAuth />}>
 						<Route path="/" element={<Home />} />
-						<Route path="/Membres" element={<Membres />} />
-						<Route path="/Profil/:id" element={<Profil />} />
+						<Route path="/membres" element={<Membres />} />
+						<Route path="/profil/:id" element={<Profil />} />
 					</Route>
 				</Routes>
 			</AuthProvider>

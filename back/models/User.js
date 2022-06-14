@@ -1,6 +1,8 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/connector');
 const Message = require('./Message');
+const Like = require('./Like');
+const Comment = require('./Comment');
 
 const User = sequelize.define('User', {
   email: {
@@ -28,7 +30,7 @@ const User = sequelize.define('User', {
 
   picture: {
     type: DataTypes.STRING,
-    allowNull: true,
+    defaultValue: 'http://localhost:3000/images/default-profile.png',
   },
 
   birthday: {
@@ -42,7 +44,17 @@ const User = sequelize.define('User', {
   },
 });
 
-User.hasMany(Message);
+User.hasMany(Message, {
+  onDelete: 'CASCADE',
+});
+User.hasMany(Like, {
+  onDelete: 'CASCADE',
+});
+User.hasMany(Comment, {
+  onDelete: 'CASCADE',
+});
 Message.belongsTo(User);
+Like.belongsTo(User);
+Comment.belongsTo(User);
 
 module.exports = User;

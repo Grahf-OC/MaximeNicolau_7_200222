@@ -39,7 +39,7 @@ export default function Membres() {
 
 	const liste = users.map((user) => (
 		<li key={user.id}>
-			<Link to={`/Profil/${user.id}`}>{user.firstName}</Link>
+			<Link to={`/profil/${user.id}`}>{user.firstName}</Link>
 		</li>
 	));
 

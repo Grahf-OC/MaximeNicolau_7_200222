@@ -36,27 +36,35 @@ export default function Profil() {
 			}
 		};
 		fetchData();
-	}, []);
+	}, [id]);
 
 	const editProfil = () => setButton((prevButton) => !prevButton);
 
 	function handleChange(e) {
-		const { name, value } = e.target;
+		const { name, value, type, files } = e.target;
 		setUser((prevUser) => ({
 			...prevUser,
-			[name]: value,
+			[name]: type === 'file' ? files[0] : value,
 		}));
 	}
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		try {
+			const formData = new FormData();
+			formData.append('user', JSON.stringify(user));
+			formData.append('image', user.picture);
+
+			const config = {
+				headers: {
+					'content-type': 'multipart/form-data',
+					Authorization: `Bearer ${authToken}`,
+				},
+			};
 			const result = await axios.put(
 				`http://localhost:3000/api/user/${id}`,
-				user,
-				{
-					headers: { Authorization: `Bearer ${authToken}` },
-				}
+				formData,
+				config
 			);
 			console.log(result.data);
 			localStorage.setItem('myUser', JSON.stringify(result.data.user));
@@ -84,6 +92,7 @@ export default function Profil() {
 					{button ? (
 						<EditProfil
 							key={user.id}
+							picture={user.picture}
 							firstName={user.firstName}
 							lastName={user.lastName}
 							email={user.email}
@@ -94,6 +103,7 @@ export default function Profil() {
 					) : (
 						<ProfilComponent
 							key={user.id}
+							picture={user.picture}
 							firstName={user.firstName}
 							lastName={user.lastName}
 							email={user.email}
