@@ -46,36 +46,38 @@ exports.createMessage = async (req, res) => {
       where: { id: req.auth.userId },
     });
 
+    const userObject = [
+      {
+        model: User,
+        attributes: [
+          'id',
+          'firstname',
+          'lastname',
+          'email',
+          'picture',
+          'birthday',
+        ],
+      },
+      {
+        model: Comment,
+        include: [
+          {
+            model: User,
+            attributes: [
+              'id',
+              'firstname',
+              'lastname',
+              'email',
+              'picture',
+              'birthday',
+            ],
+          },
+        ],
+      },
+    ];
+
     const message = await Message.create({
-      include: [
-        {
-          model: User,
-          attributes: [
-            'id',
-            'firstname',
-            'lastname',
-            'email',
-            'picture',
-            'birthday',
-          ],
-        },
-        {
-          model: Comment,
-          include: [
-            {
-              model: User,
-              attributes: [
-                'id',
-                'firstname',
-                'lastname',
-                'email',
-                'picture',
-                'birthday',
-              ],
-            },
-          ],
-        },
-      ],
+      include: userObject,
       ...messageObject,
       UserId: user.id,
       likes: 0,
