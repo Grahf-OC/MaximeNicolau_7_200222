@@ -9,6 +9,7 @@ import Login from '../../pages/Login';
 import Signup from '../../pages/Signup';
 import Profil from '../../pages/Profil';
 import Membres from '../../pages/Membres';
+import Message from '../../pages/Message';
 import { AuthProvider } from '../../context/AuthProvider';
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
 						<Route path="/" element={<Home />} />
 						<Route path="/membres" element={<Membres />} />
 						<Route path="/profil/:id" element={<Profil />} />
+						<Route path="/message/:id" element={<Message />} />
 					</Route>
 				</Routes>
 			</AuthProvider>

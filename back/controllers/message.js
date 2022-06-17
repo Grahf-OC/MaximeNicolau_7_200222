@@ -21,7 +21,8 @@ exports.getOneMessage = async (req, res) => {
       where: { id: req.params.id },
       include: User,
     });
-    return res.status(200).json(message);
+    console.log(message);
+    return res.status(200).json({ message });
   } catch (error) {
     return res.status(404).json({
       error,
@@ -97,21 +98,29 @@ exports.updateMessage = async (req, res) => {
     const message = await Message.findOne({
       where: { id: req.params.id },
     });
-    if (message.userId !== req.auth.userId) {
-      res.status(403).json({ error: 'Unauthorized request' });
+    if (message.UserId !== req.auth.userId) {
+      return res.status(403).json({ error: 'Unauthorized request' });
     }
-    const messageObject = req.file
-      ? {
-          ...JSON.parse(req.body.message),
-          picture: `${req.protocol}://${req.get('host')}/images/${
-            req.file.filename
-          }`,
-        }
-      : { ...req.body };
-    await Message.update({
-      where: { id: req.params.id },
-      ...messageObject,
+    if (req.file) {
+      const newPicture = `${req.protocol}://${req.get('host')}/images/${
+        req.file.filename
+      }`;
+      if (message.picture) {
+        const filename = message.picture.split('/images')[1];
+        fs.unlink(`images/${filename}`, (error) => {
+          if (error) return console.log(error);
+          return console.log('image supprimée');
+        });
+      }
+      message.picture = newPicture;
+    }
+
+    message.body = JSON.parse(req.body.body);
+
+    await message.save({
+      fields: ['body', 'picture'],
     });
+    console.log(message);
     return res.status(200).json({ message: 'Message modified' });
   } catch (error) {
     return res.status(400).json({ error });
@@ -119,32 +128,25 @@ exports.updateMessage = async (req, res) => {
 };
 
 exports.deleteMessage = async (req, res) => {
-  const message = await Message.findOne({
-    where: { id: req.params.id },
-  });
-  if (message.userId !== req.auth.userId) {
-    res.status(400).json({
-      error: new Error('Unauthorized request'),
-    });
-  } else if (message.picture == null) {
-    await Message.destroy({
+  try {
+    const message = await Message.findOne({
       where: { id: req.params.id },
     });
-    res
-      .status(200)
-      .json({ message: 'Message succesfully deleted' })
-      .catch((error) => res.status(400).json({ error }));
-  } else {
+    if (message.UserId !== req.auth.userId) {
+      return res.status(403).json({ error: 'Unauthorized request' });
+    }
+    if (!message.picture) {
+      await message.destroy();
+      return res.status(200).json({ message: 'Message succesfully deleted' });
+    }
     const filename = message.picture.split('/images/')[1];
-    fs.unlink(`images/${filename}`, () => {
-      Message.destroy({
-        where: { id: req.params.id },
-      });
-      res
-        .status(200)
-        .json({ message: 'Message succesfully deleted' })
-        .catch((error) => res.status(400).json({ error }));
+    fs.unlink(`images/${filename}`, (err) => {
+      if (err) return console.log(err);
+      message.destroy();
+      return res.status(200).json({ message: 'Message succesfully deleted' });
     });
+  } catch (error) {
+    return res.status(400).json({ error });
   }
 };
 

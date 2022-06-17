@@ -9,6 +9,7 @@ const Message = sequelize.define('Message', {
 
   picture: {
     type: DataTypes.STRING,
+    allowNull: true,
   },
 
   likes: {

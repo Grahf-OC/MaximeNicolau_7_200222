@@ -18,7 +18,7 @@ export default function Profil() {
 	const authToken = localStorage.getItem('token');
 	const { id } = useParams();
 	const [user, setUser] = React.useState({});
-	const [button, setButton] = React.useState(false);
+	const [isToggled, setIsToggled] = React.useState(false);
 	const [isUser, setIsUser] = React.useState(false);
 	const userUrl = `http://localhost:3000/api/user/${id}`;
 
@@ -36,9 +36,9 @@ export default function Profil() {
 			}
 		};
 		fetchData();
-	}, [id]);
+	}, [id, isToggled]);
 
-	const editProfil = () => setButton((prevButton) => !prevButton);
+	const editProfil = () => setIsToggled((prev) => !prev);
 
 	function handleChange(e) {
 		const { name, value, type, files } = e.target;
@@ -61,18 +61,21 @@ export default function Profil() {
 					Authorization: `Bearer ${authToken}`,
 				},
 			};
+
 			const result = await axios.put(
 				`http://localhost:3000/api/user/${id}`,
 				formData,
 				config
 			);
 			console.log(result.data);
+			console.log(user);
+
 			localStorage.setItem('myUser', JSON.stringify(result.data.user));
 		} catch (error) {
 			console.log(error);
 		}
 
-		setButton((prevButton) => !prevButton);
+		setIsToggled((prev) => !prev);
 	};
 
 	return (
@@ -84,12 +87,12 @@ export default function Profil() {
 					{isUser && (
 						<Button
 							variant="contained"
-							onClick={button ? handleSubmit : editProfil}
+							onClick={isToggled ? handleSubmit : editProfil}
 						>
-							{button ? 'Terminer' : 'Modifier'}
+							{isToggled ? 'Terminer' : 'Modifier'}
 						</Button>
 					)}
-					{button ? (
+					{isToggled ? (
 						<EditProfil
 							key={user.id}
 							picture={user.picture}

@@ -39,7 +39,6 @@ export default function EditProfil({
 						</Button>
 					</label>
 					<label htmlFor="icon-button-file">
-						<Input accept="image/*" id="icon-button-file" type="file" />
 						<IconButton
 							color="primary"
 							aria-label="upload picture"

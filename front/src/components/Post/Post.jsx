@@ -1,40 +1,92 @@
+/* eslint-disable no-console */
 /* eslint-disable react/prop-types */
 import React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { Button, CardActionArea, CardActions } from '@mui/material';
+import axios from 'axios';
 
-export default function Post({ body, user, picture, alt }) {
+import EditMessage from '../EditMessage/EditMessage';
+import DisplayPosts from '../DisplayPosts/DisplayPosts';
+
+export default function Post({ message, setRefresh }) {
+	const [isToggled, setIsToggled] = React.useState(false);
+	const authToken = localStorage.getItem('token') || {};
+
+	const handleDelete = async () => {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${authToken}`,
+			},
+		};
+		try {
+			const result = await axios.delete(
+				`http://localhost:3000/api/message/${message.id}`,
+				config
+			);
+			setRefresh((prev) => !prev);
+			console.log(result);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const [oldMessage, setOldMessage] = React.useState(message);
+
+	function handleChange(e) {
+		const { name, value, type, files } = e.target;
+		setOldMessage((prev) => ({
+			...prev,
+			[name]: type === 'file' ? files[0] : value,
+		}));
+	}
+
+	const handleClick = () => setIsToggled(!isToggled);
+
+	const handleEditSubmit = async () => {
+		try {
+			const formData = new FormData();
+			formData.append('body', JSON.stringify(oldMessage.body));
+			formData.append('image', oldMessage.picture);
+
+			const config = {
+				headers: {
+					'content-type': 'multipart/form-data',
+					Authorization: `Bearer ${authToken}`,
+				},
+			};
+			const result = await axios.put(
+				`http://localhost:3000/api/message/${message.id}`,
+				formData,
+				config
+			);
+
+			console.log(result.data);
+			console.log(oldMessage);
+			setIsToggled(!isToggled);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	return (
-		<Card sx={{ maxWidth: 845 }}>
-			<CardActionArea>
-				{picture && (
-					<CardMedia component="img" height="140" image={picture} alt={alt} />
-				)}
-				<CardContent>
-					<Typography gutterBottom variant="h6" size="10" component="div">
-						{user}
-					</Typography>
-					<Typography variant="body2" color="text.secondary">
-						{body}
-					</Typography>
-				</CardContent>
-			</CardActionArea>
-			<CardActions>
-				<Button size="small" color="primary">
-					<FavoriteIcon />
-				</Button>
-				<Button size="small" color="primary">
-					<DeleteIcon />
-				</Button>
-				<Button size="small" color="primary">
-					Edit
-				</Button>
-			</CardActions>
-		</Card>
+		<div>
+			{isToggled ? (
+				<EditMessage
+					handleClick={() => handleClick()}
+					onChange={(e) => handleChange(e)}
+					handleEditSubmit={() => handleEditSubmit()}
+					body={oldMessage.body}
+				/>
+			) : (
+				<DisplayPosts
+					key={oldMessage.id}
+					id={oldMessage.id}
+					body={oldMessage.body}
+					user={oldMessage.User.firstName}
+					picture={oldMessage.picture}
+					alt={oldMessage.alt}
+					handleDelete={() => handleDelete(oldMessage.id)}
+					handleClick={() => handleClick()}
+				/>
+			)}
+		</div>
 	);
 }
