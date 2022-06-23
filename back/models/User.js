@@ -53,6 +53,7 @@ User.hasMany(Like, {
 User.hasMany(Comment, {
   onDelete: 'CASCADE',
 });
+
 Message.belongsTo(User);
 Like.belongsTo(User);
 Comment.belongsTo(User);

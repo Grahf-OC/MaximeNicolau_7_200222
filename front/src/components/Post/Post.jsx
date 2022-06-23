@@ -8,6 +8,8 @@ import DisplayPosts from '../DisplayPosts/DisplayPosts';
 
 export default function Post({ message, setRefresh }) {
 	const [isToggled, setIsToggled] = React.useState(false);
+	const [oldMessage, setOldMessage] = React.useState(message);
+	const [color, setColor] = React.useState();
 	const authToken = localStorage.getItem('token') || {};
 
 	const handleDelete = async () => {
@@ -28,7 +30,25 @@ export default function Post({ message, setRefresh }) {
 		}
 	};
 
-	const [oldMessage, setOldMessage] = React.useState(message);
+	const handleLike = async () => {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${authToken}`,
+			},
+		};
+		try {
+			const result = await axios.post(
+				`http://localhost:3000/api/message/${message.id}/like`,
+				+1,
+				config
+			);
+			setRefresh((prev) => !prev);
+			setColor((prev) => !prev);
+			console.log(result);
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	function handleChange(e) {
 		const { name, value, type, files } = e.target;
@@ -83,8 +103,10 @@ export default function Post({ message, setRefresh }) {
 					user={oldMessage.User.firstName}
 					picture={oldMessage.picture}
 					alt={oldMessage.alt}
+					like={oldMessage.like}
 					handleDelete={() => handleDelete(oldMessage.id)}
 					handleClick={() => handleClick()}
+					handleLike={() => handleLike(oldMessage.id)}
 				/>
 			)}
 		</div>

@@ -3,10 +3,13 @@ const fs = require('fs');
 const User = require('../models/User');
 const Message = require('../models/Message');
 const Comment = require('../models/Comment');
+const Like = require('../models/Like');
 
 exports.getAllMessages = async (req, res) => {
   try {
-    const messages = await Message.findAll({ include: User });
+    const messages = await Message.findAll({
+      include: [{ model: User }, { model: Like }, { model: Comment }],
+    });
     return res.status(200).json(messages);
   } catch (error) {
     return res.status(400).json({
@@ -19,9 +22,12 @@ exports.getOneMessage = async (req, res) => {
   try {
     const message = await Message.findOne({
       where: { id: req.params.id },
-      include: User,
+      include: [{ model: User }, { model: Like }, { model: Comment }],
     });
     console.log(message);
+    if (!message) {
+      return res.status(400).json({ error: "La ressource n'existe pas." });
+    }
     return res.status(200).json({ message });
   } catch (error) {
     return res.status(404).json({
@@ -81,7 +87,6 @@ exports.createMessage = async (req, res) => {
       include: userObject,
       ...messageObject,
       UserId: user.id,
-      likes: 0,
     });
     console.log(message);
 
@@ -145,6 +150,25 @@ exports.deleteMessage = async (req, res) => {
       message.destroy();
       return res.status(200).json({ message: 'Message succesfully deleted' });
     });
+  } catch (error) {
+    return res.status(400).json({ error });
+  }
+};
+
+exports.likeMessage = async (req, res) => {
+  try {
+    const like = await Like.findOne({
+      where: { UserId: req.auth.userId, MessageId: req.params.id },
+    });
+    if (like) {
+      await like.destroy();
+      return res.status(200).json({ message: 'like supprimé' });
+    }
+    Like.create({
+      UserId: req.auth.userId,
+      MessageId: req.params.id,
+    });
+    return res.status(201).json({ message: 'message liké' });
   } catch (error) {
     return res.status(400).json({ error });
   }

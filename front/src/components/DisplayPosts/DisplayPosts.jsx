@@ -15,8 +15,10 @@ export default function DisplayPosts({
 	user,
 	picture,
 	alt,
+	like,
 	handleDelete,
 	handleClick,
+	handleLike,
 }) {
 	return (
 		<div>
@@ -42,9 +44,12 @@ export default function DisplayPosts({
 					</CardActionArea>
 				</Link>
 				<CardActions>
-					<Button size="small" color="primary">
+					<Button size="small" color="primary" onClick={handleLike}>
 						<FavoriteIcon />
 					</Button>
+					<Typography variant="body2" color="text.secondary">
+						{like}
+					</Typography>
 					<Button size="small" color="primary" onClick={handleDelete}>
 						<DeleteIcon />
 					</Button>
