@@ -46,11 +46,6 @@ export default function Post({ message, setRefresh }) {
 		isLiked();
 	}, []);
 
-	/* React.useEffect(() => {
-		setUpdateLikes((prev) => prev + (liked ? 1 : -1));
-		console.log(oldMessage.Likes.length);
-	}, [liked]); */
-
 	const handleLike = async () => {
 		const config = {
 			headers: {
@@ -137,11 +132,3 @@ export default function Post({ message, setRefresh }) {
 		</div>
 	);
 }
-
-/* React.useEffect(() => {
-	setLiked(window.localStorage.getItem('liked'));
-}, []);
-
-React.useEffect(() => {
-	window.localStorage.setItem('liked', liked);
-}, [liked]); */
