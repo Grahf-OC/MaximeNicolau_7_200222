@@ -30,7 +30,7 @@ export default function Sidebar() {
 			<CssBaseline />
 
 			<List sx={{ margin: 3 }}>
-				<ListItem key="accueil" disablePadding>
+				<ListItem key="accueil">
 					<ListItemButton component={Link} to="/">
 						<ListItemIcon>
 							<HomeIcon />
@@ -38,7 +38,7 @@ export default function Sidebar() {
 						<ListItemText primary="Accueil" />
 					</ListItemButton>
 				</ListItem>
-				<ListItem key="liste des membres" disablePadding>
+				<ListItem key="liste des membres">
 					<ListItemButton component={Link} to="/membres">
 						<ListItemIcon>
 							<GroupsIcon />
@@ -47,7 +47,7 @@ export default function Sidebar() {
 					</ListItemButton>
 				</ListItem>
 				{auth.token && (
-					<ListItem key="profil" disablePadding>
+					<ListItem key="profil">
 						<ListItemButton component={Link} to={`/profil/${auth.user.id}`}>
 							<ListItemIcon>
 								<AccountCircleIcon />
@@ -56,7 +56,7 @@ export default function Sidebar() {
 						</ListItemButton>
 					</ListItem>
 				)}
-				<ListItem key="logout" disablePadding>
+				<ListItem key="logout">
 					<ListItemButton onClick={logout}>
 						<ListItemIcon>
 							<LogoutIcon />
@@ -64,7 +64,7 @@ export default function Sidebar() {
 						<ListItemText primary="Se déconnecter" />
 					</ListItemButton>
 				</ListItem>
-				<ListItem key="signup" disablePadding>
+				<ListItem key="signup">
 					<ListItemButton component={Link} to="/signup">
 						<ListItemIcon>
 							<EmojiPeopleIcon />
@@ -72,7 +72,7 @@ export default function Sidebar() {
 						<ListItemText primary="Pas encore inscrit? C'est par ici!" />
 					</ListItemButton>
 				</ListItem>
-				<ListItem key="nightMode" disablePadding>
+				<ListItem key="nightMode">
 					<ListItemButton>
 						<ListItemIcon>
 							<ModeNightIcon />

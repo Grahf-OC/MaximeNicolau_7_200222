@@ -62,33 +62,30 @@ export default function Home() {
 
 	const posts = allPosts.map((message) => (
 		<div className="post">
-			<Post
-				key={message.id}
-				message={message}
-				setRefresh={setRefresh}
-				post={post}
-				setPost={setPost}
-			/>
+			<Post key={message.id} message={message} setRefresh={setRefresh} />
 		</div>
 	));
 
 	return (
-		<Stack direction="row" justifyContent="space-evenly">
+		<Stack direction="row">
 			<Header />
-			<Container>
-				<input
-					type="text"
-					placeholder="Quoi de neuf?"
-					className="form--input"
-					name="body"
-					onChange={handleChange}
-					value={post.body}
-				/>
-				<Button variant="contained" type="submit" onClick={handleSubmit}>
-					Envoyer
-				</Button>
-				<div>{posts}</div>
-			</Container>
+			<Stack direction="column" sx={{ width: '50%' }}>
+				<Container>
+					<input
+						type="text"
+						placeholder="Quoi de neuf?"
+						className="message--input"
+						name="body"
+						onChange={handleChange}
+						value={post.body}
+					/>
+
+					<Button variant="contained" type="submit" onClick={handleSubmit}>
+						Envoyer
+					</Button>
+					<div>{posts}</div>
+				</Container>
+			</Stack>
 		</Stack>
 	);
 }

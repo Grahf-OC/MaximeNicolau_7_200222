@@ -15,16 +15,26 @@ export default function DisplayPosts({
 	user,
 	picture,
 	alt,
-	like,
+	likes,
+	liked,
 	handleDelete,
 	handleClick,
 	handleLike,
 }) {
 	return (
 		<div>
-			<Card sx={{ maxWidth: 845, objectFit: 'cover' }}>
-				<Link to={`/message/${id}`}>
+			<Card sx={{ maxWidth: 845, objectFit: 'cover', margin: 2 }}>
+				<Link to={`/message/${id}`} style={{ textDecoration: 'none' }}>
 					<CardActionArea>
+						<Typography
+							gutterBottom
+							variant="h6"
+							size="10"
+							component="div"
+							sx={{ marginLeft: 2 }}
+						>
+							{user}
+						</Typography>
 						{picture && (
 							<CardMedia
 								component="img"
@@ -34,9 +44,6 @@ export default function DisplayPosts({
 							/>
 						)}
 						<CardContent>
-							<Typography gutterBottom variant="h6" size="10" component="div">
-								{user}
-							</Typography>
 							<Typography variant="body2" color="text.secondary">
 								{body}
 							</Typography>
@@ -44,11 +51,15 @@ export default function DisplayPosts({
 					</CardActionArea>
 				</Link>
 				<CardActions>
-					<Button size="small" color="primary" onClick={handleLike}>
+					<Button
+						size="small"
+						color={liked ? 'secondary' : 'primary'}
+						onClick={handleLike}
+					>
 						<FavoriteIcon />
 					</Button>
 					<Typography variant="body2" color="text.secondary">
-						{like}
+						{likes}
 					</Typography>
 					<Button size="small" color="primary" onClick={handleDelete}>
 						<DeleteIcon />

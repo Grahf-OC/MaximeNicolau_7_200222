@@ -5,12 +5,15 @@ import axios from 'axios';
 
 import EditMessage from '../EditMessage/EditMessage';
 import DisplayPosts from '../DisplayPosts/DisplayPosts';
+import useAuth from '../../hooks/useAuth';
 
 export default function Post({ message, setRefresh }) {
 	const [isToggled, setIsToggled] = React.useState(false);
 	const [oldMessage, setOldMessage] = React.useState(message);
-	const [color, setColor] = React.useState();
+	const [liked, setLiked] = React.useState(false);
+	const [updateLikes, setUpdateLikes] = React.useState(oldMessage.Likes.length);
 	const authToken = localStorage.getItem('token') || {};
+	const { auth } = useAuth();
 
 	const handleDelete = async () => {
 		const config = {
@@ -30,6 +33,24 @@ export default function Post({ message, setRefresh }) {
 		}
 	};
 
+	React.useEffect(() => {
+		const isLiked = () => {
+			const likeArray = oldMessage.Likes;
+			const likedId = likeArray.filter((like) => like.UserId === auth.user.id);
+			if (likedId.length > 0) {
+				return setLiked(true);
+			}
+
+			return setLiked(false);
+		};
+		isLiked();
+	}, []);
+
+	/* React.useEffect(() => {
+		setUpdateLikes((prev) => prev + (liked ? 1 : -1));
+		console.log(oldMessage.Likes.length);
+	}, [liked]); */
+
 	const handleLike = async () => {
 		const config = {
 			headers: {
@@ -42,11 +63,14 @@ export default function Post({ message, setRefresh }) {
 				+1,
 				config
 			);
-			setRefresh((prev) => !prev);
-			setColor((prev) => !prev);
+
+			setLiked((prev) => !prev);
 			console.log(result);
 		} catch (error) {
 			console.log(error);
+		} finally {
+			setRefresh((prev) => !prev);
+			setUpdateLikes((prev) => prev + (liked ? -1 : 1));
 		}
 	};
 
@@ -103,7 +127,8 @@ export default function Post({ message, setRefresh }) {
 					user={oldMessage.User.firstName}
 					picture={oldMessage.picture}
 					alt={oldMessage.alt}
-					like={oldMessage.like}
+					likes={updateLikes}
+					liked={liked}
 					handleDelete={() => handleDelete(oldMessage.id)}
 					handleClick={() => handleClick()}
 					handleLike={() => handleLike(oldMessage.id)}
@@ -112,3 +137,11 @@ export default function Post({ message, setRefresh }) {
 		</div>
 	);
 }
+
+/* React.useEffect(() => {
+	setLiked(window.localStorage.getItem('liked'));
+}, []);
+
+React.useEffect(() => {
+	window.localStorage.setItem('liked', liked);
+}, [liked]); */

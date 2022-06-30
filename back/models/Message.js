@@ -13,11 +13,6 @@ const Message = sequelize.define('Message', {
     type: DataTypes.STRING,
     allowNull: true,
   },
-
-  likes: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-  },
 });
 
 Message.hasMany(Like, {
