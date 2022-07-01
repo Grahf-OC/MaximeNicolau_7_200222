@@ -55,7 +55,7 @@ export default function Post({ message, setRefresh }) {
 		try {
 			const result = await axios.post(
 				`http://localhost:3000/api/message/${message.id}/like`,
-				+1,
+				{},
 				config
 			);
 
@@ -98,7 +98,7 @@ export default function Post({ message, setRefresh }) {
 			);
 
 			console.log(result.data);
-			console.log(oldMessage);
+
 			setIsToggled(!isToggled);
 		} catch (error) {
 			console.log(error);

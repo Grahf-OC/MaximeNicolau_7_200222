@@ -40,15 +40,6 @@ exports.getOneMessage = async (req, res) => {
 
 exports.createMessage = async (req, res) => {
   try {
-    const messageObject = req.file
-      ? {
-          ...JSON.parse(req.body.message),
-          imageUrl: `${req.protocol}://${req.get('host')}/images/${
-            req.file.filename
-          }`,
-        }
-      : { ...req.body };
-
     const user = await User.findOne({
       where: { id: req.auth.userId },
     });
@@ -83,9 +74,15 @@ exports.createMessage = async (req, res) => {
       },
     ];
 
+    const newPicture = req.file
+      ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+      : null;
+
+    const messageObject = JSON.parse(req.body.body);
     const message = await Message.create({
       include: userObject,
-      ...messageObject,
+      body: messageObject,
+      picture: newPicture,
       UserId: user.id,
     });
     console.log(message);
@@ -146,10 +143,10 @@ exports.deleteMessage = async (req, res) => {
     }
     const filename = message.picture.split('/images/')[1];
     fs.unlink(`images/${filename}`, (err) => {
-      if (err) return console.log(err);
+      if (err) throw Error(err);
       message.destroy();
       return res.status(200).json({ message: 'Message succesfully deleted' });
-    });
+    }); // return qqch, ou chercher comment utiliser fs en promesse
   } catch (error) {
     return res.status(400).json({ error });
   }
@@ -173,23 +170,5 @@ exports.likeMessage = async (req, res) => {
     return res.status(400).json({ error });
   }
 };
-
-/* exports.likeMessage = async (req, res) => {
-  if (req.body.like === 1) {
-    const incrementLike = await Message.increment(
-      'like',
-      { by: 1 },
-
-      { where: { id: req.params.id } },
-    );
-    res
-      .status(200)
-      .json({ message: 'Message liked' })
-      .catch((error) => res.status(400).json({ error }));
-  }
-};
-
-peut-être Message.update({ like: sequelize.literal('like + 1') },
-  { where: { id: req.params.id} }) */
 
 // Ajouter controller trouver tous les messages d'un user.
