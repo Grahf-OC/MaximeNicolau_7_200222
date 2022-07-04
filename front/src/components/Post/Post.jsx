@@ -11,7 +11,6 @@ export default function Post({ message, setRefresh }) {
 	const [isToggled, setIsToggled] = React.useState(false);
 	const [oldMessage, setOldMessage] = React.useState(message);
 	const [liked, setLiked] = React.useState(false);
-	const [updateLikes, setUpdateLikes] = React.useState(oldMessage.Likes.length);
 	const authToken = localStorage.getItem('token') || {};
 	const { auth } = useAuth();
 
@@ -34,8 +33,8 @@ export default function Post({ message, setRefresh }) {
 	};
 
 	React.useEffect(() => {
-		const isLiked = () => {
-			const likeArray = oldMessage.Likes;
+		const toggleLiked = () => {
+			const likeArray = message.Likes;
 			const likedId = likeArray.filter((like) => like.UserId === auth.user.id);
 			if (likedId.length > 0) {
 				return setLiked(true);
@@ -43,7 +42,7 @@ export default function Post({ message, setRefresh }) {
 
 			return setLiked(false);
 		};
-		isLiked();
+		toggleLiked();
 	}, []);
 
 	const handleLike = async () => {
@@ -65,7 +64,6 @@ export default function Post({ message, setRefresh }) {
 			console.log(error);
 		} finally {
 			setRefresh((prev) => !prev);
-			setUpdateLikes((prev) => prev + (liked ? -1 : 1));
 		}
 	};
 
@@ -98,7 +96,7 @@ export default function Post({ message, setRefresh }) {
 			);
 
 			console.log(result.data);
-
+			setRefresh((prev) => !prev);
 			setIsToggled(!isToggled);
 		} catch (error) {
 			console.log(error);
@@ -119,10 +117,10 @@ export default function Post({ message, setRefresh }) {
 					key={oldMessage.id}
 					id={oldMessage.id}
 					body={oldMessage.body}
-					user={oldMessage.User.firstName}
-					picture={oldMessage.picture}
-					alt={oldMessage.alt}
-					likes={updateLikes}
+					user={message.User.firstName}
+					picture={message.picture}
+					alt={message.alt}
+					likes={message.Likes.length}
 					liked={liked}
 					handleDelete={() => handleDelete(oldMessage.id)}
 					handleClick={() => handleClick()}

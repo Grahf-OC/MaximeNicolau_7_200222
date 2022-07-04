@@ -25,6 +25,7 @@ export default function Home() {
 	const [allPosts, setAllPosts] = React.useState([]);
 	const [post, setPost] = React.useState({
 		body: '',
+		picture: '',
 	});
 	const [refresh, setRefresh] = React.useState(false);
 
@@ -65,11 +66,10 @@ export default function Home() {
 		} catch (error) {
 			console.log(error);
 		} finally {
-			setPost({ body: '' });
 			setRefresh((prev) => !prev);
 		}
 
-		console.log('Message created');
+		console.log(post);
 	};
 
 	const posts = allPosts.map((message) => (
