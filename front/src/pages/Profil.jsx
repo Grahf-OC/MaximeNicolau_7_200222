@@ -11,6 +11,7 @@ import Header from '../components/Header/Header';
 
 import EditProfil from '../components/EditProfil/EditProfil';
 import ProfilComponent from '../components/Profil/Profil';
+import useAuth from '../hooks/useAuth';
 
 const axios = require('axios');
 
@@ -20,6 +21,8 @@ export default function Profil() {
 	const [user, setUser] = React.useState({});
 	const [isToggled, setIsToggled] = React.useState(false);
 	const [isUser, setIsUser] = React.useState(false);
+	const [refresh, setRefresh] = React.useState(false);
+	const { auth } = useAuth();
 	const userUrl = `http://localhost:3000/api/user/${id}`;
 
 	React.useEffect(() => {
@@ -30,13 +33,13 @@ export default function Profil() {
 			console.log(result);
 
 			setUser(result.data.user);
-			const myUser = JSON.parse(localStorage.getItem('myUser'));
-			if (result.data.user.id === myUser.id) {
+
+			if (result.data.user.id === auth.user.id || auth.user.isAdmin === true) {
 				setIsUser(true);
 			}
 		};
 		fetchData();
-	}, [id, isToggled]);
+	}, [id, isToggled, refresh]);
 
 	const editProfil = () => setIsToggled((prev) => !prev);
 
@@ -52,7 +55,9 @@ export default function Profil() {
 		event.preventDefault();
 		try {
 			const formData = new FormData();
-			formData.append('user', JSON.stringify(user));
+			formData.append('email', JSON.stringify(user.email));
+			formData.append('firstName', JSON.stringify(user.firstName));
+			formData.append('lastName', JSON.stringify(user.lastName));
 			formData.append('image', user.picture);
 
 			const config = {
@@ -69,6 +74,7 @@ export default function Profil() {
 			);
 			console.log(result.data);
 			console.log(user);
+			setRefresh((prev) => !prev);
 
 			localStorage.setItem('myUser', JSON.stringify(result.data.user));
 		} catch (error) {
@@ -99,8 +105,6 @@ export default function Profil() {
 							firstName={user.firstName}
 							lastName={user.lastName}
 							email={user.email}
-							birthday={user.birthday}
-							password={user.password}
 							onChange={(e) => handleChange(e)}
 						/>
 					) : (
@@ -110,7 +114,6 @@ export default function Profil() {
 							firstName={user.firstName}
 							lastName={user.lastName}
 							email={user.email}
-							birthday={user.birthday}
 						/>
 					)}
 				</div>

@@ -33,11 +33,6 @@ const User = sequelize.define('User', {
     defaultValue: 'http://localhost:3000/images/default-profile.png',
   },
 
-  birthday: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-
   isAdmin: {
     type: DataTypes.BOOLEAN,
     allowNull: false,

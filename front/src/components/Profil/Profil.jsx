@@ -21,7 +21,6 @@ export default function ProfilComponent({
 	firstName,
 	lastName,
 	email,
-	birthday,
 }) {
 	return (
 		<Box sx={{ flexGrow: 1 }}>
@@ -56,15 +55,6 @@ export default function ProfilComponent({
 						<div className="profil-info">
 							<p>Email</p>
 							<h2>{email}</h2>
-						</div>
-					</Item>
-				</Grid>
-
-				<Grid item xs={8}>
-					<Item>
-						<div className="profil-info">
-							<p>Anniversaire</p>
-							<h2>{birthday}</h2>
 						</div>
 					</Item>
 				</Grid>

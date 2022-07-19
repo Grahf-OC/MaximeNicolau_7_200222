@@ -18,8 +18,7 @@ export default function EditProfil({
 	firstName,
 	lastName,
 	email,
-	password,
-	birthday,
+
 	onChange,
 }) {
 	return (
@@ -50,15 +49,6 @@ export default function EditProfil({
 				</Stack>
 				<form className="form">
 					<input
-						type="email"
-						placeholder={email}
-						className="form--input"
-						name="email"
-						onChange={onChange}
-						value={email}
-					/>
-
-					<input
 						type="firstName"
 						placeholder={firstName}
 						className="form--input"
@@ -77,21 +67,12 @@ export default function EditProfil({
 					/>
 
 					<input
-						type="password"
-						placeholder={password}
+						type="email"
+						placeholder={email}
 						className="form--input"
-						name="password"
+						name="email"
 						onChange={onChange}
-						value={password}
-					/>
-
-					<input
-						type="birthday"
-						placeholder={birthday}
-						className="form--input"
-						name="birthday"
-						onChange={onChange}
-						value={birthday}
+						value={email}
 					/>
 				</form>
 			</div>

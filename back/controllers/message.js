@@ -97,10 +97,13 @@ exports.createMessage = async (req, res) => {
 
 exports.updateMessage = async (req, res) => {
   try {
+    const user = await User.findOne({
+      where: { id: req.auth.userId },
+    });
     const message = await Message.findOne({
       where: { id: req.params.id },
     });
-    if (message.UserId !== req.auth.userId) {
+    if (message.UserId !== req.auth.userId && user.isAdmin === false) {
       return res.status(403).json({ error: 'Unauthorized request' });
     }
     if (req.file) {
@@ -131,10 +134,14 @@ exports.updateMessage = async (req, res) => {
 
 exports.deleteMessage = async (req, res) => {
   try {
+    const user = await User.findOne({
+      where: { id: req.auth.userId },
+    });
+    console.log(user);
     const message = await Message.findOne({
       where: { id: req.params.id },
     });
-    if (message.UserId !== req.auth.userId) {
+    if (message.UserId !== req.auth.userId && user.isAdmin === false) {
       return res.status(403).json({ error: 'Unauthorized request' });
     }
     if (!message.picture) {
