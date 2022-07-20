@@ -20,7 +20,6 @@ export default function Signup() {
 		lastName: '',
 		password: '',
 		confirmPassword: '',
-		birthday: '',
 		isAdmin: false,
 	});
 
@@ -104,15 +103,6 @@ export default function Signup() {
 							name="confirmPassword"
 							onChange={handleChange}
 							value={formData.confirmPassword}
-						/>
-
-						<input
-							type="birthday"
-							placeholder="Date d'anniversaire"
-							className="form--input"
-							name="birthday"
-							onChange={handleChange}
-							value={formData.birthday}
 						/>
 
 						<Button variant="contained" type="submit">

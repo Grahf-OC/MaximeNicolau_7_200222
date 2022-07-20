@@ -122,27 +122,3 @@ export default function Home() {
 		</Stack>
 	);
 }
-
-/* 	const handleEditSubmit = async (event, id) => {
-		event.preventDefault();
-		try {
-			const formData = new FormData();
-			formData.append('message', JSON.stringify(post));
-			formData.append('image', post.picture);
-
-			const config = {
-				headers: {
-					'content-type': 'multipart/form-data',
-					Authorization: `Bearer ${authToken}`,
-				},
-			};
-			const result = await axios.put(
-				`http://localhost:3000/api/message/${id}`,
-				formData,
-				config
-			);
-			console.log(result.data);
-		} catch (error) {
-			console.log(error);
-		}
-	}; */

@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('p7db', 'root', '', {
+const sequelize = new Sequelize('p7db', 'grahf', 'mlkjh', {
   dialect: 'mysql',
   host: 'localhost',
 });

@@ -84,6 +84,24 @@ export default function Profil() {
 		setIsToggled((prev) => !prev);
 	};
 
+	const handleDelete = async () => {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${authToken}`,
+			},
+		};
+		try {
+			const result = await axios.delete(
+				`http://localhost:3000/api/user/${id}`,
+				config
+			);
+			setRefresh((prev) => !prev);
+			console.log(result);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	return (
 		<Stack direction="row" justifyContent="space-evenly">
 			<Header />
@@ -91,12 +109,22 @@ export default function Profil() {
 				<div className="profil-container">
 					<h1>Informations Personnelles</h1>
 					{isUser && (
-						<Button
-							variant="contained"
-							onClick={isToggled ? handleSubmit : editProfil}
-						>
-							{isToggled ? 'Terminer' : 'Modifier'}
-						</Button>
+						<>
+							<Button
+								variant="contained"
+								onClick={isToggled ? handleSubmit : editProfil}
+							>
+								{isToggled ? 'Terminer' : 'Modifier'}
+							</Button>
+
+							<Button
+								variant="contained"
+								onClick={handleDelete}
+								sx={{ marginLeft: 5 }}
+							>
+								Supprimer le compte
+							</Button>
+						</>
 					)}
 					{isToggled ? (
 						<EditProfil

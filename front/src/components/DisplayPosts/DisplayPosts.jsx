@@ -15,6 +15,7 @@ export default function DisplayPosts({
 	user,
 	picture,
 	alt,
+	date,
 	likes,
 	liked,
 	handleDelete,
@@ -35,6 +36,17 @@ export default function DisplayPosts({
 						>
 							{user}
 						</Typography>
+
+						<Typography
+							gutterBottom
+							variant="h6"
+							size="10"
+							component="div"
+							sx={{ marginLeft: 2, fontSize: 16 }}
+						>
+							{date}
+						</Typography>
+
 						{picture && (
 							<CardMedia
 								component="img"

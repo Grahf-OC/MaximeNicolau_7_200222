@@ -36,7 +36,7 @@ exports.delete = async (req, res) => {
     where: { id: req.auth.userId },
   });
 
-  if (user.id !== req.auth.id && admin.isAdmin === false) {
+  if (user.id !== req.auth.userId && admin.isAdmin === false) {
     return res.status(403).json({ error: 'Unauthorized request' });
   }
   return user.destroy({
@@ -61,7 +61,7 @@ exports.updateAccount = async (req, res) => {
       const newPicture = `${req.protocol}://${req.get('host')}/images/${
         req.file.filename
       }`;
-      if (user.picture) {
+      if (user.picture !== 'http://localhost:3000/images/default-profile.png') {
         const filename = user.picture.split('/images')[1];
         fs.unlink(`images/${filename}`, (error) => {
           if (error) return console.log(error);

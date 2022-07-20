@@ -103,6 +103,12 @@ export default function Post({ message, setRefresh }) {
 		}
 	};
 
+	const date = message.createdAt;
+	const showDate = date
+		.substring(0, date.length - 5)
+		.replace('T', '')
+		.replace('-', '/');
+
 	return (
 		<div>
 			{isToggled ? (
@@ -118,6 +124,7 @@ export default function Post({ message, setRefresh }) {
 					id={oldMessage.id}
 					body={oldMessage.body}
 					user={message.User.firstName}
+					date={showDate}
 					picture={message.picture}
 					alt={message.alt}
 					likes={message.Likes.length}
