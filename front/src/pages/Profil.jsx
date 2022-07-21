@@ -2,13 +2,12 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
 import '../styles/index.css';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useConfirm } from 'material-ui-confirm';
 import Container from '@mui/material/Container';
-
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Header from '../components/Header/Header';
-
 import EditProfil from '../components/EditProfil/EditProfil';
 import ProfilComponent from '../components/Profil/Profil';
 import useAuth from '../hooks/useAuth';
@@ -22,8 +21,10 @@ export default function Profil() {
 	const [isToggled, setIsToggled] = React.useState(false);
 	const [isUser, setIsUser] = React.useState(false);
 	const [refresh, setRefresh] = React.useState(false);
-	const { auth } = useAuth();
+	const { setAuth, auth } = useAuth();
 	const userUrl = `http://localhost:3000/api/user/${id}`;
+	const confirm = useConfirm();
+	const navigate = useNavigate();
 
 	React.useEffect(() => {
 		const fetchData = async () => {
@@ -40,6 +41,27 @@ export default function Profil() {
 		};
 		fetchData();
 	}, [id, isToggled, refresh]);
+
+	const handleDelete = async () => {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${authToken}`,
+			},
+		};
+		try {
+			await confirm({
+				title: 'Êtes-vous sûr?',
+				description: 'Supprimer le compte? Cette action est irréversible',
+			});
+			axios.delete(`http://localhost:3000/api/user/${id}`, config);
+			setAuth({});
+			localStorage.clear();
+			setRefresh((prev) => !prev);
+			navigate('/');
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	const editProfil = () => setIsToggled((prev) => !prev);
 
@@ -82,24 +104,6 @@ export default function Profil() {
 		}
 
 		setIsToggled((prev) => !prev);
-	};
-
-	const handleDelete = async () => {
-		const config = {
-			headers: {
-				Authorization: `Bearer ${authToken}`,
-			},
-		};
-		try {
-			const result = await axios.delete(
-				`http://localhost:3000/api/user/${id}`,
-				config
-			);
-			setRefresh((prev) => !prev);
-			console.log(result);
-		} catch (error) {
-			console.log(error);
-		}
 	};
 
 	return (

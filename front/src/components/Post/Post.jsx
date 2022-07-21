@@ -14,6 +14,16 @@ export default function Post({ message, setRefresh }) {
 	const authToken = localStorage.getItem('token') || {};
 	const { auth } = useAuth();
 	const confirm = useConfirm();
+	const [isUser, setIsUser] = React.useState(false);
+
+	React.useEffect(() => {
+		const user = () => {
+			if (message.UserId === auth.user.id || auth.user.isAdmin === true) {
+				setIsUser(true);
+			}
+		};
+		user();
+	}, []);
 
 	const handleDelete = async () => {
 		const config = {
@@ -22,7 +32,7 @@ export default function Post({ message, setRefresh }) {
 			},
 		};
 		try {
-			await confirm({ description: 'Supprimer ce message?' });
+			await confirm({ title: 'Supprimer ce message?' });
 			axios.delete(`http://localhost:3000/api/message/${message.id}`, config);
 			setRefresh((prev) => !prev);
 		} catch (error) {
@@ -123,6 +133,7 @@ export default function Post({ message, setRefresh }) {
 					id={oldMessage.id}
 					body={oldMessage.body}
 					user={message.User.firstName}
+					isUser={isUser}
 					date={showDate}
 					picture={message.picture}
 					alt={message.alt}

@@ -21,7 +21,6 @@ const Input = styled('input')({
 export default function Home() {
 	const urlMessage = 'http://localhost:3000/api/message';
 	const authToken = localStorage.getItem('token') || {};
-
 	const [allPosts, setAllPosts] = React.useState([]);
 	const [post, setPost] = React.useState({
 		body: '',

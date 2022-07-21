@@ -13,7 +13,6 @@ import useAuth from '../hooks/useAuth';
 
 export default function Login() {
 	const urlLogin = 'http://localhost:3000/api/auth/login';
-
 	const { setAuth } = useAuth();
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -40,7 +39,6 @@ export default function Login() {
 			const { token, user } = result.data;
 			localStorage.setItem('token', token);
 			localStorage.setItem('myUser', JSON.stringify(user));
-
 			setAuth({ token, user });
 			navigate(from, { replace: true });
 		} catch (error) {

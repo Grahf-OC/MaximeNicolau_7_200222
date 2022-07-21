@@ -13,6 +13,7 @@ export default function DisplayPosts({
 	id,
 	body,
 	user,
+	isUser,
 	picture,
 	alt,
 	date,
@@ -42,7 +43,7 @@ export default function DisplayPosts({
 							variant="h6"
 							size="10"
 							component="div"
-							sx={{ marginLeft: 2, fontSize: 16 }}
+							sx={{ marginLeft: 2, fontSize: 14 }}
 						>
 							{date}
 						</Typography>
@@ -73,12 +74,16 @@ export default function DisplayPosts({
 					<Typography variant="body2" color="text.secondary">
 						{likes}
 					</Typography>
-					<Button size="small" color="primary" onClick={handleDelete}>
-						<DeleteIcon />
-					</Button>
-					<Button size="small" color="primary" onClick={handleClick}>
-						Edit
-					</Button>
+					{isUser && (
+						<>
+							<Button size="small" color="primary" onClick={handleDelete}>
+								<DeleteIcon />
+							</Button>
+							<Button size="small" color="primary" onClick={handleClick}>
+								Edit
+							</Button>
+						</>
+					)}
 				</CardActions>
 			</Card>
 		</div>
