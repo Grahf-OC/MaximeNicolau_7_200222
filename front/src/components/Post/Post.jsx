@@ -106,7 +106,8 @@ export default function Post({ message, setRefresh }) {
 	const date = message.createdAt;
 	const showDate = date
 		.substring(0, date.length - 5)
-		.replace('T', '')
+		.replace('T', ' ')
+		.replace('-', '/')
 		.replace('-', '/');
 
 	return (
