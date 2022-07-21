@@ -50,9 +50,9 @@ export default function EditMessage({ onChange, body, handleEditSubmit }) {
 							onChange={onChange}
 							value={body}
 						/>
-						<button type="button" onClick={handleEditSubmit}>
+						<Button type="button" onClick={handleEditSubmit}>
 							Envoyer
-						</button>
+						</Button>
 					</form>
 				</Stack>
 			</div>

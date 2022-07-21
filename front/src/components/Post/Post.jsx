@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import axios from 'axios';
-
+import { useConfirm } from 'material-ui-confirm';
 import EditMessage from '../EditMessage/EditMessage';
 import DisplayPosts from '../DisplayPosts/DisplayPosts';
 import useAuth from '../../hooks/useAuth';
@@ -13,6 +13,7 @@ export default function Post({ message, setRefresh }) {
 	const [liked, setLiked] = React.useState(false);
 	const authToken = localStorage.getItem('token') || {};
 	const { auth } = useAuth();
+	const confirm = useConfirm();
 
 	const handleDelete = async () => {
 		const config = {
@@ -21,12 +22,9 @@ export default function Post({ message, setRefresh }) {
 			},
 		};
 		try {
-			const result = await axios.delete(
-				`http://localhost:3000/api/message/${message.id}`,
-				config
-			);
+			await confirm({ description: 'Supprimer ce message?' });
+			axios.delete(`http://localhost:3000/api/message/${message.id}`, config);
 			setRefresh((prev) => !prev);
-			console.log(result);
 		} catch (error) {
 			console.log(error);
 		}
@@ -130,7 +128,7 @@ export default function Post({ message, setRefresh }) {
 					alt={message.alt}
 					likes={message.Likes.length}
 					liked={liked}
-					handleDelete={() => handleDelete(oldMessage.id)}
+					handleDelete={handleDelete}
 					handleClick={() => handleClick()}
 					handleLike={() => handleLike(oldMessage.id)}
 				/>

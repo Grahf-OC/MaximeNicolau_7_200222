@@ -61,15 +61,12 @@ export default function Home() {
 			formData.append('body', JSON.stringify(post.body));
 			formData.append('image', post.picture);
 			const result = await axios.post(urlMessage, formData, config);
-
+			setPost({ body: '' });
+			setRefresh((prev) => !prev);
 			console.log(result);
 		} catch (error) {
 			console.log(error);
-		} finally {
-			setRefresh((prev) => !prev);
 		}
-
-		console.log(post);
 	};
 
 	const posts = allPosts.map((message) => (
