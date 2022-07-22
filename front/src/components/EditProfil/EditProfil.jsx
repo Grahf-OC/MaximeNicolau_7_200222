@@ -16,7 +16,6 @@ const Input = styled('input')({
 
 export default function EditProfil({
 	firstName,
-	lastName,
 	email,
 
 	onChange,
@@ -34,7 +33,7 @@ export default function EditProfil({
 							onChange={onChange}
 						/>
 						<Button variant="contained" component="span">
-							Upload
+							Photo de profil
 						</Button>
 					</label>
 					<label htmlFor="icon-button-file">
@@ -55,15 +54,6 @@ export default function EditProfil({
 						name="firstName"
 						onChange={onChange}
 						value={firstName}
-					/>
-
-					<input
-						type="lastName"
-						placeholder={lastName}
-						className="form--input"
-						name="lastName"
-						onChange={onChange}
-						value={lastName}
 					/>
 
 					<input

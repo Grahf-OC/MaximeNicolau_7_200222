@@ -18,7 +18,7 @@ pwSchema
   .has()
   .lowercase() // Must have lowercase letters
   .has()
-  .digits(2) // Must have at least 2 digits
+  .digits(1) // Must have at least 1 digits
   .has()
   .not()
   .spaces() // Should not have spaces
@@ -29,19 +29,18 @@ pwSchema
 exports.signup = async (req, res) => {
   try {
     if (!pwSchema.validate(req.body.password)) {
-      res.status(401).json({
+      return res.status(401).json({
         message:
-          "Le mot de passe doit contenir entre 8 et 100 caractères, doit avoir des minuscules et des majuscules, ainsi qu'au moins 2 chiffres et pas d'espace.",
+          "Le mot de passe doit contenir entre 8 et 100 caractères, doit avoir des minuscules et des majuscules, au moins 1 chifre et pas d'espace.",
       });
     }
+
     const hash = await bcrypt.hash(req.body.password, 10);
     const user = await User.create({
-      lastName: req.body.lastName,
       firstName: req.body.firstName,
       password: hash,
       email: req.body.email,
       isAdmin: false,
-      birthday: req.body.birthday,
     });
     return res.status(201).json({
       message: 'User succesfully created',

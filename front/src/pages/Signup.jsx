@@ -13,45 +13,34 @@ export default function Signup() {
 	const urlSignup = 'http://localhost:3000/api/auth/signup';
 	const navigate = useNavigate();
 	const { setAuth } = useAuth();
-
-	const [formData, setFormData] = React.useState({
-		email: '',
-		firstName: '',
-		lastName: '',
-		password: '',
-		confirmPassword: '',
-		isAdmin: false,
-	});
-
-	function handleChange(event) {
-		const { name, value } = event.target;
-		setFormData((prevFormData) => ({
-			...prevFormData,
-			[name]: value,
-		}));
-	}
-
-	// TODO: refacto if/else
+	const [wrongPassword, setWrongPassword] = React.useState('');
+	const [firstName, setFirstName] = React.useState('');
+	const [email, setEmail] = React.useState('');
+	const [password, setPassword] = React.useState('');
+	const [confirmPassword, setConfirmPassword] = React.useState('');
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
-		if (formData.password === formData.confirmPassword) {
+		if (password === confirmPassword) {
 			try {
-				const result = await axios.post(urlSignup, formData);
+				const form = { email, password, firstName };
+				const result = await axios.post(urlSignup, form);
 				console.log(result);
 				const { token, user } = result.data;
 				localStorage.setItem('token', token);
 				localStorage.setItem('myUser', JSON.stringify(user));
+				setWrongPassword('');
 				setAuth({ token, user });
+				navigate('/');
 			} catch (error) {
 				console.log(error);
 			}
 			console.log('Successfully signed up');
 		} else {
 			console.log('Passwords do not match');
+			setWrongPassword('Mots de passe non identiques!');
 		}
-		navigate('/');
 	};
 
 	return (
@@ -65,8 +54,8 @@ export default function Signup() {
 							placeholder="Adresse email"
 							className="form--input"
 							name="email"
-							onChange={handleChange}
-							value={formData.email}
+							onChange={(e) => setEmail(e.target.value)}
+							value={email}
 						/>
 
 						<input
@@ -74,17 +63,8 @@ export default function Signup() {
 							placeholder="Prénom"
 							className="form--input"
 							name="firstName"
-							onChange={handleChange}
-							value={formData.firstName}
-						/>
-
-						<input
-							type="lastName"
-							placeholder="Nom de famille"
-							className="form--input"
-							name="lastName"
-							onChange={handleChange}
-							value={formData.lastName}
+							onChange={(e) => setFirstName(e.target.value)}
+							value={firstName}
 						/>
 
 						<input
@@ -92,17 +72,19 @@ export default function Signup() {
 							placeholder="Mot de passe"
 							className="form--input"
 							name="password"
-							onChange={handleChange}
-							value={formData.password}
+							onChange={(e) => setPassword(e.target.value)}
+							value={password}
 						/>
+
+						<p>{wrongPassword}</p>
 
 						<input
 							type="password"
 							placeholder="Confirmer le mot de passe"
 							className="form--input"
 							name="confirmPassword"
-							onChange={handleChange}
-							value={formData.confirmPassword}
+							onChange={(e) => setConfirmPassword(e.target.value)}
+							value={confirmPassword}
 						/>
 
 						<Button variant="contained" type="submit">

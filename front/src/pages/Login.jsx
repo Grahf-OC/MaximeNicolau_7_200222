@@ -3,11 +3,20 @@
 import * as React from 'react';
 import '../styles/index.css';
 import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
-import Container from '@mui/material/Container';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
+import { CardActionArea } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import Header from '../components/Header/Header';
+import logo from '../images/icon-above-font.png';
 
 import useAuth from '../hooks/useAuth';
 
@@ -48,32 +57,74 @@ export default function Login() {
 	};
 
 	return (
-		<Stack direction="row" justifyContent="space-evenly">
-			<Header />
-			<Container>
-				<form className="form" onSubmit={handleSubmit}>
-					<input
-						type="email"
-						placeholder="Email adress"
-						className="form--input"
-						name="email"
-						onChange={handleChange}
-						value={formData.email}
+		<Stack direction="column" alignItems="center">
+			<Card sx={{ width: 450, maxWidth: 500, marginTop: 2 }}>
+				<CardActionArea>
+					<CardMedia
+						component="img"
+						height="180"
+						image={logo}
+						alt="Logo groupomania"
 					/>
+					<CardContent>
+						<Typography gutterBottom variant="h6" component="div">
+							Le réseau social Groupomania
+						</Typography>
+						<Typography variant="body2" color="text.secondary">
+							Entrez, et détendez-vous!
+						</Typography>
+					</CardContent>
+				</CardActionArea>
+			</Card>
+			<form className="form" onSubmit={handleSubmit}>
+				<Typography
+					gutterBottom
+					variant="h6"
+					size="10"
+					component="div"
+					sx={{ marginLeft: 2, fontsize: 10 }}
+				>
+					Adresse email:
+				</Typography>
+				<input
+					type="email"
+					placeholder="Email adress"
+					className="form--input"
+					name="email"
+					onChange={handleChange}
+					value={formData.email}
+				/>
 
-					<input
-						type="password"
-						placeholder="Password"
-						className="form--input"
-						name="password"
-						onChange={handleChange}
-						value={formData.password}
-					/>
-					<Button variant="contained" type="submit">
-						Se connecter
-					</Button>
-				</form>
-			</Container>
+				<Typography
+					gutterBottom
+					variant="h6"
+					size="10"
+					component="div"
+					sx={{ marginLeft: 2, fontsize: 10 }}
+				>
+					Mot de passe:
+				</Typography>
+
+				<input
+					type="password"
+					placeholder="Password"
+					className="form--input"
+					name="password"
+					onChange={handleChange}
+					value={formData.password}
+				/>
+				<Button variant="contained" type="submit">
+					Se connecter
+				</Button>
+				<ListItem key="signup">
+					<ListItemButton component={Link} to="/signup">
+						<ListItemIcon color="red">
+							<EmojiPeopleIcon />
+						</ListItemIcon>
+						<ListItemText primary="Pas encore inscrit? C'est par ici!" />
+					</ListItemButton>
+				</ListItem>
+			</form>
 		</Stack>
 	);
 }

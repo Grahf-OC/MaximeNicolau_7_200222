@@ -72,7 +72,6 @@ exports.updateAccount = async (req, res) => {
     }
     user.email = JSON.parse(req.body.email);
     user.firstName = JSON.parse(req.body.firstName);
-    user.lastName = JSON.parse(req.body.lastName);
 
     await user.save({
       fields: ['email', 'firstName', 'lastName', 'picture'],

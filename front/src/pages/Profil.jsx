@@ -79,7 +79,6 @@ export default function Profil() {
 			const formData = new FormData();
 			formData.append('email', JSON.stringify(user.email));
 			formData.append('firstName', JSON.stringify(user.firstName));
-			formData.append('lastName', JSON.stringify(user.lastName));
 			formData.append('image', user.picture);
 
 			const config = {
@@ -113,30 +112,30 @@ export default function Profil() {
 				<div className="profil-container">
 					<h1>Informations Personnelles</h1>
 					{isUser && (
-						<>
-							<Button
-								variant="contained"
-								onClick={isToggled ? handleSubmit : editProfil}
-							>
-								{isToggled ? 'Terminer' : 'Modifier'}
-							</Button>
-
-							<Button
-								variant="contained"
-								onClick={handleDelete}
-								sx={{ marginLeft: 5 }}
-							>
-								Supprimer le compte
-							</Button>
-						</>
+						<Button
+							variant="contained"
+							onClick={isToggled ? handleSubmit : editProfil}
+						>
+							{isToggled ? 'Terminer' : 'Modifier'}
+						</Button>
 					)}
+					{isUser && !isToggled && (
+						<Button
+							variant="contained"
+							onClick={handleDelete}
+							sx={{ marginLeft: 5 }}
+						>
+							Supprimer le compte
+						</Button>
+					)}
+
 					{isToggled ? (
 						<EditProfil
 							key={user.id}
 							picture={user.picture}
 							firstName={user.firstName}
-							lastName={user.lastName}
 							email={user.email}
+							toggled={isToggled}
 							onChange={(e) => handleChange(e)}
 						/>
 					) : (
@@ -144,7 +143,6 @@ export default function Profil() {
 							key={user.id}
 							picture={user.picture}
 							firstName={user.firstName}
-							lastName={user.lastName}
 							email={user.email}
 						/>
 					)}
