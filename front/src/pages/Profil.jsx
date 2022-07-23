@@ -15,13 +15,13 @@ import useAuth from '../hooks/useAuth';
 const axios = require('axios');
 
 export default function Profil() {
-	const authToken = localStorage.getItem('token');
 	const { id } = useParams();
 	const [user, setUser] = React.useState({});
 	const [isToggled, setIsToggled] = React.useState(false);
 	const [isUser, setIsUser] = React.useState(false);
 	const [refresh, setRefresh] = React.useState(false);
 	const { setAuth, auth } = useAuth();
+	const authToken = auth.token || {};
 	const userUrl = `http://localhost:3000/api/user/${id}`;
 	const confirm = useConfirm();
 	const navigate = useNavigate();
@@ -54,10 +54,12 @@ export default function Profil() {
 				description: 'Supprimer le compte? Cette action est irréversible',
 			});
 			axios.delete(`http://localhost:3000/api/user/${id}`, config);
-			setAuth({});
-			localStorage.clear();
 			setRefresh((prev) => !prev);
 			navigate('/');
+			if (auth.user.isAdmin === false) {
+				localStorage.clear();
+				setAuth({});
+			}
 		} catch (error) {
 			console.log(error);
 		}
@@ -96,8 +98,6 @@ export default function Profil() {
 			console.log(result.data);
 			console.log(user);
 			setRefresh((prev) => !prev);
-
-			localStorage.setItem('myUser', JSON.stringify(result.data.user));
 		} catch (error) {
 			console.log(error);
 		}

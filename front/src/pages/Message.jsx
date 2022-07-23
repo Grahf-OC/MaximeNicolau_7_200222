@@ -4,14 +4,15 @@ import React from 'react';
 import '../styles/index.css';
 import { useParams } from 'react-router-dom';
 import Container from '@mui/material/Container';
-
 import Stack from '@mui/material/Stack';
 import Header from '../components/Header/Header';
+import useAuth from '../hooks/useAuth';
 
 const axios = require('axios');
 
 export default function Profil() {
-	const authToken = localStorage.getItem('token');
+	const { auth } = useAuth();
+	const authToken = auth.token || {};
 	const { id } = useParams();
 	const [message, setMessage] = React.useState([]);
 

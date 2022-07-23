@@ -13,14 +13,16 @@ import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import Header from '../components/Header/Header';
 import Post from '../components/Post/Post';
+import useAuth from '../hooks/useAuth';
 
 const Input = styled('input')({
 	display: 'none',
 });
 
 export default function Home() {
+	const { auth } = useAuth();
 	const urlMessage = 'http://localhost:3000/api/message';
-	const authToken = localStorage.getItem('token') || {};
+	const authToken = auth.token || {};
 	const [allPosts, setAllPosts] = React.useState([]);
 	const [post, setPost] = React.useState({
 		body: '',

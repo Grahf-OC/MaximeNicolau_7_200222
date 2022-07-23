@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Header from '../components/Header/Header';
+import useAuth from '../hooks/useAuth';
 
 const Item = styled(Paper)(({ theme }) => ({
 	backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -20,9 +21,9 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function Membres() {
-	const authToken = localStorage.getItem('token');
+	const { auth } = useAuth();
+	const authToken = auth.token || {};
 	const [users, setUsers] = React.useState([]);
-	// const userId = localStorage.getItem('userId');
 
 	React.useEffect(() => {
 		async function fetchData() {

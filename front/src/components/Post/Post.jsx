@@ -11,8 +11,8 @@ export default function Post({ message, setRefresh }) {
 	const [isToggled, setIsToggled] = React.useState(false);
 	const [oldMessage, setOldMessage] = React.useState(message);
 	const [liked, setLiked] = React.useState(false);
-	const authToken = localStorage.getItem('token') || {};
 	const { auth } = useAuth();
+	const authToken = auth.token || {};
 	const confirm = useConfirm();
 	const [isUser, setIsUser] = React.useState(false);
 
@@ -65,7 +65,6 @@ export default function Post({ message, setRefresh }) {
 				{},
 				config
 			);
-
 			setLiked((prev) => !prev);
 			console.log(result);
 		} catch (error) {

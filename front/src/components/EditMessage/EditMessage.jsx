@@ -29,7 +29,7 @@ export default function EditMessage({ onChange, body, handleEditSubmit }) {
 								onChange={onChange}
 							/>
 							<Button variant="contained" component="span">
-								Upload
+								Image
 							</Button>
 						</label>
 						<label htmlFor="icon-button-file">

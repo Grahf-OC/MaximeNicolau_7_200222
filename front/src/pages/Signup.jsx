@@ -14,6 +14,7 @@ export default function Signup() {
 	const navigate = useNavigate();
 	const { setAuth } = useAuth();
 	const [wrongPassword, setWrongPassword] = React.useState('');
+	const [checkNotEmpty, setCheckNotEmpty] = React.useState('');
 	const [firstName, setFirstName] = React.useState('');
 	const [email, setEmail] = React.useState('');
 	const [password, setPassword] = React.useState('');
@@ -23,18 +24,20 @@ export default function Signup() {
 		event.preventDefault();
 
 		if (password === confirmPassword) {
-			try {
-				const form = { email, password, firstName };
-				const result = await axios.post(urlSignup, form);
-				console.log(result);
-				const { token, user } = result.data;
-				localStorage.setItem('token', token);
-				localStorage.setItem('myUser', JSON.stringify(user));
-				setWrongPassword('');
-				setAuth({ token, user });
-				navigate('/');
-			} catch (error) {
-				console.log(error);
+			if (email !== null || firstName !== null || password !== null) {
+				try {
+					const form = { email, password, firstName };
+					const result = await axios.post(urlSignup, form);
+					console.log(result);
+					const { token, user } = result.data;
+					setWrongPassword('');
+					setAuth({ token, user });
+					navigate('/');
+				} catch (error) {
+					console.log(error);
+				}
+			} else {
+				setCheckNotEmpty('Veuillez remplir tous les champs');
 			}
 			console.log('Successfully signed up');
 		} else {
@@ -67,6 +70,8 @@ export default function Signup() {
 							value={firstName}
 						/>
 
+						<p>{checkNotEmpty}</p>
+
 						<input
 							type="password"
 							placeholder="Mot de passe"
@@ -76,8 +81,6 @@ export default function Signup() {
 							value={password}
 						/>
 
-						<p>{wrongPassword}</p>
-
 						<input
 							type="password"
 							placeholder="Confirmer le mot de passe"
@@ -86,6 +89,7 @@ export default function Signup() {
 							onChange={(e) => setConfirmPassword(e.target.value)}
 							value={confirmPassword}
 						/>
+						<p>{wrongPassword}</p>
 
 						<Button variant="contained" type="submit">
 							S&apos;inscrire

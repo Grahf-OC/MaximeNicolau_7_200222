@@ -10,7 +10,6 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import HomeIcon from '@mui/icons-material/Home';
-import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import GroupsIcon from '@mui/icons-material/Groups';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -62,14 +61,6 @@ export default function Sidebar() {
 							<LogoutIcon />
 						</ListItemIcon>
 						<ListItemText primary="Se déconnecter" />
-					</ListItemButton>
-				</ListItem>
-				<ListItem key="signup">
-					<ListItemButton component={Link} to="/signup">
-						<ListItemIcon>
-							<EmojiPeopleIcon />
-						</ListItemIcon>
-						<ListItemText primary="Pas encore inscrit? C'est par ici!" />
 					</ListItemButton>
 				</ListItem>
 				<ListItem key="nightMode">
