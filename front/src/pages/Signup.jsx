@@ -24,7 +24,7 @@ export default function Signup() {
 		event.preventDefault();
 
 		if (password === confirmPassword) {
-			if (email !== null || firstName !== null || password !== null) {
+			if (email !== '' || firstName !== '' || password !== '') {
 				try {
 					const form = { email, password, firstName };
 					const result = await axios.post(urlSignup, form);

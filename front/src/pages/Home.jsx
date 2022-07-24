@@ -71,8 +71,8 @@ export default function Home() {
 	};
 
 	const posts = allPosts.map((message) => (
-		<div className="post">
-			<Post key={message.id} message={message} setRefresh={setRefresh} />
+		<div className="post" key={message.id}>
+			<Post message={message} setRefresh={setRefresh} />
 		</div>
 	));
 

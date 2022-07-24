@@ -7,6 +7,8 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Stack from '@mui/material/Stack';
+import Avatar from '@mui/material/Avatar';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 
 export default function DisplayPosts({
@@ -15,6 +17,7 @@ export default function DisplayPosts({
 	user,
 	isUser,
 	picture,
+	profile,
 	alt,
 	date,
 	likes,
@@ -25,35 +28,45 @@ export default function DisplayPosts({
 }) {
 	return (
 		<div>
-			<Card sx={{ maxWidth: 845, objectFit: 'cover', margin: 2 }}>
-				<Link to={`/message/${id}`} style={{ textDecoration: 'none' }}>
+			<Card sx={{ maxWidth: 750, margin: 2 }}>
+				<Link to={`/profil/${id}`} style={{ textDecoration: 'none' }}>
 					<CardActionArea>
-						<Typography
-							gutterBottom
-							variant="h6"
-							size="10"
-							component="div"
-							sx={{ marginLeft: 2 }}
+						<Stack
+							direction="row"
+							alignItems="center"
+							justifyContent="flex-start"
 						>
-							{user}
-						</Typography>
+							<Avatar alt="Remy Sharp" src={profile} />
 
-						<Typography
-							gutterBottom
-							variant="h6"
-							size="10"
-							component="div"
-							sx={{ marginLeft: 2, fontSize: 14 }}
-						>
-							{date}
-						</Typography>
+							<Typography
+								gutterBottom
+								variant="h6"
+								size="10"
+								component="div"
+								sx={{ marginLeft: 2 }}
+							>
+								{user}
+							</Typography>
+
+							<Typography
+								gutterBottom
+								variant="h6"
+								size="10"
+								component="div"
+								color="#4E5166"
+								sx={{ marginLeft: 2, fontSize: 14 }}
+							>
+								{date}
+							</Typography>
+						</Stack>
 
 						{picture && (
 							<CardMedia
 								component="img"
-								height="140"
+								height="250"
 								image={picture}
 								alt={alt}
+								sx={{ objectFit: 'cover' }}
 							/>
 						)}
 						<CardContent>

@@ -7,9 +7,10 @@ import { useConfirm } from 'material-ui-confirm';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 import Header from '../components/Header/Header';
 import EditProfil from '../components/EditProfil/EditProfil';
-import ProfilComponent from '../components/Profil/Profil';
+import ProfilComponent from '../components/ProfilComponent/ProfilComponent';
 import useAuth from '../hooks/useAuth';
 
 const axios = require('axios');
@@ -106,29 +107,21 @@ export default function Profil() {
 	};
 
 	return (
-		<Stack direction="row" justifyContent="space-evenly">
+		<Stack direction="row" spacing={20}>
 			<Header />
-			<Container>
+			<Container
+				sx={{
+					padding: 2,
+					display: 'flex',
+					direction: 'column',
+					width: 500,
+					marginTop: 2,
+				}}
+			>
 				<div className="profil-container">
-					<h1>Informations Personnelles</h1>
-					{isUser && (
-						<Button
-							variant="contained"
-							onClick={isToggled ? handleSubmit : editProfil}
-						>
-							{isToggled ? 'Terminer' : 'Modifier'}
-						</Button>
-					)}
-					{isUser && !isToggled && (
-						<Button
-							variant="contained"
-							onClick={handleDelete}
-							sx={{ marginLeft: 5 }}
-						>
-							Supprimer le compte
-						</Button>
-					)}
-
+					<Typography variant="h4" color="#FD2D01">
+						Informations Personnelles
+					</Typography>
 					{isToggled ? (
 						<EditProfil
 							key={user.id}
@@ -146,6 +139,21 @@ export default function Profil() {
 							email={user.email}
 						/>
 					)}
+					<Stack spacing={2} sx={{ marginTop: 2 }}>
+						{isUser && (
+							<Button
+								variant="contained"
+								onClick={isToggled ? handleSubmit : editProfil}
+							>
+								{isToggled ? 'Terminer' : 'Modifier'}
+							</Button>
+						)}
+						{isUser && !isToggled && (
+							<Button variant="contained" onClick={handleDelete}>
+								Supprimer le compte
+							</Button>
+						)}
+					</Stack>
 				</div>
 			</Container>
 		</Stack>

@@ -129,11 +129,12 @@ export default function Post({ message, setRefresh }) {
 			) : (
 				<DisplayPosts
 					key={oldMessage.id}
-					id={oldMessage.id}
+					id={message.UserId}
 					body={oldMessage.body}
 					user={message.User.firstName}
 					isUser={isUser}
 					date={showDate}
+					profile={message.User.picture}
 					picture={message.picture}
 					alt={message.alt}
 					likes={message.Likes.length}
