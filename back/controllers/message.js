@@ -8,6 +8,7 @@ exports.getAllMessages = async (req, res) => {
   try {
     const messages = await Message.findAll({
       include: [{ model: User }, { model: Like }],
+      order: [['createdAt', 'DESC']],
     });
     return res.status(200).json(messages);
   } catch (error) {
