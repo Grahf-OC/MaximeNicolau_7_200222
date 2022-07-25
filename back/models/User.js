@@ -2,7 +2,6 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/connector');
 const Message = require('./Message');
 const Like = require('./Like');
-const Comment = require('./Comment');
 
 const User = sequelize.define('User', {
   email: {
@@ -40,12 +39,8 @@ User.hasMany(Message, {
 User.hasMany(Like, {
   onDelete: 'CASCADE',
 });
-User.hasMany(Comment, {
-  onDelete: 'CASCADE',
-});
 
 Message.belongsTo(User);
 Like.belongsTo(User);
-Comment.belongsTo(User);
 
 module.exports = User;

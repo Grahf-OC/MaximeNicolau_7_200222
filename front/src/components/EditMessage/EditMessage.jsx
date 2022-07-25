@@ -45,7 +45,7 @@ export default function EditMessage({ onChange, body, handleEditSubmit }) {
 						<input
 							type="text"
 							placeholder={body}
-							className="form--input"
+							className="edit--input"
 							name="body"
 							onChange={onChange}
 							value={body}

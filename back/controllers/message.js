@@ -2,13 +2,12 @@
 const fs = require('fs');
 const User = require('../models/User');
 const Message = require('../models/Message');
-const Comment = require('../models/Comment');
 const Like = require('../models/Like');
 
 exports.getAllMessages = async (req, res) => {
   try {
     const messages = await Message.findAll({
-      include: [{ model: User }, { model: Like }, { model: Comment }],
+      include: [{ model: User }, { model: Like }],
     });
     return res.status(200).json(messages);
   } catch (error) {
@@ -22,7 +21,7 @@ exports.getOneMessage = async (req, res) => {
   try {
     const message = await Message.findOne({
       where: { id: req.params.id },
-      include: [{ model: User }, { model: Like }, { model: Comment }],
+      include: [{ model: User }, { model: Like }],
     });
     console.log(message);
     if (!message) {
@@ -54,22 +53,6 @@ exports.createMessage = async (req, res) => {
           'email',
           'picture',
           'birthday',
-        ],
-      },
-      {
-        model: Comment,
-        include: [
-          {
-            model: User,
-            attributes: [
-              'id',
-              'firstname',
-              'lastname',
-              'email',
-              'picture',
-              'birthday',
-            ],
-          },
         ],
       },
     ];
