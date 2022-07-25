@@ -19,17 +19,12 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function ProfilComponent({ picture, firstName, email }) {
 	return (
-		<Box
-			sx={{
-				flexGrow: 1,
-				marginTop: 2,
-				width: 500,
-			}}
-		>
+		<Box sx={{ marginTop: '100' }}>
 			<Container
 				sx={{
 					display: 'flex',
 					justifyContent: 'center',
+					marginTop: '10px',
 				}}
 			>
 				<CardMedia

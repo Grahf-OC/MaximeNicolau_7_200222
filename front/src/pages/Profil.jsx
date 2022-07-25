@@ -5,6 +5,10 @@ import '../styles/index.css';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useConfirm } from 'material-ui-confirm';
 import Container from '@mui/material/Container';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -26,6 +30,9 @@ export default function Profil() {
 	const userUrl = `http://localhost:3000/api/user/${id}`;
 	const confirm = useConfirm();
 	const navigate = useNavigate();
+
+	const theme = useTheme();
+	const matches = useMediaQuery(theme.breakpoints.up('md'));
 
 	React.useEffect(() => {
 		const fetchData = async () => {
@@ -107,21 +114,34 @@ export default function Profil() {
 	};
 
 	return (
-		<Stack direction="row" spacing={20}>
+		<Stack
+			direction={matches ? 'row' : 'column'}
+			sx={{
+				padding: 1,
+				display: 'flex',
+				direction: 'column',
+				justifyContent: 'center',
+				marginRight: '50px',
+			}}
+		>
 			<Header />
 			<Container
 				sx={{
-					padding: 2,
-					display: 'flex',
-					direction: 'column',
-					width: 500,
-					marginTop: 2,
+					padding: 1,
 				}}
 			>
 				<div className="profil-container">
-					<Typography variant="h4" color="#FD2D01">
-						Informations Personnelles
-					</Typography>
+					<Card>
+						<CardContent>
+							<Typography
+								variant="h4"
+								color="#FD2D01"
+								sx={{ textAlign: 'center' }}
+							>
+								Vos informations
+							</Typography>
+						</CardContent>
+					</Card>
 					{isToggled ? (
 						<EditProfil
 							key={user.id}
@@ -139,9 +159,12 @@ export default function Profil() {
 							email={user.email}
 						/>
 					)}
-					<Stack spacing={2} sx={{ marginTop: 2 }}>
+					<Container
+						sx={{ marginTop: 2, display: 'flex', justifyContent: 'center' }}
+					>
 						{isUser && (
 							<Button
+								sx={{ width: '30%', marginRight: '4px' }}
 								variant="contained"
 								onClick={isToggled ? handleSubmit : editProfil}
 							>
@@ -149,11 +172,19 @@ export default function Profil() {
 							</Button>
 						)}
 						{isUser && !isToggled && (
-							<Button variant="contained" onClick={handleDelete}>
+							<Button
+								sx={{
+									width: '30%',
+									marginRight: '4px',
+									backgroundColor: '#FD2D01',
+								}}
+								variant="contained"
+								onClick={handleDelete}
+							>
 								Supprimer le compte
 							</Button>
 						)}
-					</Stack>
+					</Container>
 				</div>
 			</Container>
 		</Stack>

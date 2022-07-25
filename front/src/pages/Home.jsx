@@ -5,10 +5,12 @@
 import React from 'react';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import '../styles/index.css';
 import axios from 'axios';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import Header from '../components/Header/Header';
@@ -29,6 +31,8 @@ export default function Home() {
 		picture: '',
 	});
 	const [refresh, setRefresh] = React.useState(false);
+	const theme = useTheme();
+	const matches = useMediaQuery(theme.breakpoints.up('md'));
 
 	React.useEffect(() => {
 		const fetchData = async () => {
@@ -77,46 +81,59 @@ export default function Home() {
 	));
 
 	return (
-		<Stack direction="row">
-			<Header />
-			<Stack direction="column" sx={{ width: '50%' }}>
-				<Container>
-					<form>
-						<input
-							type="text"
-							placeholder="Quoi de neuf?"
-							className="message--input"
-							name="body"
-							onChange={handleChange}
-							value={post.body}
-						/>
-						<label htmlFor="icon-button-file">
-							<Input
-								accept="image/*"
-								id="icon-button-file"
-								type="file"
-								name="picture"
-								onChange={(e) => handleChange(e)}
+		<Box>
+			<Stack direction={matches ? 'row' : 'column'}>
+				<Header />
+				<Stack
+					direction="column"
+					sx={{
+						width: {
+							xs: '95%',
+							sm: '80%',
+							md: '70%',
+							lg: '50%',
+							xl: '50%',
+						},
+					}}
+				>
+					<Container>
+						<form>
+							<input
+								type="text"
+								placeholder="Quoi de neuf?"
+								className="message--input"
+								name="body"
+								onChange={handleChange}
+								value={post.body}
 							/>
-						</label>
-						<label htmlFor="icon-button-file">
-							<IconButton
-								color="primary"
-								aria-label="upload picture"
-								component="span"
-							>
-								<PhotoCamera />
-							</IconButton>
-						</label>
+							<label htmlFor="icon-button-file">
+								<Input
+									accept="image/*"
+									id="icon-button-file"
+									type="file"
+									name="picture"
+									onChange={(e) => handleChange(e)}
+								/>
+							</label>
+							<label htmlFor="icon-button-file">
+								<IconButton
+									color="primary"
+									aria-label="upload picture"
+									component="span"
+								>
+									<PhotoCamera />
+								</IconButton>
+							</label>
 
-						<Button variant="contained" type="submit" onClick={handleSubmit}>
-							Envoyer
-						</Button>
-					</form>
+							<Button variant="contained" type="submit" onClick={handleSubmit}>
+								Envoyer
+							</Button>
+						</form>
 
-					<div>{posts}</div>
-				</Container>
+						<div>{posts}</div>
+					</Container>
+				</Stack>
 			</Stack>
-		</Stack>
+		</Box>
 	);
 }

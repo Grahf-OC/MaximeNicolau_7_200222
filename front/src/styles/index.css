@@ -73,3 +73,7 @@
 .post {
 	text-decoration: none;
 }
+
+.error {
+	color: #fd2d01;
+}

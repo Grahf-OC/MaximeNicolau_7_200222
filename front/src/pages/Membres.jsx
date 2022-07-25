@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 import '../styles/index.css';
 import axios from 'axios';
 import Stack from '@mui/material/Stack';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -24,6 +25,8 @@ export default function Membres() {
 	const { auth } = useAuth();
 	const authToken = auth.token || {};
 	const [users, setUsers] = React.useState([]);
+	const theme = useTheme();
+	const matches = useMediaQuery(theme.breakpoints.up('md'));
 
 	React.useEffect(() => {
 		async function fetchData() {
@@ -45,7 +48,7 @@ export default function Membres() {
 	));
 
 	return (
-		<Stack direction="row" justifyContent="space-evenly">
+		<Stack direction={matches ? 'row' : 'column'}>
 			<Header />
 			<Box sx={{ flexGrow: 1 }}>
 				<Grid container spacing={2}>

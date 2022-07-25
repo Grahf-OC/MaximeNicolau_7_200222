@@ -36,7 +36,11 @@ export default function DisplayPosts({
 							alignItems="center"
 							justifyContent="flex-start"
 						>
-							<Avatar alt="Remy Sharp" src={profile} />
+							<Avatar
+								sx={{ width: 55, height: 55, marginLeft: '5px' }}
+								alt="Photo de profil"
+								src={profile}
+							/>
 
 							<Typography
 								gutterBottom

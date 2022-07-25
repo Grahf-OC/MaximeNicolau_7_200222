@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import { CardActionArea } from '@mui/material';
+import Box from '@mui/material/Box';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
@@ -56,7 +57,18 @@ export default function Login() {
 
 	return (
 		<Stack direction="column" alignItems="center">
-			<Card sx={{ width: 450, maxWidth: 500, marginTop: 2 }}>
+			<Card
+				sx={{
+					width: {
+						xs: '70%',
+						sm: '50%',
+						md: '35%',
+						lg: '25%',
+						xl: '25%',
+					},
+					marginTop: 2,
+				}}
+			>
 				<CardActionArea>
 					<CardMedia
 						component="img"
@@ -66,7 +78,7 @@ export default function Login() {
 					/>
 					<CardContent>
 						<Typography gutterBottom variant="h6" component="div">
-							Le réseau social Groupomania
+							Bienvenue sur Groupomania
 						</Typography>
 						<Typography variant="body2" color="text.secondary">
 							Entrez, et détendez-vous!
@@ -74,55 +86,72 @@ export default function Login() {
 					</CardContent>
 				</CardActionArea>
 			</Card>
-			<form className="form" onSubmit={handleSubmit}>
-				<Typography
-					gutterBottom
-					variant="h6"
-					size="10"
-					component="div"
-					sx={{ marginLeft: 2, fontsize: 10 }}
-				>
-					Adresse email:
-				</Typography>
-				<input
-					type="email"
-					placeholder="Email adress"
-					className="form--input"
-					name="email"
-					onChange={handleChange}
-					value={formData.email}
-				/>
+			<Box
+				sx={{
+					width: {
+						xs: '200%',
+						sm: '180%',
+						md: '120%',
+						lg: '100%',
+						xl: '100%',
+					},
+					display: 'flex',
+					justifyContent: 'center',
+				}}
+			>
+				<form className="form" onSubmit={handleSubmit}>
+					<Typography
+						gutterBottom
+						variant="h6"
+						size="10"
+						component="div"
+						sx={{ marginLeft: 2, fontsize: 10 }}
+					>
+						Adresse email:
+					</Typography>
+					<input
+						type="email"
+						placeholder="Email adress"
+						className="form--input"
+						name="email"
+						onChange={handleChange}
+						value={formData.email}
+					/>
 
-				<Typography
-					gutterBottom
-					variant="h6"
-					size="10"
-					component="div"
-					sx={{ marginLeft: 2, fontsize: 10 }}
-				>
-					Mot de passe:
-				</Typography>
+					<Typography
+						gutterBottom
+						variant="h6"
+						size="10"
+						component="div"
+						sx={{ marginLeft: 2, fontsize: 10 }}
+					>
+						Mot de passe:
+					</Typography>
 
-				<input
-					type="password"
-					placeholder="Password"
-					className="form--input"
-					name="password"
-					onChange={handleChange}
-					value={formData.password}
-				/>
-				<Button variant="contained" type="submit">
-					Se connecter
-				</Button>
-				<ListItem key="signup">
-					<ListItemButton component={Link} to="/signup">
-						<ListItemIcon color="red">
-							<EmojiPeopleIcon />
-						</ListItemIcon>
-						<ListItemText primary="Pas encore inscrit? C'est par ici!" />
-					</ListItemButton>
-				</ListItem>
-			</form>
+					<input
+						type="password"
+						placeholder="Password"
+						className="form--input"
+						name="password"
+						onChange={handleChange}
+						value={formData.password}
+					/>
+					<Button variant="contained" type="submit">
+						Se connecter
+					</Button>
+					<ListItem key="signup">
+						<ListItemButton component={Link} to="/signup">
+							<ListItemIcon sx={{ color: '#FD2D01' }}>
+								<EmojiPeopleIcon />
+							</ListItemIcon>
+							<ListItemText
+								sx={{ color: '#FD2D01' }}
+								primary="Pas encore inscrit? C'est par ici!"
+							/>
+						</ListItemButton>
+					</ListItem>
+				</form>
+			</Box>
 		</Stack>
 	);
 }

@@ -3,12 +3,14 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
+import Stack from '@mui/material/Stack';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import HomeIcon from '@mui/icons-material/Home';
 import GroupsIcon from '@mui/icons-material/Groups';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -23,87 +25,110 @@ export default function Sidebar() {
 		setAuth({});
 		localStorage.clear();
 	};
+	const theme = useTheme();
+	const matches = useMediaQuery(theme.breakpoints.up('md'));
 
 	return (
-		<Box sx={{ display: 'flex' }}>
-			<CssBaseline />
-
-			<List sx={{ margin: 3 }}>
-				<ListItem key="accueil">
+		<Box
+			sx={{
+				display: 'flex',
+				width: {
+					xs: 100,
+					sm: 150,
+					md: 200,
+					lg: 250,
+					xl: 300,
+				},
+				margin: {
+					xs: 0,
+					sm: 1,
+					md: 1,
+					lg: 1,
+					xl: 2,
+				},
+				padding: {
+					xs: 0,
+					sm: 1,
+					md: 1,
+					lg: 1,
+					xl: 2,
+				},
+			}}
+		>
+			{matches ? (
+				<Stack>
+					<List>
+						<ListItem key="accueil">
+							<ListItemButton component={Link} to="/">
+								<ListItemIcon>
+									<HomeIcon />
+								</ListItemIcon>
+								<ListItemText primary="Accueil" />
+							</ListItemButton>
+						</ListItem>
+						<ListItem key="liste des membres">
+							<ListItemButton component={Link} to="/membres">
+								<ListItemIcon>
+									<GroupsIcon />
+								</ListItemIcon>
+								<ListItemText primary="Liste des membres" />
+							</ListItemButton>
+						</ListItem>
+						{auth.token && (
+							<ListItem key="profil">
+								<ListItemButton component={Link} to={`/profil/${auth.user.id}`}>
+									<ListItemIcon>
+										<AccountCircleIcon />
+									</ListItemIcon>
+									<ListItemText primary="Profil" />
+								</ListItemButton>
+							</ListItem>
+						)}
+						<ListItem key="logout">
+							<ListItemButton onClick={logout}>
+								<ListItemIcon>
+									<LogoutIcon />
+								</ListItemIcon>
+								<ListItemText primary="Se déconnecter" />
+							</ListItemButton>
+						</ListItem>
+						<ListItem key="nightMode">
+							<ListItemButton>
+								<ListItemIcon>
+									<ModeNightIcon />
+								</ListItemIcon>
+								<Switch />
+							</ListItemButton>
+						</ListItem>
+					</List>
+				</Stack>
+			) : (
+				<Stack direction="row">
 					<ListItemButton component={Link} to="/">
-						<ListItemIcon>
-							<HomeIcon />
-						</ListItemIcon>
-						<ListItemText primary="Accueil" />
+						<HomeIcon />
 					</ListItemButton>
-				</ListItem>
-				<ListItem key="liste des membres">
+
 					<ListItemButton component={Link} to="/membres">
-						<ListItemIcon>
-							<GroupsIcon />
-						</ListItemIcon>
-						<ListItemText primary="Liste des membres" />
+						<GroupsIcon />
 					</ListItemButton>
-				</ListItem>
-				{auth.token && (
-					<ListItem key="profil">
+
+					{auth.token && (
 						<ListItemButton component={Link} to={`/profil/${auth.user.id}`}>
-							<ListItemIcon>
-								<AccountCircleIcon />
-							</ListItemIcon>
-							<ListItemText primary="Profil" />
+							<AccountCircleIcon />
 						</ListItemButton>
-					</ListItem>
-				)}
-				<ListItem key="logout">
+					)}
+
 					<ListItemButton onClick={logout}>
-						<ListItemIcon>
-							<LogoutIcon />
-						</ListItemIcon>
-						<ListItemText primary="Se déconnecter" />
+						<LogoutIcon />
 					</ListItemButton>
-				</ListItem>
-				<ListItem key="nightMode">
+
 					<ListItemButton>
-						<ListItemIcon>
-							<ModeNightIcon />
-						</ListItemIcon>
-						<Switch />
+						<ModeNightIcon />
 					</ListItemButton>
-				</ListItem>
-			</List>
+
+					<Switch />
+				</Stack>
+			)}
 		</Box>
 	);
 }
-
-/* import React from 'react';
-import { Link } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth';
-
-export default function Header() {
-	const { setAuth, auth } = useAuth();
-	const logout = () => {
-		setAuth(null);
-		localStorage.clear();
-	};
-
-	return (
-		<nav>
-			{auth?.token ? (
-				<>
-					<Link to="/">Accueil</Link>
-					<Link to="/membres">Liste des membres</Link>
-					<Link to={`/profil/${auth.user.id}`}>Profil</Link>
-					<button className="form--submit" type="button" onClick={logout}>
-						Logout
-					</button>
-				</>
-			) : (
-				<>
-					<Link to="/signup">S'inscrire</Link>
-					<Link to="/login">Login</Link>
-				</>
-			)}
-		</nav>
-	);
-} */
