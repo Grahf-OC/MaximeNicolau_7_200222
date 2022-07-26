@@ -1,10 +1,16 @@
 /* eslint-disable no-console */
 const Sequelize = require('sequelize');
+require('dotenv').config();
 
-const sequelize = new Sequelize('p7db', 'grahf', 'mlkjh', {
-  dialect: 'mysql',
-  host: 'localhost',
-});
+const sequelize = new Sequelize(
+  process.env.SQL_DB,
+  process.env.SQL_USER,
+  process.env.SQL_PW,
+  {
+    dialect: 'mysql',
+    host: 'localhost',
+  },
+);
 
 const dbConnect = async () => {
   try {
