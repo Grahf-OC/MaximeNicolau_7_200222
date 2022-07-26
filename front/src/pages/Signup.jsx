@@ -13,29 +13,25 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import logo from '../images/icon-above-font.png';
-
 import useAuth from '../hooks/useAuth';
 
 export default function Signup() {
 	const urlSignup = 'http://localhost:3000/api/auth/signup';
 	const navigate = useNavigate();
 	const { setAuth } = useAuth();
-	const [wrongPassword, setWrongPassword] = React.useState('');
+	const [wrongPasswords, setWrongPasswords] = React.useState('');
 	const [checkNotEmpty, setCheckNotEmpty] = React.useState('');
 	const [firstName, setFirstName] = React.useState('');
 	const [email, setEmail] = React.useState('');
 	const [password, setPassword] = React.useState('');
 	const [confirmPassword, setConfirmPassword] = React.useState('');
-	const [goodPassword, setGoodPassword] = React.useState(false);
+	const [securedPassword, setSecuredPassword] = React.useState(false);
 
 	const isInputValid = (regex, e) => {
-		console.log(e);
-		console.log(goodPassword);
-
 		if (regex.test(e)) {
-			return setGoodPassword(true);
+			return setSecuredPassword(true);
 		}
-		return setGoodPassword(false);
+		return setSecuredPassword(false);
 	};
 
 	const handleSubmit = async (event) => {
@@ -43,13 +39,13 @@ export default function Signup() {
 
 		if (password === confirmPassword) {
 			if (email !== '' || firstName !== '' || password !== '') {
-				if (goodPassword === true) {
+				if (securedPassword === true) {
 					try {
 						const form = { email, password, firstName };
 						const result = await axios.post(urlSignup, form);
 						console.log(result);
 						const { token, user } = result.data;
-						setWrongPassword('');
+						setWrongPasswords('');
 						setCheckNotEmpty('');
 						setAuth({ token, user });
 						navigate('/');
@@ -57,18 +53,17 @@ export default function Signup() {
 						console.log(error);
 					}
 				} else {
-					alert(
+					return alert(
 						'Au moins 8 caractères, une majuscule, un chiffre et un caractère spécial'
 					);
 				}
 			} else {
-				setCheckNotEmpty('Veuillez remplir tous les champs');
+				return setCheckNotEmpty('Veuillez remplir tous les champs');
 			}
-			console.log('Successfully signed up');
-		} else {
-			console.log('Passwords do not match');
-			setWrongPassword('Mots de passe non identiques!');
+			return console.log('Successfully signed up');
 		}
+		console.log('Passwords do not match');
+		return setWrongPasswords('Mots de passe non identiques!');
 	};
 
 	const goHome = () => {
@@ -153,7 +148,7 @@ export default function Signup() {
 						name="password"
 						onChange={(e) => {
 							setPassword(e.target.value);
-							setWrongPassword('');
+							setWrongPasswords('');
 							setCheckNotEmpty('');
 							isInputValid(
 								/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
@@ -170,12 +165,12 @@ export default function Signup() {
 						name="confirmPassword"
 						onChange={(e) => {
 							setConfirmPassword(e.target.value);
-							setWrongPassword('');
+							setWrongPasswords('');
 							setCheckNotEmpty('');
 						}}
 						value={confirmPassword}
 					/>
-					<p className="error">{wrongPassword}</p>
+					<p className="error">{wrongPasswords}</p>
 
 					<Button variant="contained" type="submit" sx={{ marginTop: '10px' }}>
 						S&apos;inscrire

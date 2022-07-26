@@ -9,5 +9,6 @@ router.get('/', auth, userCtrl.getAllUsers);
 router.get('/:id', auth, userCtrl.getOneUser);
 router.delete('/:id', auth, userCtrl.delete);
 router.put('/:id', auth, multer, userCtrl.updateAccount);
+router.put('/:id/password', auth, userCtrl.modifyPassword);
 
 module.exports = router;

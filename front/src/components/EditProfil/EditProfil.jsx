@@ -5,6 +5,7 @@
 import React from 'react';
 import Container from '@mui/material/Container';
 import { styled } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
@@ -17,7 +18,7 @@ const Input = styled('input')({
 
 export default function EditProfil({ firstName, email, picture, onChange }) {
 	return (
-		<Box sx={{ marginTop: '100' }}>
+		<Box>
 			<Container
 				sx={{
 					display: 'flex',
@@ -70,6 +71,15 @@ export default function EditProfil({ firstName, email, picture, onChange }) {
 				}}
 			>
 				<form className="form-profil">
+					<Typography
+						gutterBottom
+						variant="h6"
+						size="10"
+						component="div"
+						sx={{ marginLeft: 2, fontsize: 10 }}
+					>
+						Prénom:
+					</Typography>
 					<input
 						type="firstName"
 						placeholder={firstName}
@@ -78,7 +88,15 @@ export default function EditProfil({ firstName, email, picture, onChange }) {
 						onChange={onChange}
 						value={firstName}
 					/>
-
+					<Typography
+						gutterBottom
+						variant="h6"
+						size="10"
+						component="div"
+						sx={{ marginLeft: 2, fontsize: 10 }}
+					>
+						Email:
+					</Typography>
 					<input
 						type="email"
 						placeholder={email}

@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable no-console */
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
@@ -14,6 +15,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Header from '../components/Header/Header';
 import EditProfil from '../components/EditProfil/EditProfil';
+import EditPw from '../components/EditPw/EditPw';
 import ProfilComponent from '../components/ProfilComponent/ProfilComponent';
 import useAuth from '../hooks/useAuth';
 
@@ -21,11 +23,18 @@ const axios = require('axios');
 
 export default function Profil() {
 	const { id } = useParams();
+	const { setAuth, auth } = useAuth();
 	const [user, setUser] = React.useState({});
+	const [changePw, setChangePw] = React.useState(false);
+	const [password, setPassword] = React.useState('');
+	const [newPw, setNewPw] = React.useState('');
+	const [confirmNewPw, setConfirmNewPw] = React.useState('');
+	const [wrongPasswords, setWrongPasswords] = React.useState('');
+	const [incorrectPassword, setIncorrectPassword] = React.useState('');
+	const [securedPassword, setSecuredPassword] = React.useState(false);
 	const [isToggled, setIsToggled] = React.useState(false);
 	const [isUser, setIsUser] = React.useState(false);
 	const [refresh, setRefresh] = React.useState(false);
-	const { setAuth, auth } = useAuth();
 	const authToken = auth.token || {};
 	const userUrl = `http://localhost:3000/api/user/${id}`;
 	const confirm = useConfirm();
@@ -73,6 +82,7 @@ export default function Profil() {
 	};
 
 	const editProfil = () => setIsToggled((prev) => !prev);
+	const editPw = () => setChangePw((prev) => !prev);
 
 	function handleChange(e) {
 		const { name, value, type, files } = e.target;
@@ -103,13 +113,52 @@ export default function Profil() {
 				config
 			);
 			console.log(result.data);
-			console.log(user);
 			setRefresh((prev) => !prev);
 		} catch (error) {
 			console.log(error);
 		}
-
 		setIsToggled((prev) => !prev);
+	};
+
+	const isInputValid = (regex, e) => {
+		console.log(e);
+		if (regex.test(e)) {
+			return setSecuredPassword(true);
+		}
+		return setSecuredPassword(false);
+	};
+
+	const submitNewPw = async (e) => {
+		e.preventDefault();
+
+		if (newPw === confirmNewPw) {
+			if (securedPassword === true) {
+				try {
+					const config = {
+						headers: {
+							Authorization: `Bearer ${authToken}`,
+						},
+					};
+					const form = { password, newPw };
+					const result = await axios.put(
+						`http://localhost:3000/api/user/${id}/password`,
+						form,
+						config
+					);
+					setRefresh((prev) => !prev);
+					setChangePw((prev) => !prev);
+					return console.log(result);
+				} catch (error) {
+					console.log(error);
+					return setIncorrectPassword('Mot de passe incorrect');
+				}
+			}
+			return alert(
+				'Au moins 8 caractères, une majuscule, un chiffre et un caractère spécial'
+			);
+		}
+		console.log('Passwords do not match');
+		return setWrongPasswords('Mots de passe non identiques');
 	};
 
 	return (
@@ -124,11 +173,7 @@ export default function Profil() {
 			}}
 		>
 			<Header />
-			<Container
-				sx={{
-					padding: 1,
-				}}
-			>
+			<Container>
 				<div className="profil-container">
 					<Card>
 						<CardContent>
@@ -151,18 +196,39 @@ export default function Profil() {
 							onChange={(e) => handleChange(e)}
 						/>
 					) : (
-						<ProfilComponent
+						!changePw && (
+							<ProfilComponent
+								key={user.id}
+								picture={user.picture}
+								firstName={user.firstName}
+								email={user.email}
+								isUser={isUser}
+							/>
+						)
+					)}
+					{changePw ? (
+						<EditPw
 							key={user.id}
-							picture={user.picture}
-							firstName={user.firstName}
-							email={user.email}
-							isUser={isUser}
+							password={password}
+							setPassword={setPassword}
+							newPw={newPw}
+							setNewPw={setNewPw}
+							confirmNewPw={confirmNewPw}
+							setConfirmNewPw={setConfirmNewPw}
+							cancel={() => editPw()}
+							wrongPasswords={wrongPasswords}
+							setWrongPasswords={setWrongPasswords}
+							incorrectPassword={incorrectPassword}
+							setIncorrectPassword={setIncorrectPassword}
+							isInputValid={(regex, e) => isInputValid(regex, e)}
 						/>
+					) : (
+						<div />
 					)}
 					<Container
 						sx={{ marginTop: 2, display: 'flex', justifyContent: 'center' }}
 					>
-						{isUser && (
+						{isUser && !changePw && (
 							<Button
 								sx={{ width: '30%', marginRight: '4px' }}
 								variant="contained"
@@ -171,7 +237,7 @@ export default function Profil() {
 								{isToggled ? 'Terminer' : 'Modifier'}
 							</Button>
 						)}
-						{isUser && !isToggled && (
+						{isUser && !isToggled && !changePw && (
 							<Button
 								sx={{
 									width: '30%',
@@ -182,6 +248,18 @@ export default function Profil() {
 								onClick={handleDelete}
 							>
 								Supprimer le compte
+							</Button>
+						)}
+						{isUser && !isToggled && (
+							<Button
+								sx={{
+									width: '30%',
+									marginRight: '4px',
+								}}
+								variant="contained"
+								onClick={changePw ? submitNewPw : editPw}
+							>
+								{changePw ? 'Terminer' : 'Changer de mot de passe'}
 							</Button>
 						)}
 					</Container>

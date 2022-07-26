@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 const fs = require('fs');
+const bcrypt = require('bcrypt');
 const { User } = require('../models/index');
 require('dotenv').config();
 
@@ -54,7 +55,7 @@ exports.updateAccount = async (req, res) => {
     });
 
     if (user.id !== req.auth.userId && admin.isAdmin === false) {
-      res.status(403).json({ error: 'Unauthorized request' });
+      return res.status(403).json({ error: 'Unauthorized request' });
     }
 
     if (req.file) {
@@ -85,4 +86,28 @@ exports.updateAccount = async (req, res) => {
   }
 };
 
-exports.modifyPassword = () => {};
+exports.modifyPassword = async (req, res) => {
+  try {
+    const user = await User.findOne({
+      where: { id: req.params.id },
+    });
+
+    if (user.id !== req.auth.userId) {
+      return res.status(403).json({ error: 'Unauthorized request' });
+    }
+
+    const match = await bcrypt.compare(req.body.password, user.password);
+
+    if (match) {
+      const hash = await bcrypt.hash(req.body.newPw, 10);
+      user.password = hash;
+      await user.save({
+        fields: ['password'],
+      });
+      return res.status(200).json({ message: 'Mot de passe modifié !', user });
+    }
+    return res.status(403).json({ error: 'Wrong password' });
+  } catch (error) {
+    return res.status(400).json({ error });
+  }
+};

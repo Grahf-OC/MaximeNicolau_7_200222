@@ -27,32 +27,23 @@ export default function Login() {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const from = location.state?.from?.pathname || '/';
-
-	const [formData, setFormData] = React.useState({
-		email: '',
-		password: '',
-		isAdmin: false,
-	});
-
-	function handleChange(event) {
-		const { name, value } = event.target;
-		setFormData((prevFormData) => ({
-			...prevFormData,
-			[name]: value,
-		}));
-	}
+	const [email, setEmail] = React.useState('');
+	const [password, setPassword] = React.useState('');
+	const [wrongId, setWrongId] = React.useState('');
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		try {
-			const result = await axios.post(urlLogin, formData);
+			const form = { email, password };
+			const result = await axios.post(urlLogin, form);
 			const { token, user } = result.data;
 			setAuth({ token, user });
 			navigate(from, { replace: true });
 		} catch (error) {
 			console.log(error);
+			return setWrongId('Identifiants incorrects');
 		}
-		console.log('Successfully signed up');
+		return console.log('Successfully signed up');
 	};
 
 	return (
@@ -114,9 +105,14 @@ export default function Login() {
 						placeholder="Email adress"
 						className="form--input"
 						name="email"
-						onChange={handleChange}
-						value={formData.email}
+						onChange={(e) => {
+							setEmail(e.target.value);
+							setWrongId('');
+						}}
+						value={email}
 					/>
+
+					<p className="error">{wrongId}</p>
 
 					<Typography
 						gutterBottom
@@ -133,8 +129,11 @@ export default function Login() {
 						placeholder="Password"
 						className="form--input"
 						name="password"
-						onChange={handleChange}
-						value={formData.password}
+						onChange={(e) => {
+							setPassword(e.target.value);
+							setWrongId('');
+						}}
+						value={password}
 					/>
 					<Button variant="contained" type="submit">
 						Se connecter
