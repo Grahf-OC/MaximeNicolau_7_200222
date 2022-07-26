@@ -33,7 +33,7 @@ pour SQL_PW, et le nom de la database dans SQL_DB.
 ## Backend: 
 
 Ouvrir le dossier back dans votre terminal. Puis éxécutez ```npm install``` 
-Exécutez ensuite nodemon server ou npm start.
+Exécutez ensuite ```nodemon server``` ou ```npm start```.
 
 ## Frontend :
 
