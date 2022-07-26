@@ -19,7 +19,7 @@ Une base de données SQL est utilisée.
 
 Clonez le repo.
 
-MYSQL :
+## MYSQL :
 
 Connectez-vous à mysql et créez une database groupomania. ```CREATE DATABASE groupomania;```
 
@@ -32,13 +32,13 @@ pour SQL_PW, et le nom de la database dans SQL_DB.
 
 ## Backend: 
 
-Ouvrir le dossier back dans votre terminal. Puis éxécutez npm install. 
+Ouvrir le dossier back dans votre terminal. Puis éxécutez ```npm install``` 
 Exécutez ensuite nodemon server ou npm start.
 
 ## Frontend :
 
-Ouvrir le dossier front dans votre terminal. Puis exécutez npm install.
-Exécutez npm start. Si le navigateur n'ouvre pas la page, allez sur http://localhost:3001/
+Ouvrir le dossier front dans votre terminal. Puis exécutez ```npm install```
+Exécutez ```npm start``` Si le navigateur n'ouvre pas la page, allez sur http://localhost:3001/
 
 
 
