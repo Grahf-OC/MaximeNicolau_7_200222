@@ -27,12 +27,16 @@ export default function Signup() {
 	const [confirmPassword, setConfirmPassword] = React.useState('');
 	const [securedPassword, setSecuredPassword] = React.useState(false);
 
+	// Vérification de la force du mot de passe
+
 	const isInputValid = (regex, e) => {
 		if (regex.test(e)) {
 			return setSecuredPassword(true);
 		}
 		return setSecuredPassword(false);
 	};
+
+	// Envoi du formulaire de signup.
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();

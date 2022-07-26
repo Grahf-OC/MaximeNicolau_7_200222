@@ -42,6 +42,10 @@ export default function Profil() {
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.up('md'));
 
+	/* Récupération des infos de l'utilisateur, qu'on stocke dans le state user. On vérifie en même temps si l'utilisateur 
+demandant la page du profil est le propriétaire ou l'admin, et on stocke le résultat dans isUser. Cela permet d'afficher
+ou non les boutons pour modifier le profil, ainsi que l'adresse mail. */
+
 	React.useEffect(() => {
 		const fetchData = async () => {
 			const result = await axios(userUrl, {
@@ -57,6 +61,8 @@ export default function Profil() {
 		};
 		fetchData();
 	}, [id, isToggled, refresh]);
+
+	// Suppression du compte avec choix avant de confirmer, et logout après confirmation. Si l'admin supprime le compte, il n'est pas déconnecté.
 
 	const handleDelete = async () => {
 		const config = {
@@ -92,6 +98,8 @@ export default function Profil() {
 		}));
 	}
 
+	// Modification de l'email, du prénom ainsi que de la photo de profil.
+
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		try {
@@ -120,6 +128,8 @@ export default function Profil() {
 		setIsToggled((prev) => !prev);
 	};
 
+	// Vérification de la force du mot de passe.
+
 	const isInputValid = (regex, e) => {
 		console.log(e);
 		if (regex.test(e)) {
@@ -127,6 +137,8 @@ export default function Profil() {
 		}
 		return setSecuredPassword(false);
 	};
+
+	// Envoi du nouveau mot de passe, après avoir vérifié l'ancien mdp, et la force du nouveau mdp.
 
 	const submitNewPw = async (e) => {
 		e.preventDefault();

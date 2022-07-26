@@ -18,7 +18,6 @@ import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import logo from '../images/icon-above-font.png';
-
 import useAuth from '../hooks/useAuth';
 
 export default function Login() {

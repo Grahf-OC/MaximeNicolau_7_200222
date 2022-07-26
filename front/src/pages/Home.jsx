@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/button-has-type */
 /* eslint-disable no-console */
@@ -34,6 +35,8 @@ export default function Home() {
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.up('md'));
 
+	// Récupération de tous les messages depuis la BDD puis le résulstat est stocké dans allPosts.
+
 	React.useEffect(() => {
 		const fetchData = async () => {
 			const result = await axios(urlMessage, {
@@ -53,6 +56,8 @@ export default function Home() {
 		}));
 	}
 
+	// Création d'un post avec ou sans image.
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const config = {
@@ -62,17 +67,22 @@ export default function Home() {
 			},
 		};
 		try {
-			const formData = new FormData();
-			formData.append('body', JSON.stringify(post.body));
-			formData.append('image', post.picture);
-			const result = await axios.post(urlMessage, formData, config);
-			setPost({ body: '' });
-			setRefresh((prev) => !prev);
-			console.log(result);
+			if (post.body !== '') {
+				const formData = new FormData();
+				formData.append('body', JSON.stringify(post.body));
+				formData.append('image', post.picture);
+				const result = await axios.post(urlMessage, formData, config);
+				setPost({ body: '' });
+				setRefresh((prev) => !prev);
+				return console.log(result);
+			}
+			return alert('Le message est vide.');
 		} catch (error) {
-			console.log(error);
+			return console.log(error);
 		}
 	};
+
+	// .map qui affiche tous les messages sur la page.
 
 	const posts = allPosts.map((message) => (
 		<div className="post" key={message.id}>

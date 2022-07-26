@@ -34,7 +34,6 @@ exports.signup = async (req, res) => {
           "Le mot de passe doit contenir entre 8 et 100 caractères, doit avoir des minuscules et des majuscules, au moins 1 chifre et pas d'espace.",
       });
     }
-
     const hash = await bcrypt.hash(req.body.password, 10);
     const user = await User.create({
       firstName: req.body.firstName,

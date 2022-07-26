@@ -116,6 +116,11 @@ exports.updateMessage = async (req, res) => {
   }
 };
 
+/* On vérifie si la personne voulant supprimer le message est bien le propriétaire ou l'admin.
+Ensuite, si le message n'a pas de photo, on le supprime.
+S'il a une photo, on la unlink puis on supprime le message. 
+*/
+
 exports.deleteMessage = async (req, res) => {
   try {
     const user = await User.findOne({
@@ -137,11 +142,13 @@ exports.deleteMessage = async (req, res) => {
       if (err) throw Error(err);
       message.destroy();
       return res.status(200).json({ message: 'Message succesfully deleted' });
-    }); // return qqch, ou chercher comment utiliser fs en promesse
+    });
   } catch (error) {
     return res.status(400).json({ error });
   }
 };
+
+// On vérifie si l'utilisateur a déjà liké le message. Si c'est le cas, on supprime le like. Sinon on le créée.
 
 exports.likeMessage = async (req, res) => {
   try {
@@ -161,5 +168,3 @@ exports.likeMessage = async (req, res) => {
     return res.status(400).json({ error });
   }
 };
-
-// Ajouter controller trouver tous les messages d'un user.

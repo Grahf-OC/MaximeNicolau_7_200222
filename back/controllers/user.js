@@ -45,6 +45,13 @@ exports.delete = async (req, res) => {
   });
 };
 
+/* Modification du profil. On vérifie si c'est bien le propriétaire du profil ou l'admin.
+On vérifie si le body contient un fichier. Si c'est le cas, on vérifie que la photo de profil
+de l'utilisateur n'est pas celle par défaut, afin de ne pas la supprimer pour les autres utilisateurs
+qui l'utilisent. On supprime ensuite l'ancienne photo de profil, puis on sauvegarde les nouvelles
+infos de l'utilisateur.
+*/
+
 exports.updateAccount = async (req, res) => {
   try {
     const user = await User.findOne({
@@ -85,6 +92,11 @@ exports.updateAccount = async (req, res) => {
     return res.status(400).json({ error });
   }
 };
+
+/*  On vérifie que c'est bien l'utilisateur qui veut changer son mdp. On vérifie ensuite
+à l'aide de bcrypt que son ancien mot de passe correspond bien à celui enregistré dans la BDD.
+Si c'est le cas, on récupère son nouveau mot de passe, on le hash 10 fois et on l'enregistré.
+*/
 
 exports.modifyPassword = async (req, res) => {
   try {

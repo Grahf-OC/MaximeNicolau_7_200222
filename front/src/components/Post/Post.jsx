@@ -16,6 +16,8 @@ export default function Post({ message, setRefresh }) {
 	const confirm = useConfirm();
 	const [isUser, setIsUser] = React.useState(false);
 
+	// const user permet de vérifier si l'utilisateur a les droits pour effectuer une action. On stocke le résultat dans isUser.
+
 	React.useEffect(() => {
 		const user = () => {
 			if (message.UserId === auth.user.id || auth.user.isAdmin === true) {
@@ -24,6 +26,8 @@ export default function Post({ message, setRefresh }) {
 		};
 		user();
 	}, []);
+
+	// Suppression d'un post avec une dialog box de confirmation.
 
 	const handleDelete = async () => {
 		const config = {
@@ -40,6 +44,8 @@ export default function Post({ message, setRefresh }) {
 		}
 	};
 
+	// Vérifie si l'utilisateur a déjà liké ce post.
+
 	React.useEffect(() => {
 		const toggleLiked = () => {
 			const likeArray = message.Likes;
@@ -47,7 +53,6 @@ export default function Post({ message, setRefresh }) {
 			if (likedId.length > 0) {
 				return setLiked(true);
 			}
-
 			return setLiked(false);
 		};
 		toggleLiked();
@@ -82,7 +87,11 @@ export default function Post({ message, setRefresh }) {
 		}));
 	}
 
+	// toggle pour vérifier si le post est en train d'être édité, afin de changer l'affichage.
+
 	const handleClick = () => setIsToggled(!isToggled);
+
+	// Fonction pour envoyer le message édité.
 
 	const handleEditSubmit = async () => {
 		try {

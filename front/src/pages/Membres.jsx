@@ -55,7 +55,7 @@ export default function Membres() {
 					<Grid item xs={8}>
 						<Item>
 							<div className="Membres">
-								<h1>Tous les utilisateurs</h1>
+								<h1 className="error">Tous les utilisateurs</h1>
 								<h2>{liste}</h2>
 							</div>
 						</Item>

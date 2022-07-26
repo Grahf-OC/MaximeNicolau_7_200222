@@ -14,10 +14,3 @@ function RequireAuth() {
 }
 
 export default RequireAuth;
-
-/* 	return auth?.token ? (
-		<Outlet />
-	) : (
-		<Navigate to="/login" state={{ from: location }} replace />
-	);
-} */
