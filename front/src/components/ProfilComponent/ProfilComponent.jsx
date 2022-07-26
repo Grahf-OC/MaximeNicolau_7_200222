@@ -17,7 +17,7 @@ const Item = styled(Paper)(({ theme }) => ({
 	color: theme.palette.text.secondary,
 }));
 
-export default function ProfilComponent({ picture, firstName, email }) {
+export default function ProfilComponent({ picture, firstName, email, isUser }) {
 	return (
 		<Box sx={{ marginTop: '100' }}>
 			<Container
@@ -46,14 +46,16 @@ export default function ProfilComponent({ picture, firstName, email }) {
 				</Item>
 			</Grid>
 
-			<Grid item xs={8}>
-				<Item>
-					<div className="profil-info">
-						<p>Email</p>
-						<h2>{email}</h2>
-					</div>
-				</Item>
-			</Grid>
+			{isUser && (
+				<Grid item xs={8}>
+					<Item>
+						<div className="profil-info">
+							<p>Email</p>
+							<h2>{email}</h2>
+						</div>
+					</Item>
+				</Grid>
+			)}
 		</Box>
 	);
 }

@@ -30,7 +30,6 @@ export default function Profil() {
 	const userUrl = `http://localhost:3000/api/user/${id}`;
 	const confirm = useConfirm();
 	const navigate = useNavigate();
-
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.up('md'));
 
@@ -157,6 +156,7 @@ export default function Profil() {
 							picture={user.picture}
 							firstName={user.firstName}
 							email={user.email}
+							isUser={isUser}
 						/>
 					)}
 					<Container
