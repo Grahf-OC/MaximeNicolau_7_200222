@@ -22,8 +22,11 @@ Clonez le repo.
 MYSQL :
 
 Connectez-vous à mysql et créez une database groupomania. CREATE DATABASE groupomania;
+
 Utilisez-là. USE groupomania;
+
 Importez le fichier groupomania.sql présent dans le dossier back.
+
 Ouvrez le fichier .env situé dans le dossier back. Entrez un mot de passe pour le TOKEN, votre nom d'utilisateur mysql pour SQL_USER, votre mot de passe mysql
 pour SQL_PW, et le nom de la database dans SQL_DB.
 
