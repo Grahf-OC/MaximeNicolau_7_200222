@@ -18,6 +18,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ModeNightIcon from '@mui/icons-material/ModeNight';
 import Switch from '@mui/material/Switch';
 import useAuth from '../../hooks/useAuth';
+import ColorModeContext from '../../context/ColorModeContext';
 
 export default function Sidebar() {
 	const { setAuth, auth } = useAuth();
@@ -27,6 +28,7 @@ export default function Sidebar() {
 	};
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.up('md'));
+	const colorMode = React.useContext(ColorModeContext);
 
 	return (
 		<Box
@@ -93,7 +95,7 @@ export default function Sidebar() {
 							</ListItemButton>
 						</ListItem>
 						<ListItem key="nightMode">
-							<ListItemButton>
+							<ListItemButton onClick={colorMode.toggleColorMode}>
 								<ListItemIcon>
 									<ModeNightIcon />
 								</ListItemIcon>
@@ -122,11 +124,9 @@ export default function Sidebar() {
 						<LogoutIcon />
 					</ListItemButton>
 
-					<ListItemButton>
+					<ListItemButton onClick={colorMode.toggleColorMode}>
 						<ModeNightIcon />
 					</ListItemButton>
-
-					<Switch />
 				</Stack>
 			)}
 		</Box>

@@ -37,7 +37,12 @@ export default function DisplayPosts({
 							justifyContent="flex-start"
 						>
 							<Avatar
-								sx={{ width: 55, height: 55, marginLeft: '5px' }}
+								sx={{
+									width: 55,
+									height: 55,
+									marginLeft: '5px',
+									marginBottom: '4px',
+								}}
 								alt="Photo de profil"
 								src={profile}
 							/>

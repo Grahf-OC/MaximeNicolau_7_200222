@@ -11,14 +11,18 @@ import Button from '@mui/material/Button';
 import '../styles/index.css';
 import axios from 'axios';
 import { styled, useTheme } from '@mui/material/styles';
+import FormControl from '@mui/material/FormControl';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import InputLabel from '@mui/material/InputLabel';
+import { OutlinedInput } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import Avatar from '@mui/material/Avatar';
 import Header from '../components/Header/Header';
 import Post from '../components/Post/Post';
 import useAuth from '../hooks/useAuth';
 
-const Input = styled('input')({
+const FileUpload = styled('input')({
 	display: 'none',
 });
 
@@ -35,7 +39,7 @@ export default function Home() {
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.up('md'));
 
-	// Récupération de tous les messages depuis la BDD puis le résulstat est stocké dans allPosts.
+	// Récupération de tous les messages depuis la BDD puis le résultat est stocké dans allPosts.
 
 	React.useEffect(() => {
 		const fetchData = async () => {
@@ -94,6 +98,7 @@ export default function Home() {
 		<Box>
 			<Stack direction={matches ? 'row' : 'column'}>
 				<Header />
+
 				<Stack
 					direction="column"
 					sx={{
@@ -104,27 +109,33 @@ export default function Home() {
 							lg: '50%',
 							xl: '50%',
 						},
+						bgcolor: 'background.default',
 					}}
 				>
 					<Container>
-						<form>
-							<input
-								type="text"
-								placeholder="Quoi de neuf?"
-								className="message--input"
-								name="body"
-								onChange={handleChange}
-								value={post.body}
-							/>
-							<label htmlFor="icon-button-file">
-								<Input
-									accept="image/*"
-									id="icon-button-file"
-									type="file"
-									name="picture"
-									onChange={(e) => handleChange(e)}
+						<FormControl fullWidth>
+							<Container sx={{ display: 'flex', alignItems: 'center' }}>
+								<Avatar
+									sx={{ width: 55, height: 55, marginRight: 2, marginTop: 2 }}
+									alt="Photo de profil"
+									src={auth.user.picture}
 								/>
-							</label>
+								<OutlinedInput
+									fullWidth
+									sx={{ marginTop: 2 }}
+									placeholder={`Quoi de neuf ${auth.user.firstName}?`}
+									name="body"
+									onChange={(e) => handleChange(e)}
+									value={post.body}
+								/>
+							</Container>
+							<InputLabel htmlFor="icon-button-file" />
+							<FileUpload
+								id="icon-button-file"
+								type="file"
+								name="picture"
+								onChange={(e) => handleChange(e)}
+							/>
 							<label htmlFor="icon-button-file">
 								<IconButton
 									color="primary"
@@ -138,7 +149,7 @@ export default function Home() {
 							<Button variant="contained" type="submit" onClick={handleSubmit}>
 								Envoyer
 							</Button>
-						</form>
+						</FormControl>
 
 						<div>{posts}</div>
 					</Container>
