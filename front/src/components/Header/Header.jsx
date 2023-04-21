@@ -35,11 +35,11 @@ export default function Sidebar() {
 			sx={{
 				display: 'flex',
 				width: {
-					xs: 100,
-					sm: 150,
-					md: 200,
-					lg: 250,
-					xl: 300,
+					xs: '100%',
+					sm: '80%',
+					md: '20%',
+					lg: '15%',
+					xl: '15%',
 				},
 				margin: {
 					xs: 0,
@@ -95,11 +95,11 @@ export default function Sidebar() {
 							</ListItemButton>
 						</ListItem>
 						<ListItem key="nightMode">
-							<ListItemButton onClick={colorMode.toggleColorMode}>
+							<ListItemButton>
 								<ListItemIcon>
 									<ModeNightIcon />
 								</ListItemIcon>
-								<Switch />
+								<Switch onClick={colorMode.toggleColorMode} />
 							</ListItemButton>
 						</ListItem>
 					</List>

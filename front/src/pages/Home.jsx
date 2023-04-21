@@ -98,62 +98,62 @@ export default function Home() {
 		<Box>
 			<Stack direction={matches ? 'row' : 'column'}>
 				<Header />
-
 				<Stack
-					direction="column"
 					sx={{
 						width: {
-							xs: '95%',
+							xs: '100%',
 							sm: '80%',
 							md: '70%',
-							lg: '50%',
+							lg: '60%',
 							xl: '50%',
 						},
-						bgcolor: 'background.default',
+						margin: 'auto',
+						padding: 2,
 					}}
 				>
-					<Container>
-						<FormControl fullWidth>
-							<Container sx={{ display: 'flex', alignItems: 'center' }}>
-								<Avatar
-									sx={{ width: 55, height: 55, marginRight: 2, marginTop: 2 }}
-									alt="Photo de profil"
-									src={auth.user.picture}
-								/>
-								<OutlinedInput
-									fullWidth
-									sx={{ marginTop: 2 }}
-									placeholder={`Quoi de neuf ${auth.user.firstName}?`}
-									name="body"
-									onChange={(e) => handleChange(e)}
-									value={post.body}
-								/>
-							</Container>
-							<InputLabel htmlFor="icon-button-file" />
-							<FileUpload
-								id="icon-button-file"
-								type="file"
-								name="picture"
-								onChange={(e) => handleChange(e)}
+					<FormControl>
+						<Container sx={{ display: 'flex', alignItems: 'center' }}>
+							<Avatar
+								sx={{ width: 55, height: 55, marginRight: 2, marginTop: 2 }}
+								alt="Photo de profil"
+								src={auth.user.picture}
 							/>
-							<label htmlFor="icon-button-file">
-								<IconButton
-									color="primary"
-									aria-label="upload picture"
-									component="span"
-								>
-									<PhotoCamera />
-								</IconButton>
-							</label>
+							<OutlinedInput
+								fullWidth
+								sx={{ marginTop: 2 }}
+								placeholder={`Quoi de neuf ${auth.user.firstName}?`}
+								name="body"
+								onChange={(e) => handleChange(e)}
+								value={post.body}
+							/>
+						</Container>
+						<InputLabel htmlFor="icon-button-file" />
+						<FileUpload
+							id="icon-button-file"
+							type="file"
+							name="picture"
+							onChange={(e) => handleChange(e)}
+						/>
+						<label htmlFor="icon-button-file">
+							<IconButton
+								color="primary"
+								aria-label="upload picture"
+								component="span"
+							>
+								<PhotoCamera />
+							</IconButton>
+						</label>
 
-							<Button variant="contained" type="submit" onClick={handleSubmit}>
-								Envoyer
-							</Button>
-						</FormControl>
+						<Button variant="contained" type="submit" onClick={handleSubmit}>
+							Publier
+						</Button>
+					</FormControl>
 
-						<div>{posts}</div>
+					<Container sx={{ margin: 'auto', padding: 'auto' }}>
+						{posts}
 					</Container>
 				</Stack>
+				<Stack sx={{ width: '15%', margin: '1' }} />
 			</Stack>
 		</Box>
 	);

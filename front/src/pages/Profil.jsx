@@ -179,103 +179,101 @@ ou non les boutons pour modifier le profil, ainsi que l'adresse mail. */
 			sx={{
 				padding: 1,
 				display: 'flex',
-				direction: 'column',
+				direction: 'columnr',
 				justifyContent: 'center',
 				marginRight: '50px',
 			}}
 		>
 			<Header />
 			<Container>
-				<div className="profil-container">
-					<Card>
-						<CardContent>
-							<Typography
-								variant="h4"
-								color="#FD2D01"
-								sx={{ textAlign: 'center' }}
-							>
-								Vos informations
-							</Typography>
-						</CardContent>
-					</Card>
-					{isToggled ? (
-						<EditProfil
+				<Card>
+					<CardContent>
+						<Typography
+							variant="h4"
+							color="#FD2D01"
+							sx={{ textAlign: 'center' }}
+						>
+							Vos informations
+						</Typography>
+					</CardContent>
+				</Card>
+				{isToggled ? (
+					<EditProfil
+						key={user.id}
+						picture={user.picture}
+						firstName={user.firstName}
+						email={user.email}
+						toggled={isToggled}
+						onChange={(e) => handleChange(e)}
+					/>
+				) : (
+					!changePw && (
+						<ProfilComponent
 							key={user.id}
 							picture={user.picture}
 							firstName={user.firstName}
 							email={user.email}
-							toggled={isToggled}
-							onChange={(e) => handleChange(e)}
+							isUser={isUser}
 						/>
-					) : (
-						!changePw && (
-							<ProfilComponent
-								key={user.id}
-								picture={user.picture}
-								firstName={user.firstName}
-								email={user.email}
-								isUser={isUser}
-							/>
-						)
+					)
+				)}
+				{changePw ? (
+					<EditPw
+						key={user.id}
+						password={password}
+						setPassword={setPassword}
+						newPw={newPw}
+						setNewPw={setNewPw}
+						confirmNewPw={confirmNewPw}
+						setConfirmNewPw={setConfirmNewPw}
+						cancel={() => editPw()}
+						wrongPasswords={wrongPasswords}
+						setWrongPasswords={setWrongPasswords}
+						incorrectPassword={incorrectPassword}
+						setIncorrectPassword={setIncorrectPassword}
+						isInputValid={(regex, e) => isInputValid(regex, e)}
+					/>
+				) : (
+					<div />
+				)}
+				<Container
+					sx={{ marginTop: 2, display: 'flex', justifyContent: 'center' }}
+				>
+					{isUser && !changePw && (
+						<Button
+							sx={{ width: '30%', marginRight: '4px' }}
+							variant="contained"
+							onClick={isToggled ? handleSubmit : editProfil}
+						>
+							{isToggled ? 'Terminer' : 'Modifier'}
+						</Button>
 					)}
-					{changePw ? (
-						<EditPw
-							key={user.id}
-							password={password}
-							setPassword={setPassword}
-							newPw={newPw}
-							setNewPw={setNewPw}
-							confirmNewPw={confirmNewPw}
-							setConfirmNewPw={setConfirmNewPw}
-							cancel={() => editPw()}
-							wrongPasswords={wrongPasswords}
-							setWrongPasswords={setWrongPasswords}
-							incorrectPassword={incorrectPassword}
-							setIncorrectPassword={setIncorrectPassword}
-							isInputValid={(regex, e) => isInputValid(regex, e)}
-						/>
-					) : (
-						<div />
+					{isUser && !isToggled && !changePw && (
+						<Button
+							sx={{
+								width: '30%',
+								marginRight: '4px',
+								backgroundColor: '#FD2D01',
+							}}
+							variant="contained"
+							onClick={handleDelete}
+						>
+							Supprimer le compte
+						</Button>
 					)}
-					<Container
-						sx={{ marginTop: 2, display: 'flex', justifyContent: 'center' }}
-					>
-						{isUser && !changePw && (
-							<Button
-								sx={{ width: '30%', marginRight: '4px' }}
-								variant="contained"
-								onClick={isToggled ? handleSubmit : editProfil}
-							>
-								{isToggled ? 'Terminer' : 'Modifier'}
-							</Button>
-						)}
-						{isUser && !isToggled && !changePw && (
-							<Button
-								sx={{
-									width: '30%',
-									marginRight: '4px',
-									backgroundColor: '#FD2D01',
-								}}
-								variant="contained"
-								onClick={handleDelete}
-							>
-								Supprimer le compte
-							</Button>
-						)}
-						{isUser && !isToggled && (
-							<Button
-								sx={{
-									width: '30%',
-									marginRight: '4px',
-								}}
-								variant="contained"
-								onClick={changePw ? submitNewPw : editPw}
-							>
-								{changePw ? 'Terminer' : 'Changer de mot de passe'}
-							</Button>
-						)}
-					</Container>
-				</div>
+					{isUser && !isToggled && (
+						<Button
+							sx={{
+								width: '30%',
+								marginRight: '4px',
+							}}
+							variant="contained"
+							onClick={changePw ? submitNewPw : editPw}
+						>
+							{changePw ? 'Terminer' : 'Changer de mot de passe'}
+						</Button>
+					)}
+				</Container>
 			</Container>
 		</Stack>
 	);

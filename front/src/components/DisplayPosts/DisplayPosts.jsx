@@ -28,7 +28,7 @@ export default function DisplayPosts({
 }) {
 	return (
 		<div>
-			<Card sx={{ maxWidth: 750, margin: 2 }}>
+			<Card sx={{ maxWidth: 850, margin: 6, padding: 'auto' }}>
 				<Link to={`/profil/${id}`} style={{ textDecoration: 'none' }}>
 					<CardActionArea>
 						<Stack
