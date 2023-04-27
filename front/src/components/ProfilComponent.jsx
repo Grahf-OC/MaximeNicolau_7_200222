@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-console */
 import React from 'react';
-import '../../styles/index.css';
+import '../styles/index.css';
 import { styled } from '@mui/material/styles';
 import CardMedia from '@mui/material/CardMedia';
 import Container from '@mui/material/Container';

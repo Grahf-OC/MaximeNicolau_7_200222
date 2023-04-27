@@ -18,8 +18,8 @@ import InputLabel from '@mui/material/InputLabel';
 import { OutlinedInput } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Avatar from '@mui/material/Avatar';
-import Header from '../components/Header/Header';
-import Post from '../components/Post/Post';
+import Header from '../components/Header';
+import Post from '../components/Post';
 import useAuth from '../hooks/useAuth';
 
 const FileUpload = styled('input')({
@@ -149,11 +149,8 @@ export default function Home() {
 						</Button>
 					</FormControl>
 
-					<Container sx={{ margin: 'auto', padding: 'auto' }}>
-						{posts}
-					</Container>
+					<Container>{posts}</Container>
 				</Stack>
-				<Stack sx={{ width: '15%', margin: '1' }} />
 			</Stack>
 		</Box>
 	);

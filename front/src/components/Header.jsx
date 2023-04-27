@@ -17,8 +17,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ModeNightIcon from '@mui/icons-material/ModeNight';
 import Switch from '@mui/material/Switch';
-import useAuth from '../../hooks/useAuth';
-import ColorModeContext from '../../context/ColorModeContext';
+import useAuth from '../hooks/useAuth';
+import ColorModeContext from '../context/ColorModeContext';
 
 export default function Sidebar() {
 	const { setAuth, auth } = useAuth();
@@ -28,11 +28,12 @@ export default function Sidebar() {
 	};
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.up('md'));
-	const colorMode = React.useContext(ColorModeContext);
+	const { colorMode, checked } = React.useContext(ColorModeContext);
 
 	return (
 		<Box
 			sx={{
+				position: 'fixed',
 				display: 'flex',
 				width: {
 					xs: '100%',
@@ -63,7 +64,7 @@ export default function Sidebar() {
 						<ListItem key="accueil">
 							<ListItemButton component={Link} to="/">
 								<ListItemIcon>
-									<HomeIcon />
+									<HomeIcon sx={{ color: '#1976d2' }} />
 								</ListItemIcon>
 								<ListItemText primary="Accueil" />
 							</ListItemButton>
@@ -71,7 +72,7 @@ export default function Sidebar() {
 						<ListItem key="liste des membres">
 							<ListItemButton component={Link} to="/membres">
 								<ListItemIcon>
-									<GroupsIcon />
+									<GroupsIcon sx={{ color: '#1976d2' }} />
 								</ListItemIcon>
 								<ListItemText primary="Liste des membres" />
 							</ListItemButton>
@@ -80,7 +81,7 @@ export default function Sidebar() {
 							<ListItem key="profil">
 								<ListItemButton component={Link} to={`/profil/${auth.user.id}`}>
 									<ListItemIcon>
-										<AccountCircleIcon />
+										<AccountCircleIcon sx={{ color: '#1976d2' }} />
 									</ListItemIcon>
 									<ListItemText primary="Profil" />
 								</ListItemButton>
@@ -89,7 +90,7 @@ export default function Sidebar() {
 						<ListItem key="logout">
 							<ListItemButton onClick={logout}>
 								<ListItemIcon>
-									<LogoutIcon />
+									<LogoutIcon sx={{ color: '#1976d2' }} />
 								</ListItemIcon>
 								<ListItemText primary="Se déconnecter" />
 							</ListItemButton>
@@ -97,9 +98,9 @@ export default function Sidebar() {
 						<ListItem key="nightMode">
 							<ListItemButton>
 								<ListItemIcon>
-									<ModeNightIcon />
+									<ModeNightIcon sx={{ color: '#1976d2' }} />
 								</ListItemIcon>
-								<Switch onClick={colorMode.toggleColorMode} />
+								<Switch onClick={colorMode.toggleColorMode} checked={checked} />
 							</ListItemButton>
 						</ListItem>
 					</List>

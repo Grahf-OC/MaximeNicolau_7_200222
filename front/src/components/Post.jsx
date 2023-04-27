@@ -3,9 +3,9 @@
 import React from 'react';
 import axios from 'axios';
 import { useConfirm } from 'material-ui-confirm';
-import EditMessage from '../EditMessage/EditMessage';
-import DisplayPosts from '../DisplayPosts/DisplayPosts';
-import useAuth from '../../hooks/useAuth';
+import EditMessage from './EditMessage';
+import DisplayPosts from './DisplayPosts';
+import useAuth from '../hooks/useAuth';
 
 export default function Post({ message, setRefresh }) {
 	const [isToggled, setIsToggled] = React.useState(false);

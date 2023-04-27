@@ -1,20 +1,20 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-console */
 import React from 'react';
-import '../../styles/index.css';
+import '../styles/index.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // import Axios from 'axios';
 import { ConfirmProvider } from 'material-ui-confirm';
 import CssBaseline from '@mui/material/CssBaseline';
-import RequireAuth from '../RequireAuth';
+import RequireAuth from './RequireAuth';
 
-import Home from '../../pages/Home';
-import Login from '../../pages/Login';
-import Signup from '../../pages/Signup';
-import Profil from '../../pages/Profil';
-import Membres from '../../pages/Membres';
-import { AuthProvider } from '../../context/AuthProvider';
-import { ToggleColorMode } from '../../context/ColorModeContext';
+import Home from '../pages/Home';
+import Login from '../pages/Login';
+import Signup from '../pages/Signup';
+import Profil from '../pages/Profil';
+import Membres from '../pages/Membres';
+import { AuthProvider } from '../context/AuthProvider';
+import { ToggleColorMode } from '../context/ColorModeContext';
 
 export default function App() {
 	return (

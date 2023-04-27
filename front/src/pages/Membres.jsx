@@ -9,9 +9,9 @@ import Stack from '@mui/material/Stack';
 import { styled, useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Header from '../components/Header/Header';
+import Header from '../components/Header';
 import useAuth from '../hooks/useAuth';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -51,7 +51,7 @@ export default function Membres() {
 	return (
 		<Stack direction={matches ? 'row' : 'column'}>
 			<Header />
-			<Box sx={{ flexGrow: 1 }}>
+			<Container>
 				<Grid container spacing={2}>
 					<Grid item xs={8}>
 						<Item>
@@ -62,7 +62,7 @@ export default function Membres() {
 						</Item>
 					</Grid>
 				</Grid>
-			</Box>
+			</Container>
 		</Stack>
 	);
 }

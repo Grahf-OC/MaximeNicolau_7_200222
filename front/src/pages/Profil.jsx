@@ -13,10 +13,10 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Header from '../components/Header/Header';
-import EditProfil from '../components/EditProfil/EditProfil';
-import EditPw from '../components/EditPw/EditPw';
-import ProfilComponent from '../components/ProfilComponent/ProfilComponent';
+import Header from '../components/Header';
+import EditProfil from '../components/EditProfil';
+import EditPw from '../components/EditPw';
+import ProfilComponent from '../components/ProfilComponent';
 import useAuth from '../hooks/useAuth';
 
 const axios = require('axios');
@@ -174,16 +174,7 @@ ou non les boutons pour modifier le profil, ainsi que l'adresse mail. */
 	};
 
 	return (
-		<Stack
-			direction={matches ? 'row' : 'column'}
-			sx={{
-				padding: 1,
-				display: 'flex',
-				direction: 'columnr',
-				justifyContent: 'center',
-				marginRight: '50px',
-			}}
-		>
+		<Stack direction={matches ? 'row' : 'column'}>
 			<Header />
 			<Container>
 				<Card>
@@ -217,7 +208,7 @@ ou non les boutons pour modifier le profil, ainsi que l'adresse mail. */
 						/>
 					)
 				)}
-				{changePw ? (
+				{changePw && (
 					<EditPw
 						key={user.id}
 						password={password}
@@ -233,8 +224,6 @@ ou non les boutons pour modifier le profil, ainsi que l'adresse mail. */
 						setIncorrectPassword={setIncorrectPassword}
 						isInputValid={(regex, e) => isInputValid(regex, e)}
 					/>
-				) : (
-					<div />
 				)}
 				<Container
 					sx={{ marginTop: 2, display: 'flex', justifyContent: 'center' }}
