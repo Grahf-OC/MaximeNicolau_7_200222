@@ -20,6 +20,7 @@ import IconButton from '@mui/material/IconButton';
 import Avatar from '@mui/material/Avatar';
 import Header from '../components/Header';
 import Post from '../components/Post';
+import ScrollToTopButton from '../components/ScrollToTopButton';
 import useAuth from '../hooks/useAuth';
 
 const FileUpload = styled('input')({
@@ -151,6 +152,7 @@ export default function Home() {
 
 					<Container>{posts}</Container>
 				</Stack>
+				<ScrollToTopButton />
 			</Stack>
 		</Box>
 	);

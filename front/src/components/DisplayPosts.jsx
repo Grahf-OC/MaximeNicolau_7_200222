@@ -9,7 +9,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
-import { Button, CardActionArea, CardActions } from '@mui/material';
+import { Button, CardActionArea, CardActions, IconButton } from '@mui/material';
 
 export default function DisplayPosts({
 	id,
@@ -85,21 +85,21 @@ export default function DisplayPosts({
 				</CardActionArea>
 			</Link>
 			<CardActions>
-				<Button
+				<IconButton
 					size="small"
 					color={liked ? 'secondary' : 'primary'}
 					onClick={handleLike}
 				>
 					<FavoriteIcon />
-				</Button>
+				</IconButton>
 				<Typography variant="body2" color="text.secondary">
 					{likes}
 				</Typography>
 				{isUser && (
 					<>
-						<Button size="small" color="primary" onClick={handleDelete}>
+						<IconButton size="small" color="primary" onClick={handleDelete}>
 							<DeleteIcon />
-						</Button>
+						</IconButton>
 						<Button size="small" color="primary" onClick={handleClick}>
 							Edit
 						</Button>
