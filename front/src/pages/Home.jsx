@@ -38,7 +38,7 @@ export default function Home() {
 	});
 	const [refresh, setRefresh] = React.useState(false);
 	const theme = useTheme();
-	const matches = useMediaQuery(theme.breakpoints.up('md'));
+	const matches = useMediaQuery(theme.breakpoints.up('lg'));
 
 	// Récupération de tous les messages depuis la BDD puis le résultat est stocké dans allPosts.
 
@@ -103,12 +103,15 @@ export default function Home() {
 					sx={{
 						width: {
 							xs: '100%',
-							sm: '80%',
-							md: '70%',
+							sm: '90%',
+							md: '80%',
 							lg: '60%',
 							xl: '50%',
 						},
-						margin: 'auto',
+						marginTop: { xs: 7, sm: 7, md: 7, lg: 'auto', xl: 'auto' },
+						marginRight: 'auto',
+						marginBottom: 'auto',
+						marginLeft: 'auto',
 						padding: 2,
 					}}
 				>

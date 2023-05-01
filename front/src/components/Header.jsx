@@ -3,6 +3,8 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
+import AppBar from '@mui/material/AppBar';
+import { Toolbar } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -27,39 +29,27 @@ export default function Sidebar() {
 		localStorage.clear();
 	};
 	const theme = useTheme();
-	const matches = useMediaQuery(theme.breakpoints.up('md'));
+	const matches = useMediaQuery(theme.breakpoints.up('lg'));
 	const { colorMode, checked } = React.useContext(ColorModeContext);
 
 	return (
-		<Box
-			sx={{
-				position: 'fixed',
-				display: 'flex',
-				width: {
-					xs: '100%',
-					sm: '80%',
-					md: '20%',
-					lg: '15%',
-					xl: '15%',
-				},
-				margin: {
-					xs: 0,
-					sm: 1,
-					md: 1,
-					lg: 1,
-					xl: 2,
-				},
-				padding: {
-					xs: 0,
-					sm: 1,
-					md: 1,
-					lg: 1,
-					xl: 2,
-				},
-			}}
-		>
+		<Box>
 			{matches ? (
-				<Stack>
+				<Stack
+					sx={{
+						position: 'fixed',
+
+						width: {
+							xs: '100%',
+							sm: '80%',
+							md: '15%',
+							lg: '15%',
+							xl: '15%',
+						},
+						margin: 2,
+						padding: 2,
+					}}
+				>
 					<List>
 						<ListItem key="accueil">
 							<ListItemButton component={Link} to="/">
@@ -106,7 +96,45 @@ export default function Sidebar() {
 					</List>
 				</Stack>
 			) : (
-				<Stack direction="row">
+				<AppBar sx={{ top: '0' }}>
+					<Toolbar>
+						<ListItemButton component={Link} to="/">
+							<HomeIcon />
+						</ListItemButton>
+
+						<ListItemButton component={Link} to="/membres">
+							<GroupsIcon />
+						</ListItemButton>
+
+						{auth.token && (
+							<ListItemButton component={Link} to={`/profil/${auth.user.id}`}>
+								<AccountCircleIcon />
+							</ListItemButton>
+						)}
+
+						<ListItemButton onClick={logout}>
+							<LogoutIcon />
+						</ListItemButton>
+
+						<ListItemButton
+							onClick={colorMode.toggleColorMode}
+							checked={checked}
+						>
+							<ModeNightIcon />
+						</ListItemButton>
+					</Toolbar>
+				</AppBar>
+
+				/* 
+				<Stack
+					direction="row"
+					sx={{
+						position: 'sticky',
+						top: '0px',
+						margin: 2,
+						padding: 2,
+					}}
+				>
 					<ListItemButton component={Link} to="/">
 						<HomeIcon />
 					</ListItemButton>
@@ -125,10 +153,10 @@ export default function Sidebar() {
 						<LogoutIcon />
 					</ListItemButton>
 
-					<ListItemButton onClick={colorMode.toggleColorMode}>
+					<ListItemButton onClick={colorMode.toggleColorMode} checked={checked}>
 						<ModeNightIcon />
 					</ListItemButton>
-				</Stack>
+				</Stack> */
 			)}
 		</Box>
 	);

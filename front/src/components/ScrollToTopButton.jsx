@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Fab from '@mui/material/Fab';
-import NavigationIcon from '@mui/icons-material/Navigation';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 export default function ScrollToTopButton() {
 	const [backToTopButton, setBackToTopButton] = useState(false);
@@ -37,7 +37,7 @@ export default function ScrollToTopButton() {
 					}}
 					onClick={() => scrollUp()}
 				>
-					<NavigationIcon sx={{ fontSize: 18 }} />
+					<KeyboardArrowUpIcon sx={{ fontSize: 40 }} />
 				</Fab>
 			)}
 		</div>
