@@ -87,7 +87,10 @@ ou non les boutons pour modifier le profil, ainsi que l'adresse mail. */
 		}
 	};
 
+	// Fonction qui fait passer isToggled à true lorsqu'on appuie sur le bouton pour modifier le profil, ce qui permet d'afficher le composant pour éditer le profil.
 	const editProfil = () => setIsToggled((prev) => !prev);
+
+	// Fonction qui fait passer changePw à true lorsqu'on appuie sur le bouton pour changer de mdp, ce qui permet d'afficher le composant pour changer de mdp.
 	const editPw = () => setChangePw((prev) => !prev);
 
 	function handleChange(e) {
@@ -249,7 +252,7 @@ ou non les boutons pour modifier le profil, ainsi que l'adresse mail. */
 							sx={{
 								width: '30%',
 								marginRight: '4px',
-								backgroundColor: '#FD2D01',
+								backgroundColor: '#CB8EC8',
 							}}
 							variant="contained"
 							onClick={handleDelete}

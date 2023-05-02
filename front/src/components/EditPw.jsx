@@ -114,7 +114,7 @@ export default function EditPw({
 					sx={{
 						width: '100%',
 						marginRight: '4px',
-						backgroundColor: '#FD2D01',
+						backgroundColor: '#CB8EC8',
 						marginTop: 2,
 					}}
 					variant="contained"
