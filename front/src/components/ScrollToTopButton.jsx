@@ -26,6 +26,7 @@ export default function ScrollToTopButton() {
 		<div>
 			{backToTopButton && (
 				<Fab
+					title="Haut de page"
 					aria-label="Scroll to top"
 					size="large"
 					color="primary"

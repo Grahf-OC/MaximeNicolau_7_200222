@@ -176,15 +176,22 @@ ou non les boutons pour modifier le profil, ainsi que l'adresse mail. */
 	return (
 		<Stack direction={matches ? 'row' : 'column'}>
 			<Header />
-			<Container>
+			<Container
+				sx={{
+					marginTop: 8,
+					width: {
+						xs: '100%',
+						sm: '100%',
+						md: '100%',
+						lg: '50%',
+						xl: '50%',
+					},
+				}}
+			>
 				<Card>
 					<CardContent>
-						<Typography
-							variant="h4"
-							color="#FD2D01"
-							sx={{ textAlign: 'center' }}
-						>
-							Vos informations
+						<Typography variant="h4" sx={{ textAlign: 'center' }}>
+							Profil
 						</Typography>
 					</CardContent>
 				</Card>

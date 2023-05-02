@@ -18,6 +18,7 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ModeNightIcon from '@mui/icons-material/ModeNight';
+import Avatar from '@mui/material/Avatar';
 import Switch from '@mui/material/Switch';
 import useAuth from '../hooks/useAuth';
 import ColorModeContext from '../context/ColorModeContext';
@@ -96,31 +97,37 @@ export default function Sidebar() {
 					</List>
 				</Stack>
 			) : (
-				<AppBar sx={{ top: '0' }}>
-					<Toolbar>
-						<ListItemButton component={Link} to="/">
+				<AppBar>
+					<Toolbar sx={{ justifyContent: 'center' }}>
+						<ListItemButton component={Link} to="/" title="Page d'accueil">
 							<HomeIcon />
 						</ListItemButton>
 
-						<ListItemButton component={Link} to="/membres">
+						<ListItemButton component={Link} to="/membres" title="Membres">
 							<GroupsIcon />
 						</ListItemButton>
 
 						{auth.token && (
-							<ListItemButton component={Link} to={`/profil/${auth.user.id}`}>
-								<AccountCircleIcon />
+							<ListItemButton
+								component={Link}
+								to={`/profil/${auth.user.id}`}
+								title="Profil"
+							>
+								<Avatar
+									sx={{ width: 30, height: 30, marginLeft: 1 }}
+									alt="Photo de profil"
+									src={auth.user.picture}
+								/>
 							</ListItemButton>
 						)}
 
-						<ListItemButton onClick={logout}>
+						<ListItemButton onClick={logout} title="Se déconnecter">
 							<LogoutIcon />
 						</ListItemButton>
 
-						<ListItemButton
-							onClick={colorMode.toggleColorMode}
-							checked={checked}
-						>
+						<ListItemButton title="Thème clair ou sombre">
 							<ModeNightIcon />
+							<Switch onClick={colorMode.toggleColorMode} checked={checked} />
 						</ListItemButton>
 					</Toolbar>
 				</AppBar>
