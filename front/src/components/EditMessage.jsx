@@ -4,58 +4,46 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
 import Container from '@mui/material/Container';
-import { styled } from '@mui/material/styles';
+// import Box from '@mui/material/Box';
+import FormControl from '@mui/material/FormControl';
+import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import Stack from '@mui/material/Stack';
 
-const Input = styled('input')({
-	display: 'none',
-});
-
 export default function EditMessage({ onChange, body, handleEditSubmit }) {
 	return (
 		<Container>
-			<div className="form-container">
-				<Stack direction="row" alignItems="center" spacing={1}>
-					<form>
-						<label htmlFor="contained-button-file">
-							<Input
-								accept="image/*"
-								id="contained-button-file"
-								name="picture"
-								type="file"
-								onChange={onChange}
-							/>
-							<Button variant="contained" component="span">
-								Image
-							</Button>
-						</label>
-						<label htmlFor="icon-button-file">
-							<IconButton
-								color="primary"
-								aria-label="upload picture"
-								component="span"
-							>
-								<PhotoCamera />
-							</IconButton>
-						</label>
-
+			<Stack direction="row" alignItems="center" spacing={1}>
+				<FormControl>
+					<IconButton
+						color="primary"
+						aria-label="upload picture"
+						component="label"
+					>
 						<input
-							type="text"
-							placeholder={body}
-							className="edit--input"
-							name="body"
+							hidden
+							accept="image/*"
+							type="file"
+							name="picture"
 							onChange={onChange}
-							value={body}
 						/>
-						<Button type="button" onClick={handleEditSubmit}>
-							Envoyer
-						</Button>
-					</form>
-				</Stack>
-			</div>
+						<PhotoCamera />
+					</IconButton>
+
+					<TextField
+						placeholder={body}
+						name="body"
+						onChange={onChange}
+						value={body}
+					/>
+
+					<Button type="button" variant="contained" onClick={handleEditSubmit}>
+						Envoyer
+					</Button>
+				</FormControl>
+			</Stack>
 		</Container>
 	);
 }

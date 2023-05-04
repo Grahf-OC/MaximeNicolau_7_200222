@@ -38,12 +38,12 @@ export default function ProfilComponent({ picture, firstName, email, isUser }) {
 					<Typography
 						align="center"
 						color="secondary"
-						gutterBottom="true"
+						gutterBottom
 						sx={{ fontSize: 20 }}
 					>
 						<b>Prénom</b>
 					</Typography>
-					<Typography align="center" variant="h5" gutterBottom="true">
+					<Typography align="center" variant="h5" gutterBottom>
 						{firstName}
 					</Typography>
 					{isUser && (
@@ -51,12 +51,12 @@ export default function ProfilComponent({ picture, firstName, email, isUser }) {
 							<Typography
 								align="center"
 								color="secondary"
-								gutterBottom="true"
+								gutterBottom
 								sx={{ fontSize: 20 }}
 							>
 								<b>Email</b>
 							</Typography>
-							<Typography align="center" variant="h5" gutterBottom="true">
+							<Typography align="center" variant="h5" gutterBottom>
 								{email}
 							</Typography>
 						</CardContent>

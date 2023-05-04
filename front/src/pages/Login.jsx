@@ -1,12 +1,16 @@
 /* eslint-disable no-console */
 /* eslint-disable react/no-unescaped-entities */
 import * as React from 'react';
+// import { useEffect } from 'react';
+// import jwt_decode from 'jwt-decode';
 import '../styles/index.css';
 import axios from 'axios';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
-import { CardActionArea } from '@mui/material';
+import { CardActionArea, OutlinedInput } from '@mui/material';
 import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import FormControl from '@mui/material/FormControl';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
@@ -44,6 +48,35 @@ export default function Login() {
 		}
 		return console.log('Successfully signed up');
 	};
+
+	/* Sign in with google :
+	function handleCallbackResponse(response) {
+		// const userGoogle = jwt_decode(response.credential);
+		const token = response;
+		setAuth({ token });
+		navigate(from, { replace: true });
+	}
+
+	useEffect(() => {
+		à mettre en commentaire si j'enlève le commentaire global, pour signifier à eslint que google est connu globalement :  global google 
+		google.accounts.id.initialize({
+			client_id:
+				'670441777219-1bj4mmlhpnrhgsd65u8foglcfmpgmal5.apps.googleusercontent.com',
+			callback: handleCallbackResponse,
+		});
+
+		google.accounts.id.renderButton(
+			document.getElementById('googleSignInButton'),
+			{ theme: 'outline', size: 'large' }
+		);
+
+		google.accounts.id.prompt();
+	}, []);
+
+	div à ajouter pour que le bouton apparaisse: 				<div id="googleSignInButton" />
+	ne pas oublier le script google dans ma page html si je veux tout enlever.
+
+	*/
 
 	return (
 		<Stack direction="column" alignItems="center">
@@ -89,66 +122,62 @@ export default function Login() {
 					justifyContent: 'center',
 				}}
 			>
-				<form className="form" onSubmit={handleSubmit}>
-					<Typography
-						gutterBottom
-						variant="h6"
-						size="10"
-						component="div"
-						sx={{ marginLeft: 2, fontsize: 10 }}
-					>
-						Adresse email:
-					</Typography>
-					<input
-						type="email"
-						placeholder="Email adress"
-						className="form--input"
-						name="email"
-						onChange={(e) => {
-							setEmail(e.target.value);
-							setWrongId('');
-						}}
-						value={email}
-					/>
+				<Container>
+					<FormControl>
+						<Typography
+							gutterBottom
+							variant="h6"
+							sx={{ marginLeft: 2, fontsize: 10 }}
+						>
+							Adresse email:
+						</Typography>
+						<OutlinedInput
+							type="email"
+							placeholder="Email adress"
+							name="email"
+							onChange={(e) => {
+								setEmail(e.target.value);
+								setWrongId('');
+							}}
+							value={email}
+						/>
 
-					<p className="error">{wrongId}</p>
+						<p className="error">{wrongId}</p>
 
-					<Typography
-						gutterBottom
-						variant="h6"
-						size="10"
-						component="div"
-						sx={{ marginLeft: 2, fontsize: 10 }}
-					>
-						Mot de passe:
-					</Typography>
+						<Typography
+							gutterBottom
+							variant="h6"
+							sx={{ marginLeft: 2, fontsize: 10 }}
+						>
+							Mot de passe:
+						</Typography>
 
-					<input
-						type="password"
-						placeholder="Password"
-						className="form--input"
-						name="password"
-						onChange={(e) => {
-							setPassword(e.target.value);
-							setWrongId('');
-						}}
-						value={password}
-					/>
-					<Button variant="contained" type="submit">
-						Se connecter
-					</Button>
-					<ListItem key="signup">
-						<ListItemButton component={Link} to="/signup">
-							<ListItemIcon sx={{ color: '#FD2D01' }}>
-								<EmojiPeopleIcon />
-							</ListItemIcon>
-							<ListItemText
-								sx={{ color: '#FD2D01' }}
-								primary="Pas encore inscrit? C'est par ici!"
-							/>
-						</ListItemButton>
-					</ListItem>
-				</form>
+						<OutlinedInput
+							type="password"
+							placeholder="Password"
+							name="password"
+							onChange={(e) => {
+								setPassword(e.target.value);
+								setWrongId('');
+							}}
+							value={password}
+						/>
+						<Button variant="contained" type="submit" onClick={handleSubmit}>
+							Se connecter
+						</Button>
+						<ListItem key="signup">
+							<ListItemButton component={Link} to="/signup">
+								<ListItemIcon sx={{ color: '#FD2D01' }}>
+									<EmojiPeopleIcon />
+								</ListItemIcon>
+								<ListItemText
+									sx={{ color: '#FD2D01' }}
+									primary="Pas encore inscrit? C'est par ici!"
+								/>
+							</ListItemButton>
+						</ListItem>
+					</FormControl>
+				</Container>
 			</Box>
 		</Stack>
 	);

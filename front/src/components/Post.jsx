@@ -85,6 +85,7 @@ export default function Post({ message, setRefresh }) {
 			...prev,
 			[name]: type === 'file' ? files[0] : value,
 		}));
+		console.log(oldMessage);
 	}
 
 	// toggle pour vérifier si le post est en train d'être édité, afin de changer l'affichage.

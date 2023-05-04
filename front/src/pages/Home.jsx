@@ -10,11 +10,10 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import '../styles/index.css';
 import axios from 'axios';
-import { styled, useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import FormControl from '@mui/material/FormControl';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
-import InputLabel from '@mui/material/InputLabel';
 import { OutlinedInput } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Avatar from '@mui/material/Avatar';
@@ -22,10 +21,6 @@ import Header from '../components/Header';
 import Post from '../components/Post';
 import ScrollToTopButton from '../components/ScrollToTopButton';
 import useAuth from '../hooks/useAuth';
-
-const FileUpload = styled('input')({
-	display: 'none',
-});
 
 export default function Home() {
 	const { auth } = useAuth();
@@ -47,8 +42,10 @@ export default function Home() {
 			const result = await axios(urlMessage, {
 				headers: { Authorization: `Bearer ${authToken}` },
 			});
-			console.log(result.data);
+
 			setAllPosts(result.data);
+			console.log(post);
+			return console.log(result.data);
 		};
 		fetchData();
 	}, [refresh]);
@@ -77,8 +74,9 @@ export default function Home() {
 				formData.append('body', JSON.stringify(post.body));
 				formData.append('image', post.picture);
 				const result = await axios.post(urlMessage, formData, config);
-				setPost({ body: '' });
+				setPost({ body: '', picture: '' });
 				setRefresh((prev) => !prev);
+
 				return console.log(result);
 			}
 			return alert('Le message est vide.');
@@ -131,22 +129,21 @@ export default function Home() {
 								value={post.body}
 							/>
 						</Container>
-						<InputLabel htmlFor="icon-button-file" />
-						<FileUpload
-							id="icon-button-file"
-							type="file"
-							name="picture"
-							onChange={(e) => handleChange(e)}
-						/>
-						<label htmlFor="icon-button-file">
-							<IconButton
-								color="primary"
-								aria-label="upload picture"
-								component="span"
-							>
-								<PhotoCamera />
-							</IconButton>
-						</label>
+
+						<IconButton
+							color="primary"
+							aria-label="upload picture"
+							component="label"
+						>
+							<input
+								hidden
+								accept="image/*"
+								type="file"
+								name="picture"
+								onChange={(e) => handleChange(e)}
+							/>
+							<PhotoCamera />
+						</IconButton>
 
 						<Button variant="contained" type="submit" onClick={handleSubmit}>
 							Publier

@@ -90,13 +90,3 @@
 .error {
 	color: #fd2d01;
 }
-
-.edit--input {
-	width: 110%;
-	margin-bottom: 10px;
-	height: 5rem;
-	border-radius: 5px;
-	border: 1px solid gray;
-	padding: 4px;
-	font-family: 'Inter', sans-serif;
-}
