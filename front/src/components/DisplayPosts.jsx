@@ -77,7 +77,7 @@ export default function DisplayPosts({
 							sx={{ objectFit: 'cover' }}
 						/>
 					)}
-					<CardContent>
+					<CardContent sx={{ overflowWrap: 'anywhere' }}>
 						<Typography variant="body2" color="text.secondary">
 							{body}
 						</Typography>

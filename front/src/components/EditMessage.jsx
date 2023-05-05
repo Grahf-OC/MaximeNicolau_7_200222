@@ -4,23 +4,41 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
 import Container from '@mui/material/Container';
-// import Box from '@mui/material/Box';
+import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
-import Stack from '@mui/material/Stack';
 
-export default function EditMessage({ onChange, body, handleEditSubmit }) {
+export default function EditMessage({
+	onChange,
+	body,
+	handleEditSubmit,
+	errorText,
+}) {
 	return (
-		<Container>
-			<Stack direction="row" alignItems="center" spacing={1}>
-				<FormControl>
-					<IconButton
+		<Box component="form" sx={{ marginTop: 15 }}>
+			<Container>
+				<FormControl fullWidth>
+					<TextField
+						placeholder={body}
+						name="body"
+						onChange={onChange}
+						value={body}
+						variant="filled"
+						helperText={errorText}
+						multiline
+						error={errorText !== ''}
+					/>
+
+					<Button type="button" variant="contained" onClick={handleEditSubmit}>
+						Envoyer
+					</Button>
+					<Button
 						color="primary"
 						aria-label="upload picture"
 						component="label"
+						startIcon={<PhotoCamera />}
 					>
 						<input
 							hidden
@@ -29,21 +47,10 @@ export default function EditMessage({ onChange, body, handleEditSubmit }) {
 							name="picture"
 							onChange={onChange}
 						/>
-						<PhotoCamera />
-					</IconButton>
-
-					<TextField
-						placeholder={body}
-						name="body"
-						onChange={onChange}
-						value={body}
-					/>
-
-					<Button type="button" variant="contained" onClick={handleEditSubmit}>
-						Envoyer
+						Image
 					</Button>
 				</FormControl>
-			</Stack>
-		</Container>
+			</Container>
+		</Box>
 	);
 }

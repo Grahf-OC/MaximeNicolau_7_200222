@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable no-console */
 /* eslint-disable react/prop-types */
 import React from 'react';
@@ -15,6 +16,7 @@ export default function Post({ message, setRefresh }) {
 	const authToken = auth.token || {};
 	const confirm = useConfirm();
 	const [isUser, setIsUser] = React.useState(false);
+	const [errorText, setErrorText] = React.useState('');
 
 	// const user permet de vérifier si l'utilisateur a les droits pour effectuer une action. On stocke le résultat dans isUser.
 
@@ -96,27 +98,36 @@ export default function Post({ message, setRefresh }) {
 
 	const handleEditSubmit = async () => {
 		try {
-			const formData = new FormData();
-			formData.append('body', JSON.stringify(oldMessage.body));
-			formData.append('image', oldMessage.picture);
+			if (oldMessage.body !== '' && oldMessage.body.length <= 255) {
+				const formData = new FormData();
+				formData.append('body', JSON.stringify(oldMessage.body));
+				formData.append('image', oldMessage.picture);
 
-			const config = {
-				headers: {
-					'content-type': 'multipart/form-data',
-					Authorization: `Bearer ${authToken}`,
-				},
-			};
-			const result = await axios.put(
-				`http://localhost:3000/api/message/${message.id}`,
-				formData,
-				config
+				const config = {
+					headers: {
+						'content-type': 'multipart/form-data',
+						Authorization: `Bearer ${authToken}`,
+					},
+				};
+				const result = await axios.put(
+					`http://localhost:3000/api/message/${message.id}`,
+					formData,
+					config
+				);
+
+				console.log(result.data);
+				setRefresh((prev) => !prev);
+				setIsToggled(!isToggled);
+				setErrorText('');
+
+				return console.log(result);
+			}
+			setErrorText(
+				'Le message ne doit pas être vide et doit contenir moins de 255 characters.'
 			);
-
-			console.log(result.data);
-			setRefresh((prev) => !prev);
-			setIsToggled(!isToggled);
+			return console.log(errorText);
 		} catch (error) {
-			console.log(error);
+			return console.log(error);
 		}
 	};
 
@@ -135,6 +146,7 @@ export default function Post({ message, setRefresh }) {
 					onChange={(e) => handleChange(e)}
 					handleEditSubmit={() => handleEditSubmit()}
 					body={oldMessage.body}
+					errorText={errorText}
 				/>
 			) : (
 				<DisplayPosts

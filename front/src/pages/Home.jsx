@@ -14,8 +14,7 @@ import { useTheme } from '@mui/material/styles';
 import FormControl from '@mui/material/FormControl';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
-import { OutlinedInput } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
+import { TextField } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Header from '../components/Header';
 import Post from '../components/Post';
@@ -32,6 +31,7 @@ export default function Home() {
 		picture: '',
 	});
 	const [refresh, setRefresh] = React.useState(false);
+	const [errorText, setErrorText] = React.useState('');
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.up('lg'));
 
@@ -69,17 +69,21 @@ export default function Home() {
 			},
 		};
 		try {
-			if (post.body !== '') {
+			if (post.body !== '' && post.body.length <= 255) {
 				const formData = new FormData();
 				formData.append('body', JSON.stringify(post.body));
 				formData.append('image', post.picture);
 				const result = await axios.post(urlMessage, formData, config);
 				setPost({ body: '', picture: '' });
 				setRefresh((prev) => !prev);
+				setErrorText('');
 
 				return console.log(result);
 			}
-			return alert('Le message est vide.');
+			setErrorText(
+				'Le message ne doit pas être vide et doit contenir moins de 255 characters.'
+			);
+			return console.log(errorText);
 		} catch (error) {
 			return console.log(error);
 		}
@@ -113,42 +117,57 @@ export default function Home() {
 						padding: 2,
 					}}
 				>
-					<FormControl>
-						<Container sx={{ display: 'flex', alignItems: 'center' }}>
-							<Avatar
-								sx={{ width: 55, height: 55, marginRight: 2, marginTop: 2 }}
-								alt="Photo de profil"
-								src={auth.user.picture}
-							/>
-							<OutlinedInput
-								fullWidth
-								sx={{ marginTop: 2 }}
-								placeholder={`Quoi de neuf ${auth.user.firstName}?`}
-								name="body"
-								onChange={(e) => handleChange(e)}
-								value={post.body}
-							/>
-						</Container>
+					<Box component="form">
+						<FormControl fullWidth>
+							<Container
+								sx={{ display: 'flex', alignItems: 'center', mt: 2, mb: 2 }}
+							>
+								<Avatar
+									sx={{ width: 55, height: 55, marginRight: 2 }}
+									alt="Photo de profil"
+									src={auth.user.picture}
+								/>
+								<TextField
+									fullWidth
+									multiline
+									placeholder={`Quoi de neuf ${auth.user.firstName}?`}
+									name="body"
+									onChange={(e) => handleChange(e)}
+									value={post.body}
+									error={errorText !== ''}
+									helperText={errorText}
+								/>
+							</Container>
+							<Stack direction="row" justifyContent="center">
+								<Button
+									sx={{ width: '15%', mr: 1 }}
+									color="primary"
+									variant="contained"
+									aria-label="upload picture"
+									component="label"
+									startIcon={<PhotoCamera />}
+								>
+									<input
+										hidden
+										accept="image/*"
+										type="file"
+										name="picture"
+										onChange={(e) => handleChange(e)}
+									/>
+									Image
+								</Button>
 
-						<IconButton
-							color="primary"
-							aria-label="upload picture"
-							component="label"
-						>
-							<input
-								hidden
-								accept="image/*"
-								type="file"
-								name="picture"
-								onChange={(e) => handleChange(e)}
-							/>
-							<PhotoCamera />
-						</IconButton>
-
-						<Button variant="contained" type="submit" onClick={handleSubmit}>
-							Publier
-						</Button>
-					</FormControl>
+								<Button
+									sx={{ width: '15%', ml: 1 }}
+									variant="contained"
+									type="submit"
+									onClick={handleSubmit}
+								>
+									Publier
+								</Button>
+							</Stack>
+						</FormControl>
+					</Box>
 
 					<Container>{posts}</Container>
 				</Stack>
