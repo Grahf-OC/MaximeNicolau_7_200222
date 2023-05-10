@@ -4,19 +4,12 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
 import Container from '@mui/material/Container';
-import { styled } from '@mui/material/styles';
 import FormControl from '@mui/material/FormControl';
-import Typography from '@mui/material/Typography';
+import { InputLabel, OutlinedInput } from '@mui/material';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import CardMedia from '@mui/material/CardMedia';
-import { OutlinedInput } from '@mui/material';
-
-const Input = styled('input')({
-	display: 'none',
-});
 
 export default function EditProfil({ firstName, email, picture, onChange }) {
 	return (
@@ -39,27 +32,25 @@ export default function EditProfil({ firstName, email, picture, onChange }) {
 					image={picture}
 					alt="Photo de profil"
 				/>
-				<label htmlFor="contained-button-file">
-					<Input
+
+				<Button
+					sx={{ width: '15%', mr: 1, mb: 2 }}
+					color="primary"
+					variant="contained"
+					component="label"
+					htmlFor="Profile-picture"
+					startIcon={<PhotoCamera />}
+				>
+					<input
+						hidden
 						accept="image/*"
-						id="contained-button-file"
-						name="picture"
+						id="Profile-picture"
 						type="file"
+						name="picture"
 						onChange={onChange}
 					/>
-					<Button variant="contained" component="span">
-						Photo de profil
-					</Button>
-				</label>
-				<label htmlFor="icon-button-file">
-					<IconButton
-						color="primary"
-						aria-label="upload picture"
-						component="span"
-					>
-						<PhotoCamera />
-					</IconButton>
-				</label>
+					Photo
+				</Button>
 			</Container>
 			<Container
 				sx={{
@@ -72,42 +63,30 @@ export default function EditProfil({ firstName, email, picture, onChange }) {
 					},
 				}}
 			>
-				<Container>
-					<FormControl fullWidth>
-						<Typography
-							gutterBottom
-							variant="h6"
-							size="10"
-							component="div"
-							sx={{ marginLeft: 2, fontsize: 10 }}
-						>
-							Prénom:
-						</Typography>
-						<OutlinedInput
-							type="firstName"
-							placeholder={firstName}
-							name="firstName"
-							onChange={onChange}
-							value={firstName}
-						/>
-						<Typography
-							gutterBottom
-							variant="h6"
-							size="10"
-							component="div"
-							sx={{ marginLeft: 2, fontsize: 10 }}
-						>
-							Email:
-						</Typography>
-						<OutlinedInput
-							type="email"
-							placeholder={email}
-							name="email"
-							onChange={onChange}
-							value={email}
-						/>
-					</FormControl>
-				</Container>
+				<FormControl fullWidth>
+					<InputLabel htmlFor="Prénom">Prénom</InputLabel>
+					<OutlinedInput
+						sx={{ mb: 2 }}
+						id="Prénom"
+						placeholder={firstName}
+						name="firstName"
+						onChange={onChange}
+						value={firstName}
+						label="Prénom"
+					/>
+				</FormControl>
+				<FormControl fullWidth>
+					<InputLabel htmlFor="email">Email</InputLabel>
+					<OutlinedInput
+						type="email"
+						id="email"
+						placeholder={email}
+						name="email"
+						onChange={onChange}
+						value={email}
+						label="Email"
+					/>
+				</FormControl>
 			</Container>
 		</Box>
 	);

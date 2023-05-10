@@ -15,6 +15,7 @@ import FormControl from '@mui/material/FormControl';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { TextField } from '@mui/material';
+import InputLabel from '@mui/material/InputLabel';
 import Avatar from '@mui/material/Avatar';
 import Header from '../components/Header';
 import Post from '../components/Post';
@@ -127,10 +128,12 @@ export default function Home() {
 									alt="Photo de profil"
 									src={auth.user.picture}
 								/>
+								<InputLabel htmlFor="post-message" />
 								<TextField
 									fullWidth
 									multiline
 									placeholder={`Quoi de neuf ${auth.user.firstName}?`}
+									id="post-message"
 									name="body"
 									onChange={(e) => handleChange(e)}
 									value={post.body}
@@ -143,22 +146,24 @@ export default function Home() {
 									sx={{ width: '15%', mr: 1 }}
 									color="primary"
 									variant="contained"
-									aria-label="upload picture"
 									component="label"
+									htmlFor="upload-image"
 									startIcon={<PhotoCamera />}
 								>
 									<input
 										hidden
 										accept="image/*"
+										id="upload-image"
 										type="file"
 										name="picture"
 										onChange={(e) => handleChange(e)}
 									/>
 									Image
 								</Button>
-
+								<InputLabel htmlFor="send-message" />
 								<Button
 									sx={{ width: '15%', ml: 1 }}
+									id="send-message"
 									variant="contained"
 									type="submit"
 									onClick={handleSubmit}

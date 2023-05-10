@@ -124,6 +124,7 @@ ou non les boutons pour modifier le profil, ainsi que l'adresse mail. */
 				config
 			);
 			console.log(result.data);
+			setAuth((prev) => ({ ...prev, user: result.data.user }));
 			setRefresh((prev) => !prev);
 		} catch (error) {
 			console.log(error);
