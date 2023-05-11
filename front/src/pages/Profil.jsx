@@ -11,7 +11,6 @@ import CardContent from '@mui/material/CardContent';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Header from '../components/Header';
 import EditProfil from '../components/EditProfil';
@@ -20,6 +19,7 @@ import ProfilComponent from '../components/ProfilComponent';
 import useAuth from '../hooks/useAuth';
 import DeleteAccountButton from '../components/DeleteAccountButton';
 import EditProfilSubmitButton from '../components/EditProfilSubmitButton';
+import EditPwSubmitButton from '../components/EditPwSubmitButton';
 
 const axios = require('axios');
 
@@ -252,16 +252,11 @@ ou non les boutons pour modifier le profil, ainsi que l'adresse mail. */
 						<DeleteAccountButton handleDelete={handleDelete} />
 					)}
 					{isUser && !isToggled && (
-						<Button
-							sx={{
-								width: '30%',
-								marginRight: '4px',
-							}}
-							variant="contained"
-							onClick={changePw ? submitNewPw : editPw}
-						>
-							{changePw ? 'Terminer' : 'Changer de mot de passe'}
-						</Button>
+						<EditPwSubmitButton
+							changePw={changePw}
+							submitNewPw={submitNewPw}
+							editPw={editPw}
+						/>
 					)}
 				</Container>
 			</Container>
