@@ -18,6 +18,7 @@ import EditProfil from '../components/EditProfil';
 import EditPw from '../components/EditPw';
 import ProfilComponent from '../components/ProfilComponent';
 import useAuth from '../hooks/useAuth';
+import DeleteAccountButton from '../components/DeleteAccountButton';
 
 const axios = require('axios');
 
@@ -249,17 +250,7 @@ ou non les boutons pour modifier le profil, ainsi que l'adresse mail. */
 						</Button>
 					)}
 					{isUser && !isToggled && !changePw && (
-						<Button
-							sx={{
-								width: '30%',
-								marginRight: '4px',
-								backgroundColor: '#CB8EC8',
-							}}
-							variant="contained"
-							onClick={handleDelete}
-						>
-							Supprimer le compte
-						</Button>
+						<DeleteAccountButton handleDelete={() => handleDelete()} />
 					)}
 					{isUser && !isToggled && (
 						<Button
