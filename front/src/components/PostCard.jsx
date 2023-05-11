@@ -4,8 +4,8 @@
 import React from 'react';
 import axios from 'axios';
 import { useConfirm } from 'material-ui-confirm';
-import EditMessage from './EditMessage';
-import DisplayPosts from './DisplayPosts';
+import EditPost from './EditPost';
+import PostContent from './PostContent';
 import useAuth from '../hooks/useAuth';
 
 export default function Post({ message, setRefresh }) {
@@ -141,7 +141,7 @@ export default function Post({ message, setRefresh }) {
 	return (
 		<div>
 			{isToggled ? (
-				<EditMessage
+				<EditPost
 					handleClick={() => handleClick()}
 					onChange={(e) => handleChange(e)}
 					handleEditSubmit={() => handleEditSubmit()}
@@ -149,7 +149,7 @@ export default function Post({ message, setRefresh }) {
 					errorText={errorText}
 				/>
 			) : (
-				<DisplayPosts
+				<PostContent
 					key={oldMessage.id}
 					id={message.UserId}
 					body={oldMessage.body}

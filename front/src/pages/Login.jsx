@@ -101,7 +101,7 @@ export default function Login() {
 					/>
 					<CardContent>
 						<Typography gutterBottom variant="h6" component="div">
-							Bienvenue sur Groupomania
+							Bienvenue sur JoinUs
 						</Typography>
 						<Typography variant="body2" color="text.secondary">
 							Entrez, et détendez-vous!

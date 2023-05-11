@@ -12,7 +12,7 @@ import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
-export default function EditMessage({
+export default function EditPost({
 	onChange,
 	body,
 	handleEditSubmit,

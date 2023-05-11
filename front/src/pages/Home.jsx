@@ -18,7 +18,7 @@ import { TextField } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import Avatar from '@mui/material/Avatar';
 import Header from '../components/Header';
-import Post from '../components/Post';
+import PostCard from '../components/PostCard';
 import ScrollToTopButton from '../components/ScrollToTopButton';
 import useAuth from '../hooks/useAuth';
 
@@ -94,7 +94,7 @@ export default function Home() {
 
 	const posts = allPosts.map((message) => (
 		<div className="post" key={message.id}>
-			<Post message={message} setRefresh={setRefresh} />
+			<PostCard message={message} setRefresh={setRefresh} />
 		</div>
 	));
 

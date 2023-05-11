@@ -11,7 +11,7 @@ import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import { Button, CardActionArea, CardActions, IconButton } from '@mui/material';
 
-export default function DisplayPosts({
+export default function PostContent({
 	id,
 	body,
 	user,
