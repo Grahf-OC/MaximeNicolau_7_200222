@@ -13,7 +13,6 @@ import axios from 'axios';
 import { useTheme } from '@mui/material/styles';
 import FormControl from '@mui/material/FormControl';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { TextField } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import Avatar from '@mui/material/Avatar';
@@ -21,6 +20,7 @@ import Header from '../components/Header';
 import PostCard from '../components/PostCard';
 import ScrollToTopButton from '../components/ScrollToTopButton';
 import useAuth from '../hooks/useAuth';
+import UploadMessageImageButton from '../components/UploadMessageImageButton';
 
 export default function Home() {
 	const { auth } = useAuth();
@@ -51,13 +51,13 @@ export default function Home() {
 		fetchData();
 	}, [refresh]);
 
-	function handleChange(e) {
+	const handleChange = (e) => {
 		const { name, value, type, files } = e.target;
 		setPost((prev) => ({
 			...prev,
 			[name]: type === 'file' ? files[0] : value,
 		}));
-	}
+	};
 
 	// Création d'un post avec ou sans image.
 
@@ -142,24 +142,7 @@ export default function Home() {
 								/>
 							</Container>
 							<Stack direction="row" justifyContent="center">
-								<Button
-									sx={{ width: '15%', mr: 1 }}
-									color="primary"
-									variant="contained"
-									component="label"
-									htmlFor="upload-image"
-									startIcon={<PhotoCamera />}
-								>
-									<input
-										hidden
-										accept="image/*"
-										id="upload-image"
-										type="file"
-										name="picture"
-										onChange={(e) => handleChange(e)}
-									/>
-									Image
-								</Button>
+								<UploadMessageImageButton handleChange={handleChange} />
 								<InputLabel htmlFor="send-message" />
 								<Button
 									sx={{ width: '15%', ml: 1 }}

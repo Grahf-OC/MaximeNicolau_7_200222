@@ -95,13 +95,13 @@ ou non les boutons pour modifier le profil, ainsi que l'adresse mail. */
 	// Fonction qui fait passer changePw à true/false lorsqu'on appuie sur le bouton pour changer de mdp, ce qui permet d'afficher le composant pour changer de mdp.
 	const editPw = () => setChangePw((prev) => !prev);
 
-	function handleChange(e) {
+	const handleChange = (e) => {
 		const { name, value, type, files } = e.target;
 		setUser((prevUser) => ({
 			...prevUser,
 			[name]: type === 'file' ? files[0] : value,
 		}));
-	}
+	};
 
 	// Modification de l'email, du prénom ainsi que de la photo de profil.
 
@@ -208,7 +208,7 @@ ou non les boutons pour modifier le profil, ainsi que l'adresse mail. */
 						firstName={user.firstName}
 						email={user.email}
 						toggled={isToggled}
-						onChange={(e) => handleChange(e)}
+						handleChange={handleChange}
 					/>
 				) : (
 					!changePw && (
@@ -225,17 +225,17 @@ ou non les boutons pour modifier le profil, ainsi que l'adresse mail. */
 					<EditPw
 						key={user.id}
 						password={password}
-						setPassword={setPassword}
-						newPw={newPw}
-						setNewPw={setNewPw}
 						confirmNewPw={confirmNewPw}
-						setConfirmNewPw={setConfirmNewPw}
-						cancel={() => editPw()}
+						newPw={newPw}
 						wrongPasswords={wrongPasswords}
-						setWrongPasswords={setWrongPasswords}
 						incorrectPassword={incorrectPassword}
+						setPassword={setPassword}
+						setNewPw={setNewPw}
+						setConfirmNewPw={setConfirmNewPw}
+						cancel={editPw}
+						setWrongPasswords={setWrongPasswords}
 						setIncorrectPassword={setIncorrectPassword}
-						isInputValid={(regex, e) => isInputValid(regex, e)}
+						isInputValid={isInputValid}
 					/>
 				)}
 				<Container

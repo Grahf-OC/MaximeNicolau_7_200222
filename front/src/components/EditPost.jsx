@@ -10,10 +10,11 @@ import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import UploadEditImageButton from './UploadEditImageButton';
+// import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
 export default function EditPost({
-	onChange,
+	handleChange,
 	body,
 	handleEditSubmit,
 	errorText,
@@ -28,37 +29,20 @@ export default function EditPost({
 						name="body"
 						id="edit-message"
 						placeholder={body}
-						onChange={onChange}
+						onChange={(e) => handleChange(e)}
 						value={body}
 						variant="filled"
 						helperText={errorText}
 						error={errorText !== ''}
 					/>
 					<Stack direction="row" justifyContent="center">
-						<Button
-							color="primary"
-							variant="contained"
-							sx={{ width: '15%', mr: 1, mt: 1 }}
-							component="label"
-							htmlFor="edit-image"
-							startIcon={<PhotoCamera />}
-						>
-							<input
-								hidden
-								accept="image/*"
-								type="file"
-								id="edit-image"
-								name="picture"
-								onChange={onChange}
-							/>
-							Image
-						</Button>
+						<UploadEditImageButton handleChange={handleChange} />
 						<InputLabel htmlFor="send-edited-message" />
 						<Button
 							color="primary"
 							variant="contained"
 							id="send-edited-message"
-							onClick={handleEditSubmit}
+							onClick={() => handleEditSubmit()}
 							sx={{ width: '15%', mr: 1, mt: 1 }}
 						>
 							Publier
@@ -69,3 +53,22 @@ export default function EditPost({
 		</Box>
 	);
 }
+
+/* <Button
+color="primary"
+variant="contained"
+sx={{ width: '15%', mr: 1, mt: 1 }}
+component="label"
+htmlFor="edit-image"
+startIcon={<PhotoCamera />}
+>
+<input
+	hidden
+	accept="image/*"
+	type="file"
+	id="edit-image"
+	name="picture"
+	onChange={(e) => handleChange(e)}
+/>
+Image
+</Button> */

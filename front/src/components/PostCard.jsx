@@ -81,14 +81,14 @@ export default function Post({ message, setRefresh }) {
 		}
 	};
 
-	function handleChange(e) {
+	const handleChange = (e) => {
 		const { name, value, type, files } = e.target;
 		setOldMessage((prev) => ({
 			...prev,
 			[name]: type === 'file' ? files[0] : value,
 		}));
 		console.log(oldMessage);
-	}
+	};
 
 	// toggle pour vérifier si le post est en train d'être édité, afin de changer l'affichage.
 
@@ -142,9 +142,8 @@ export default function Post({ message, setRefresh }) {
 		<div>
 			{isToggled ? (
 				<EditPost
-					handleClick={() => handleClick()}
-					onChange={(e) => handleChange(e)}
-					handleEditSubmit={() => handleEditSubmit()}
+					handleChange={handleChange}
+					handleEditSubmit={handleEditSubmit}
 					body={oldMessage.body}
 					errorText={errorText}
 				/>

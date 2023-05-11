@@ -61,7 +61,8 @@ export default function EditPw({
 						/>
 
 						<p className="error">{incorrectPassword}</p>
-
+					</FormControl>
+					<FormControl>
 						<Typography
 							gutterBottom
 							variant="h6"
@@ -87,7 +88,8 @@ export default function EditPw({
 							value={newPw}
 						/>
 						<p className="error">{wrongPasswords}</p>
-
+					</FormControl>
+					<FormControl>
 						<Typography
 							gutterBottom
 							variant="h6"

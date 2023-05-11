@@ -6,12 +6,16 @@ import React from 'react';
 import Container from '@mui/material/Container';
 import FormControl from '@mui/material/FormControl';
 import { InputLabel, OutlinedInput } from '@mui/material';
-import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import CardMedia from '@mui/material/CardMedia';
+import UploadProfileImageButton from './UploadProfileImageButton';
 
-export default function EditProfil({ firstName, email, picture, onChange }) {
+export default function EditProfil({
+	firstName,
+	email,
+	picture,
+	handleChange,
+}) {
 	return (
 		<Box>
 			<Container
@@ -32,25 +36,7 @@ export default function EditProfil({ firstName, email, picture, onChange }) {
 					image={picture}
 					alt="Photo de profil"
 				/>
-
-				<Button
-					sx={{ width: '15%', mr: 1, mb: 2 }}
-					color="primary"
-					variant="contained"
-					component="label"
-					htmlFor="Profile-picture"
-					startIcon={<PhotoCamera />}
-				>
-					<input
-						hidden
-						accept="image/*"
-						id="Profile-picture"
-						type="file"
-						name="picture"
-						onChange={onChange}
-					/>
-					Photo
-				</Button>
+				<UploadProfileImageButton handleChange={handleChange} />
 			</Container>
 			<Container
 				sx={{
@@ -70,7 +56,7 @@ export default function EditProfil({ firstName, email, picture, onChange }) {
 						id="Prénom"
 						placeholder={firstName}
 						name="firstName"
-						onChange={onChange}
+						onChange={(e) => handleChange(e)}
 						value={firstName}
 						label="Prénom"
 					/>
@@ -82,7 +68,7 @@ export default function EditProfil({ firstName, email, picture, onChange }) {
 						id="email"
 						placeholder={email}
 						name="email"
-						onChange={onChange}
+						onChange={(e) => handleChange(e)}
 						value={email}
 						label="Email"
 					/>
