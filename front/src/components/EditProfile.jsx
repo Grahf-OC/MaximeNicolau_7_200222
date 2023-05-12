@@ -1,14 +1,13 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable react/prop-types */
 /* eslint-disable no-console */
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
 import Container from '@mui/material/Container';
-import FormControl from '@mui/material/FormControl';
-import { InputLabel, OutlinedInput } from '@mui/material';
 import Box from '@mui/material/Box';
 import CardMedia from '@mui/material/CardMedia';
-import UploadProfileImageButton from './UploadProfileImageButton';
+import UploadProfileImageButton from './Buttons/UploadProfileImageButton';
+import FirstNameInput from './Form/FirstnameInput';
+import EmailInput from './Form/EmailInput';
 
 export default function EditProfil({
 	firstName,
@@ -49,30 +48,9 @@ export default function EditProfil({
 					},
 				}}
 			>
-				<FormControl fullWidth>
-					<InputLabel htmlFor="Prénom">Prénom</InputLabel>
-					<OutlinedInput
-						sx={{ mb: 2 }}
-						id="Prénom"
-						placeholder={firstName}
-						name="firstName"
-						onChange={(e) => handleChange(e)}
-						value={firstName}
-						label="Prénom"
-					/>
-				</FormControl>
-				<FormControl fullWidth>
-					<InputLabel htmlFor="email">Email</InputLabel>
-					<OutlinedInput
-						type="email"
-						id="email"
-						placeholder={email}
-						name="email"
-						onChange={(e) => handleChange(e)}
-						value={email}
-						label="Email"
-					/>
-				</FormControl>
+				<FirstNameInput firstName={firstName} handleChange={handleChange} />
+
+				<EmailInput email={email} handleChange={handleChange} />
 			</Container>
 		</Box>
 	);

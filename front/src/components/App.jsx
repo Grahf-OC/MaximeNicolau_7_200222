@@ -11,8 +11,8 @@ import RequireAuth from './RequireAuth';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
-import Profil from '../pages/Profil';
-import Membres from '../pages/Membres';
+import Profile from '../pages/Profile';
+import Members from '../pages/Members';
 import { AuthProvider } from '../context/AuthProvider';
 import { ToggleColorMode } from '../context/ColorModeContext';
 
@@ -31,8 +31,8 @@ export default function App() {
 							{/* Protected Routes */}
 							<Route element={<RequireAuth />}>
 								<Route path="/" element={<Home />} />
-								<Route path="/membres" element={<Membres />} />
-								<Route path="/profil/:id" element={<Profil />} />
+								<Route path="/membres" element={<Members />} />
+								<Route path="/profil/:id" element={<Profile />} />
 							</Route>
 						</Routes>
 					</AuthProvider>

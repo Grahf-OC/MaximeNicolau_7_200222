@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable react/prop-types */
 /* eslint-disable no-console */
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
@@ -10,8 +9,7 @@ import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
-import UploadEditImageButton from './UploadEditImageButton';
-// import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import UploadEditImageButton from './Buttons/UploadEditImageButton';
 
 export default function EditPost({
 	handleChange,
@@ -53,22 +51,3 @@ export default function EditPost({
 		</Box>
 	);
 }
-
-/* <Button
-color="primary"
-variant="contained"
-sx={{ width: '15%', mr: 1, mt: 1 }}
-component="label"
-htmlFor="edit-image"
-startIcon={<PhotoCamera />}
->
-<input
-	hidden
-	accept="image/*"
-	type="file"
-	id="edit-image"
-	name="picture"
-	onChange={(e) => handleChange(e)}
-/>
-Image
-</Button> */

@@ -1,6 +1,5 @@
 /* eslint-disable no-alert */
 /* eslint-disable no-console */
-/* eslint-disable react/prop-types */
 import React from 'react';
 import axios from 'axios';
 import { useConfirm } from 'material-ui-confirm';

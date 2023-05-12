@@ -131,39 +131,6 @@ export default function Sidebar() {
 						</ListItemButton>
 					</Toolbar>
 				</AppBar>
-
-				/* 
-				<Stack
-					direction="row"
-					sx={{
-						position: 'sticky',
-						top: '0px',
-						margin: 2,
-						padding: 2,
-					}}
-				>
-					<ListItemButton component={Link} to="/">
-						<HomeIcon />
-					</ListItemButton>
-
-					<ListItemButton component={Link} to="/membres">
-						<GroupsIcon />
-					</ListItemButton>
-
-					{auth.token && (
-						<ListItemButton component={Link} to={`/profil/${auth.user.id}`}>
-							<AccountCircleIcon />
-						</ListItemButton>
-					)}
-
-					<ListItemButton onClick={logout}>
-						<LogoutIcon />
-					</ListItemButton>
-
-					<ListItemButton onClick={colorMode.toggleColorMode} checked={checked}>
-						<ModeNightIcon />
-					</ListItemButton>
-				</Stack> */
 			)}
 		</Box>
 	);

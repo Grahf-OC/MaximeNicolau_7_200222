@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import Button from '@mui/material/Button';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';

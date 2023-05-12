@@ -7,20 +7,18 @@ import React from 'react';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import '../styles/index.css';
 import axios from 'axios';
 import { useTheme } from '@mui/material/styles';
 import FormControl from '@mui/material/FormControl';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { TextField } from '@mui/material';
-import InputLabel from '@mui/material/InputLabel';
-import Avatar from '@mui/material/Avatar';
 import Header from '../components/Header';
-import PostCard from '../components/PostCard';
-import ScrollToTopButton from '../components/ScrollToTopButton';
 import useAuth from '../hooks/useAuth';
-import UploadMessageImageButton from '../components/UploadMessageImageButton';
+import PostCard from '../components/PostCard';
+import ScrollToTopButton from '../components/Buttons/ScrollToTopButton';
+import UploadMessageImageButton from '../components/Buttons/UploadMessageImageButton';
+import SendMessageButton from '../components/Buttons/SendMessageButton';
+import InputSendMessage from '../components/InputSendMessage';
 
 export default function Home() {
 	const { auth } = useAuth();
@@ -93,7 +91,7 @@ export default function Home() {
 	// .map qui affiche tous les messages sur la page.
 
 	const posts = allPosts.map((message) => (
-		<div className="post" key={message.id}>
+		<div key={message.id}>
 			<PostCard message={message} setRefresh={setRefresh} />
 		</div>
 	));
@@ -120,39 +118,15 @@ export default function Home() {
 				>
 					<Box component="form">
 						<FormControl fullWidth>
-							<Container
-								sx={{ display: 'flex', alignItems: 'center', mt: 2, mb: 2 }}
-							>
-								<Avatar
-									sx={{ width: 55, height: 55, marginRight: 2 }}
-									alt="Photo de profil"
-									src={auth.user.picture}
-								/>
-								<InputLabel htmlFor="post-message" />
-								<TextField
-									fullWidth
-									multiline
-									placeholder={`Quoi de neuf ${auth.user.firstName}?`}
-									id="post-message"
-									name="body"
-									onChange={(e) => handleChange(e)}
-									value={post.body}
-									error={errorText !== ''}
-									helperText={errorText}
-								/>
-							</Container>
+							<InputSendMessage
+								handleChange={handleChange}
+								post={post}
+								errorText={errorText}
+							/>
+
 							<Stack direction="row" justifyContent="center">
 								<UploadMessageImageButton handleChange={handleChange} />
-								<InputLabel htmlFor="send-message" />
-								<Button
-									sx={{ width: '15%', ml: 1 }}
-									id="send-message"
-									variant="contained"
-									type="submit"
-									onClick={handleSubmit}
-								>
-									Publier
-								</Button>
+								<SendMessageButton handleSubmit={handleSubmit} />
 							</Stack>
 						</FormControl>
 					</Box>

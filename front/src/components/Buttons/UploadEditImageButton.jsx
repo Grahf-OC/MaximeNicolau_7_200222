@@ -1,23 +1,22 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import Button from '@mui/material/Button';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
-export default function UploadMessageImageButton({ handleChange }) {
+export default function UploadEditImageButton({ handleChange }) {
 	return (
 		<Button
-			sx={{ width: '15%', mr: 1 }}
 			color="primary"
 			variant="contained"
+			sx={{ width: '15%', mr: 1, mt: 1 }}
 			component="label"
-			htmlFor="upload-image"
+			htmlFor="edit-image"
 			startIcon={<PhotoCamera />}
 		>
 			<input
 				hidden
 				accept="image/*"
-				id="upload-image"
 				type="file"
+				id="edit-image"
 				name="picture"
 				onChange={(e) => handleChange(e)}
 			/>

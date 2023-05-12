@@ -1,8 +1,7 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import Button from '@mui/material/Button';
 
-export default function EditProfilSubmitButton({
+export default function EditProfileSubmitButton({
 	handleSubmit,
 	editProfil,
 	isToggled,

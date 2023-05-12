@@ -7,7 +7,7 @@ import '../styles/index.css';
 import axios from 'axios';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
-import { CardActionArea, OutlinedInput } from '@mui/material';
+import { CardActionArea, InputLabel, OutlinedInput } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import FormControl from '@mui/material/FormControl';
@@ -124,13 +124,7 @@ export default function Login() {
 			>
 				<Container>
 					<FormControl>
-						<Typography
-							gutterBottom
-							variant="h6"
-							sx={{ marginLeft: 2, fontsize: 10 }}
-						>
-							Adresse email:
-						</Typography>
+						<InputLabel htmlFor="email">Email</InputLabel>
 						<OutlinedInput
 							type="email"
 							placeholder="Email adress"
@@ -140,6 +134,7 @@ export default function Login() {
 								setWrongId('');
 							}}
 							value={email}
+							label="Email"
 						/>
 
 						<p className="error">{wrongId}</p>
