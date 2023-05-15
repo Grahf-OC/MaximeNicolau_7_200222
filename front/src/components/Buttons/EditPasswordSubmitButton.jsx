@@ -1,7 +1,11 @@
 import React from 'react';
 import Button from '@mui/material/Button';
 
-export default function EditPwSubmitButton({ submitNewPw, editPw, changePw }) {
+export default function EditPasswordSubmitButton({
+	submitNewPassword,
+	editPw,
+	changePw,
+}) {
 	return (
 		<Button
 			sx={{
@@ -9,7 +13,7 @@ export default function EditPwSubmitButton({ submitNewPw, editPw, changePw }) {
 				marginRight: '4px',
 			}}
 			variant="contained"
-			onClick={changePw ? (e) => submitNewPw(e) : () => editPw()}
+			onClick={changePw ? (e) => submitNewPassword(e) : () => editPw()}
 		>
 			{changePw ? 'Terminer' : 'Changer de mot de passe'}
 		</Button>

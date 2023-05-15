@@ -111,7 +111,7 @@ exports.modifyPassword = async (req, res) => {
     const match = await bcrypt.compare(req.body.password, user.password);
 
     if (match) {
-      const hash = await bcrypt.hash(req.body.newPw, 10);
+      const hash = await bcrypt.hash(req.body.newPassword, 10);
       user.password = hash;
       await user.save({
         fields: ['password'],

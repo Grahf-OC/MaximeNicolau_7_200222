@@ -41,14 +41,10 @@ export default function Sidebar() {
 						position: 'fixed',
 
 						width: {
-							xs: '100%',
-							sm: '80%',
-							md: '15%',
-							lg: '15%',
-							xl: '15%',
+							lg: '20%',
+							xl: '20%',
 						},
-						margin: 2,
-						padding: 2,
+						mt: 5,
 					}}
 				>
 					<List>
@@ -98,7 +94,12 @@ export default function Sidebar() {
 				</Stack>
 			) : (
 				<AppBar>
-					<Toolbar sx={{ justifyContent: 'center' }}>
+					<Toolbar
+						position="fixed"
+						sx={{
+							justifyContent: 'center',
+						}}
+					>
 						<ListItemButton component={Link} to="/" title="Page d'accueil">
 							<HomeIcon />
 						</ListItemButton>

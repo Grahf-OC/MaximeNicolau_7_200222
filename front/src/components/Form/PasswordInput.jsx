@@ -12,7 +12,7 @@ export default function PasswordInput({
 		<FormControl fullWidth>
 			<InputLabel htmlFor="password" />
 			<TextField
-				sx={{ mt: 2 }}
+				sx={{ mt: 2, mb: 2 }}
 				type="password"
 				id="password"
 				placeholder="Mot de passe actuel"

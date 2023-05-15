@@ -100,23 +100,35 @@ export default function Home() {
 		<Box>
 			<Stack direction={matches ? 'row' : 'column'}>
 				<Header />
+
 				<Stack
 					sx={{
 						width: {
 							xs: '100%',
-							sm: '90%',
-							md: '80%',
+							sm: '100%',
+							md: '100%',
 							lg: '60%',
 							xl: '50%',
 						},
-						marginTop: { xs: 7, sm: 7, md: 7, lg: 'auto', xl: 'auto' },
+						marginTop: { xs: 9, sm: 10, md: 8, lg: 5, xl: 5 },
 						marginRight: 'auto',
 						marginBottom: 'auto',
 						marginLeft: 'auto',
-						padding: 2,
+						padding: { md: 2, lg: 2, xl: 2 },
 					}}
 				>
-					<Box component="form">
+					<Container
+						component="form"
+						sx={{
+							width: {
+								xs: '100%',
+								sm: '100%',
+								md: '90%',
+								lg: '100%',
+								xl: '100%',
+							},
+						}}
+					>
 						<FormControl fullWidth>
 							<InputSendMessage
 								handleChange={handleChange}
@@ -124,15 +136,15 @@ export default function Home() {
 								errorText={errorText}
 							/>
 
-							<Stack direction="row" justifyContent="center">
+							<Stack direction="row" justifyContent="center" sx={{ mb: 2 }}>
 								<UploadMessageImageButton handleChange={handleChange} />
 								<SendMessageButton handleSubmit={handleSubmit} />
 							</Stack>
 						</FormControl>
-					</Box>
-
-					<Container>{posts}</Container>
+					</Container>
+					{posts}
 				</Stack>
+
 				<ScrollToTopButton />
 			</Stack>
 		</Box>

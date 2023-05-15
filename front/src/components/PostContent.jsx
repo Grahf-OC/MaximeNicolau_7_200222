@@ -26,7 +26,7 @@ export default function PostContent({
 	handleLike,
 }) {
 	return (
-		<Card sx={{ maxWidth: 850, margin: 6, padding: 'auto' }}>
+		<Card sx={{ margin: 1, padding: 'auto' }}>
 			<Link to={`/profil/${id}`} style={{ textDecoration: 'none' }}>
 				<CardActionArea>
 					<Stack

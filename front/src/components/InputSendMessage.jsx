@@ -9,7 +9,7 @@ export default function InputSendMessage({ handleChange, post, errorText }) {
 	const { auth } = useAuth();
 
 	return (
-		<Container sx={{ display: 'flex', alignItems: 'center', mt: 2, mb: 2 }}>
+		<Container sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
 			<Avatar
 				sx={{ width: 55, height: 55, marginRight: 2 }}
 				alt="Photo de profil"

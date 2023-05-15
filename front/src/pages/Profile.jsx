@@ -19,7 +19,7 @@ import ProfileComponent from '../components/ProfileComponent';
 import useAuth from '../hooks/useAuth';
 import DeleteAccountButton from '../components/Buttons/DeleteAccountButton';
 import EditProfileSubmitButton from '../components/Buttons/EditProfileSubmitButton';
-import EditPwSubmitButton from '../components/Buttons/EditPwSubmitButton';
+import EditPasswordSubmitButton from '../components/Buttons/EditPasswordSubmitButton';
 
 const axios = require('axios');
 
@@ -29,8 +29,8 @@ export default function Profil() {
 	const [user, setUser] = React.useState({});
 	const [changePw, setChangePw] = React.useState(false);
 	const [password, setPassword] = React.useState('');
-	const [newPw, setNewPw] = React.useState('');
-	const [confirmNewPw, setConfirmNewPw] = React.useState('');
+	const [newPassword, setNewPassword] = React.useState('');
+	const [confirmNewPassword, setConfirmNewPassword] = React.useState('');
 	const [wrongPasswords, setWrongPasswords] = React.useState('');
 	const [incorrectPassword, setIncorrectPassword] = React.useState('');
 	const [securedPassword, setSecuredPassword] = React.useState(false);
@@ -146,10 +146,10 @@ ou non les boutons pour modifier le profil, ainsi que l'adresse mail. */
 
 	// Envoi du nouveau mot de passe, après avoir vérifié l'ancien mdp, et la force du nouveau mdp.
 
-	const submitNewPw = async (e) => {
+	const submitNewPassword = async (e) => {
 		e.preventDefault();
 
-		if (newPw === confirmNewPw) {
+		if (newPassword === confirmNewPassword) {
 			if (securedPassword === true) {
 				try {
 					const config = {
@@ -157,7 +157,7 @@ ou non les boutons pour modifier le profil, ainsi que l'adresse mail. */
 							Authorization: `Bearer ${authToken}`,
 						},
 					};
-					const form = { password, newPw };
+					const form = { password, newPassword };
 					const result = await axios.put(
 						`http://localhost:3000/api/user/${id}/password`,
 						form,
@@ -165,6 +165,12 @@ ou non les boutons pour modifier le profil, ainsi que l'adresse mail. */
 					);
 					setRefresh((prev) => !prev);
 					setChangePw((prev) => !prev);
+					setIncorrectPassword('');
+					setWrongPasswords('');
+					setPassword('');
+					setNewPassword('');
+					setConfirmNewPassword('');
+
 					return console.log(result);
 				} catch (error) {
 					console.log(error);
@@ -184,7 +190,13 @@ ou non les boutons pour modifier le profil, ainsi que l'adresse mail. */
 			<Header />
 			<Container
 				sx={{
-					marginTop: 8,
+					marginTop: {
+						xs: 8,
+						sm: 8,
+						md: 8,
+						lg: 2,
+						xl: 2,
+					},
 					width: {
 						xs: '100%',
 						sm: '100%',
@@ -225,13 +237,13 @@ ou non les boutons pour modifier le profil, ainsi que l'adresse mail. */
 					<EditPw
 						key={user.id}
 						password={password}
-						confirmNewPw={confirmNewPw}
-						newPw={newPw}
+						confirmNewPw={confirmNewPassword}
+						newPassword={newPassword}
 						wrongPasswords={wrongPasswords}
 						incorrectPassword={incorrectPassword}
 						setPassword={setPassword}
-						setNewPw={setNewPw}
-						setConfirmNewPw={setConfirmNewPw}
+						setNewPassword={setNewPassword}
+						setConfirmNewPassword={setConfirmNewPassword}
 						cancel={editPw}
 						setWrongPasswords={setWrongPasswords}
 						setIncorrectPassword={setIncorrectPassword}
@@ -252,9 +264,9 @@ ou non les boutons pour modifier le profil, ainsi que l'adresse mail. */
 						<DeleteAccountButton handleDelete={handleDelete} />
 					)}
 					{isUser && !isToggled && (
-						<EditPwSubmitButton
+						<EditPasswordSubmitButton
 							changePw={changePw}
-							submitNewPw={submitNewPw}
+							submitNewPassword={submitNewPassword}
 							editPw={editPw}
 						/>
 					)}

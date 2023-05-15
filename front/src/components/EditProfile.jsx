@@ -43,8 +43,8 @@ export default function EditProfil({
 						xs: '92%',
 						sm: '70%',
 						md: '70%',
-						lg: '50%',
-						xl: '40%',
+						lg: '70%',
+						xl: '60%',
 					},
 				}}
 			>

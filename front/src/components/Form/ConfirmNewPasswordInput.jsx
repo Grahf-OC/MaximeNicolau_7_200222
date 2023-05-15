@@ -3,25 +3,24 @@ import FormControl from '@mui/material/FormControl';
 import { InputLabel, TextField } from '@mui/material';
 
 export default function ConfirmNewPasswordInput({
-	setConfirmNewPw,
+	setConfirmNewPassword,
 	setWrongPasswords,
-	confirmNewPw,
+	confirmNewPassword,
 	wrongPasswords,
 }) {
 	return (
 		<FormControl fullWidth>
-			<InputLabel htmlFor="confirmNewPw" />
+			<InputLabel htmlFor="confirmNewPassword" />
 			<TextField
 				type="password"
-				id="confirmNewPw"
+				id="confirmNewPassword"
 				placeholder="Confirmer nouveau mot de passe"
-				name="confirmNewPw"
+				name="confirmNewPassword"
 				onChange={(e) => {
-					setConfirmNewPw(e.target.value);
+					setConfirmNewPassword(e.target.value);
 					setWrongPasswords('');
-					console.log(wrongPasswords);
 				}}
-				value={confirmNewPw}
+				value={confirmNewPassword}
 				label="Confirmer nouveau mot de passe"
 				error={wrongPasswords !== ''}
 				helperText={wrongPasswords}

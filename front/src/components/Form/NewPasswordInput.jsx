@@ -3,29 +3,30 @@ import FormControl from '@mui/material/FormControl';
 import { InputLabel, TextField } from '@mui/material';
 
 export default function NewPasswordInput({
-	setNewPw,
+	setNewPassword,
 	setWrongPasswords,
-	newPw,
+	newPassword,
 	isInputValid,
 	wrongPasswords,
 }) {
 	return (
 		<FormControl fullWidth>
-			<InputLabel htmlFor="newPw" />
+			<InputLabel htmlFor="newPassword" />
 			<TextField
+				sx={{ mb: 2 }}
 				type="password"
-				id="newPw"
+				id="newPassword"
 				placeholder="Nouveau mot de passe"
-				name="newPw"
+				name="newPassword"
 				onChange={(e) => {
-					setNewPw(e.target.value);
+					setNewPassword(e.target.value);
 					setWrongPasswords('');
 					isInputValid(
 						/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
 						e.target.value
 					);
 				}}
-				value={newPw}
+				value={newPassword}
 				label="Nouveau mot de passe"
 				error={wrongPasswords !== ''}
 				helperText={wrongPasswords}
