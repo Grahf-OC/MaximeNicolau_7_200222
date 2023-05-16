@@ -79,9 +79,7 @@ export default function Home() {
 
 				return console.log(result);
 			}
-			setErrorText(
-				'Le message ne doit pas être vide et doit contenir moins de 255 characters.'
-			);
+			setErrorText('Ne doit pas être vide et moins de 255 signes.');
 			return console.log(errorText);
 		} catch (error) {
 			return console.log(error);
@@ -134,6 +132,7 @@ export default function Home() {
 								handleChange={handleChange}
 								post={post}
 								errorText={errorText}
+								setErrorText={setErrorText}
 							/>
 
 							<Stack direction="row" justifyContent="center" sx={{ mb: 2 }}>

@@ -5,13 +5,23 @@ import { TextField } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import useAuth from '../hooks/useAuth';
 
-export default function InputSendMessage({ handleChange, post, errorText }) {
+export default function InputSendMessage({
+	handleChange,
+	post,
+	errorText,
+	setErrorText,
+}) {
 	const { auth } = useAuth();
 
 	return (
 		<Container sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
 			<Avatar
-				sx={{ width: 55, height: 55, marginRight: 2 }}
+				sx={{
+					width: 55,
+					height: 55,
+					marginRight: 2,
+					mb: errorText ? 3 : 0,
+				}}
 				alt="Photo de profil"
 				src={auth.user.picture}
 			/>
@@ -22,7 +32,10 @@ export default function InputSendMessage({ handleChange, post, errorText }) {
 				placeholder={`Quoi de neuf ${auth.user.firstName}?`}
 				id="post-message"
 				name="body"
-				onChange={(e) => handleChange(e)}
+				onChange={(e) => {
+					handleChange(e);
+					setErrorText('');
+				}}
 				value={post.body}
 				error={errorText !== ''}
 				helperText={errorText}
