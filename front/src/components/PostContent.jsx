@@ -25,6 +25,17 @@ export default function PostContent({
 	handleClick,
 	handleLike,
 }) {
+	const [objectFitStyle, setObjectFitStyle] = React.useState('contain');
+
+	const handleImageLoad = (event) => {
+		const { naturalHeight, naturalWidth } = event.target;
+		if (naturalHeight > naturalWidth) {
+			setObjectFitStyle('contain');
+		} else {
+			setObjectFitStyle('cover');
+		}
+	};
+
 	return (
 		<Card sx={{ margin: 1, padding: 'auto' }}>
 			<Link to={`/profil/${id}`} style={{ textDecoration: 'none' }}>
@@ -38,8 +49,9 @@ export default function PostContent({
 							sx={{
 								width: 55,
 								height: 55,
-								marginLeft: '5px',
-								marginBottom: '4px',
+								ml: 2,
+								mb: 1,
+								mt: 1,
 							}}
 							alt="Photo de profil"
 							src={profile}
@@ -70,10 +82,10 @@ export default function PostContent({
 					{picture && (
 						<CardMedia
 							component="img"
-							height="250"
 							image={picture}
 							alt={alt}
-							sx={{ objectFit: 'cover' }}
+							onLoad={handleImageLoad}
+							sx={{ maxHeight: 400, objectFit: objectFitStyle }}
 						/>
 					)}
 					<CardContent sx={{ overflowWrap: 'anywhere' }}>
