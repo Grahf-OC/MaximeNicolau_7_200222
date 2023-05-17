@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 import '../styles/index.css';
-import CardMedia from '@mui/material/CardMedia';
+import Avatar from '@mui/material/Avatar';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -13,13 +13,12 @@ export default function ProfilComponent({ picture, firstName, email, isUser }) {
 		<Box>
 			<Card>
 				<Container sx={{ display: 'flex', justifyContent: 'center' }}>
-					<CardMedia
+					<Avatar
 						sx={{
-							maxWidth: 200,
+							width: 200,
+							height: 200,
 						}}
-						component="img"
-						height="240"
-						image={picture}
+						src={picture}
 						alt="Photo de profil"
 					/>
 				</Container>

@@ -85,7 +85,7 @@ export default function PostContent({
 							image={picture}
 							alt={alt}
 							onLoad={handleImageLoad}
-							sx={{ maxHeight: 400, objectFit: objectFitStyle }}
+							sx={{ maxHeight: 500, objectFit: objectFitStyle }}
 						/>
 					)}
 					<CardContent sx={{ overflowWrap: 'anywhere' }}>

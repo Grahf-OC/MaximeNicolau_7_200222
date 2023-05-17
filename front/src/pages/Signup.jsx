@@ -5,14 +5,16 @@ import '../styles/index.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Box from '@mui/material/Box';
-import { CardActionArea } from '@mui/material';
+import { CardActionArea, InputLabel, TextField } from '@mui/material';
+import FormControl from '@mui/material/FormControl';
+import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import logo from '../images/icon-above-font.png';
+import logo from '../images/logo-join-us.jpg';
 import useAuth from '../hooks/useAuth';
 
 export default function Signup() {
@@ -118,69 +120,107 @@ export default function Signup() {
 					justifyContent: 'center',
 				}}
 			>
-				<form className="form" onSubmit={handleSubmit}>
-					<input
-						type="email"
-						placeholder="Adresse email"
-						className="form--input"
-						name="email"
-						onChange={(e) => {
-							setEmail(e.target.value);
-							setCheckNotEmpty('');
-						}}
-						value={email}
-					/>
+				<Container
+					sx={{
+						display: 'flex',
+						flexDirection: 'column',
+						alignItems: 'center',
+						marginTop: 5,
+					}}
+				>
+					<FormControl fullWidth>
+						<InputLabel htmlFor="email" />
+						<TextField
+							type="email"
+							id="email"
+							placeholder="Adresse email"
+							name="email"
+							onChange={(e) => {
+								setEmail(e.target.value);
+								setCheckNotEmpty('');
+							}}
+							value={email}
+							label="Email"
+							sx={{ mb: 2 }}
+							error={checkNotEmpty !== ''}
+							helperText={checkNotEmpty}
+						/>
+					</FormControl>
 
-					<input
-						type="firstName"
-						placeholder="Prénom"
-						className="form--input"
-						name="firstName"
-						onChange={(e) => {
-							setFirstName(e.target.value);
-							setCheckNotEmpty('');
-						}}
-						value={firstName}
-					/>
+					<FormControl fullWidth>
+						<InputLabel htmlFor="firstName" />
+						<TextField
+							type="firstName"
+							id="firstName"
+							placeholder="Prénom"
+							name="firstName"
+							onChange={(e) => {
+								setFirstName(e.target.value);
+								setCheckNotEmpty('');
+							}}
+							value={firstName}
+							label="Prénom"
+							sx={{ mb: 2 }}
+							error={checkNotEmpty !== ''}
+							helperText={checkNotEmpty}
+						/>
+					</FormControl>
 
-					<p className="error">{checkNotEmpty}</p>
+					<FormControl fullWidth>
+						<InputLabel htmlFor="password" />
+						<TextField
+							type="password"
+							id="password"
+							placeholder="Mot de passe"
+							name="password"
+							onChange={(e) => {
+								setPassword(e.target.value);
+								setWrongPasswords('');
+								setCheckNotEmpty('');
+								isInputValid(
+									/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
+									e.target.value
+								);
+							}}
+							value={password}
+							label="Mot de passe"
+							sx={{ mb: 2 }}
+							error={wrongPasswords !== ''}
+							helperText={wrongPasswords}
+						/>
+					</FormControl>
 
-					<input
-						type="password"
-						placeholder="Mot de passe"
-						className="form--input"
-						name="password"
-						onChange={(e) => {
-							setPassword(e.target.value);
-							setWrongPasswords('');
-							setCheckNotEmpty('');
-							isInputValid(
-								/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
-								e.target.value
-							);
-						}}
-						value={password}
-					/>
+					<FormControl fullWidth>
+						<InputLabel htmlFor="confirmPassword" />
+						<TextField
+							type="password"
+							id="confirmPassword"
+							placeholder="Confirmer le mot de passe"
+							name="confirmPassword"
+							onChange={(e) => {
+								setConfirmPassword(e.target.value);
+								setWrongPasswords('');
+								setCheckNotEmpty('');
+							}}
+							value={confirmPassword}
+							label="Confirmer mot de passe"
+							sx={{ mb: 2 }}
+							error={wrongPasswords !== ''}
+							helperText={wrongPasswords}
+						/>
+					</FormControl>
 
-					<input
-						type="password"
-						placeholder="Confirmer le mot de passe"
-						className="form--input"
-						name="confirmPassword"
-						onChange={(e) => {
-							setConfirmPassword(e.target.value);
-							setWrongPasswords('');
-							setCheckNotEmpty('');
-						}}
-						value={confirmPassword}
-					/>
-					<p className="error">{wrongPasswords}</p>
-
-					<Button variant="contained" type="submit" sx={{ marginTop: '10px' }}>
+					<Button
+						variant="contained"
+						type="submit"
+						sx={{ marginTop: '10px' }}
+						onClick={handleSubmit}
+					>
 						S&apos;inscrire
 					</Button>
-				</form>
+				</Container>
 			</Box>
+
 			<Button
 				sx={{ marginTop: '5px' }}
 				variant="contained"

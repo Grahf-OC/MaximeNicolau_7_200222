@@ -7,7 +7,7 @@ import '../styles/index.css';
 import axios from 'axios';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
-import { CardActionArea, InputLabel, OutlinedInput } from '@mui/material';
+import { CardActionArea, InputLabel, TextField } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import FormControl from '@mui/material/FormControl';
@@ -21,7 +21,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import logo from '../images/icon-above-font.png';
+import logo from '../images/logo-join-us.jpg';
 import useAuth from '../hooks/useAuth';
 
 export default function Login() {
@@ -97,7 +97,7 @@ export default function Login() {
 						component="img"
 						height="180"
 						image={logo}
-						alt="Logo groupomania"
+						alt="Logo JoinUs"
 					/>
 					<CardContent>
 						<Typography gutterBottom variant="h6" component="div">
@@ -112,22 +112,29 @@ export default function Login() {
 			<Box
 				sx={{
 					width: {
-						xs: '200%',
-						sm: '180%',
-						md: '120%',
-						lg: '100%',
-						xl: '100%',
+						xs: '100%',
+						sm: '80%',
+						md: '50%',
+						lg: '30%',
+						xl: '30%',
 					},
 					display: 'flex',
 					justifyContent: 'center',
 				}}
 			>
-				<Container>
-					<FormControl>
-						<InputLabel htmlFor="email">Email</InputLabel>
-						<OutlinedInput
+				<Container
+					sx={{
+						display: 'flex',
+						flexDirection: 'column',
+						alignItems: 'center',
+						marginTop: 5,
+					}}
+				>
+					<FormControl fullWidth>
+						<InputLabel htmlFor="email" />
+						<TextField
 							type="email"
-							placeholder="Email adress"
+							id="email"
 							name="email"
 							onChange={(e) => {
 								setEmail(e.target.value);
@@ -135,20 +142,17 @@ export default function Login() {
 							}}
 							value={email}
 							label="Email"
+							sx={{ mb: 5 }}
+							error={wrongId !== ''}
+							helperText={wrongId}
 						/>
+					</FormControl>
+					<FormControl fullWidth>
+						<InputLabel htmlFor="password" />
 
-						<p className="error">{wrongId}</p>
-
-						<Typography
-							gutterBottom
-							variant="h6"
-							sx={{ marginLeft: 2, fontsize: 10 }}
-						>
-							Mot de passe:
-						</Typography>
-
-						<OutlinedInput
+						<TextField
 							type="password"
+							id="password"
 							placeholder="Password"
 							name="password"
 							onChange={(e) => {
@@ -156,6 +160,10 @@ export default function Login() {
 								setWrongId('');
 							}}
 							value={password}
+							label="Mot de passe"
+							sx={{ mb: 5 }}
+							error={wrongId !== ''}
+							helperText={wrongId}
 						/>
 						<Button variant="contained" type="submit" onClick={handleSubmit}>
 							Se connecter
