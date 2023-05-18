@@ -4,7 +4,7 @@
 import React from 'react';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import CardMedia from '@mui/material/CardMedia';
+import Avatar from '@mui/material/Avatar';
 import UploadProfileImageButton from './Buttons/UploadProfileImageButton';
 import FirstNameInput from './Form/FirstnameInput';
 import EmailInput from './Form/EmailInput';
@@ -22,17 +22,15 @@ export default function EditProfil({
 					display: 'flex',
 					flexDirection: 'column',
 					alignItems: 'center',
-					marginTop: '10px',
 				}}
 			>
-				<CardMedia
+				<Avatar
 					sx={{
-						maxWidth: 200,
-						marginBottom: '10px',
+						width: 200,
+						height: 200,
+						mb: 3,
 					}}
-					component="img"
-					height="240"
-					image={picture}
+					src={picture}
 					alt="Photo de profil"
 				/>
 				<UploadProfileImageButton handleChange={handleChange} />

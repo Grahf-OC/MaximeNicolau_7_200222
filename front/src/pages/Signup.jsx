@@ -5,16 +5,14 @@ import '../styles/index.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Box from '@mui/material/Box';
-import { CardActionArea, InputLabel, TextField } from '@mui/material';
+import { InputLabel, TextField } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import Container from '@mui/material/Container';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import logo from '../images/logo-join-us.jpg';
+import logo from '../images/logo-join-us3.png';
 import useAuth from '../hooks/useAuth';
 
 export default function Signup() {
@@ -77,8 +75,9 @@ export default function Signup() {
 	};
 
 	return (
-		<Stack direction="column" alignItems="center">
-			<Card
+		<Stack alignItems="center">
+			<Stack
+				alignItems="center"
 				sx={{
 					width: {
 						xs: '70%',
@@ -90,23 +89,20 @@ export default function Signup() {
 					marginTop: 2,
 				}}
 			>
-				<CardActionArea>
-					<CardMedia
-						component="img"
-						height="180"
-						image={logo}
-						alt="Logo groupomania"
-					/>
-					<CardContent>
-						<Typography gutterBottom variant="h6" component="div">
-							Bienvenue sur Groupomania
-						</Typography>
-						<Typography variant="body2" color="text.secondary">
-							Entrez, et détendez-vous!
-						</Typography>
-					</CardContent>
-				</CardActionArea>
-			</Card>
+				<CardMedia
+					component="img"
+					image={logo}
+					alt="Logo JoinUs"
+					sx={{ height: 250, objectFit: 'contain' }}
+				/>
+
+				<Typography gutterBottom variant="h6">
+					Bienvenue sur JoinUs
+				</Typography>
+				<Typography variant="body2" color="text.secondary">
+					Entrez, et détendez-vous!
+				</Typography>
+			</Stack>
 			<Box
 				sx={{
 					width: {

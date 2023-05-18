@@ -6,12 +6,10 @@ import * as React from 'react';
 import '../styles/index.css';
 import axios from 'axios';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import Card from '@mui/material/Card';
-import { CardActionArea, InputLabel, TextField } from '@mui/material';
+import { InputLabel, TextField } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import FormControl from '@mui/material/FormControl';
-import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import ListItem from '@mui/material/ListItem';
@@ -21,7 +19,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import logo from '../images/logo-join-us.jpg';
+import logo from '../images/logo-join-us3.png';
 import useAuth from '../hooks/useAuth';
 
 export default function Login() {
@@ -79,8 +77,9 @@ export default function Login() {
 	*/
 
 	return (
-		<Stack direction="column" alignItems="center">
-			<Card
+		<Stack alignItems="center">
+			<Stack
+				alignItems="center"
 				sx={{
 					width: {
 						xs: '70%',
@@ -92,23 +91,20 @@ export default function Login() {
 					marginTop: 2,
 				}}
 			>
-				<CardActionArea>
-					<CardMedia
-						component="img"
-						height="180"
-						image={logo}
-						alt="Logo JoinUs"
-					/>
-					<CardContent>
-						<Typography gutterBottom variant="h6" component="div">
-							Bienvenue sur JoinUs
-						</Typography>
-						<Typography variant="body2" color="text.secondary">
-							Entrez, et détendez-vous!
-						</Typography>
-					</CardContent>
-				</CardActionArea>
-			</Card>
+				<CardMedia
+					component="img"
+					image={logo}
+					alt="Logo JoinUs"
+					sx={{ height: 250, objectFit: 'contain' }}
+				/>
+
+				<Typography gutterBottom variant="h6">
+					Bienvenue sur JoinUs
+				</Typography>
+				<Typography variant="body2" color="text.secondary">
+					Entrez, et détendez-vous!
+				</Typography>
+			</Stack>
 			<Box
 				sx={{
 					width: {
