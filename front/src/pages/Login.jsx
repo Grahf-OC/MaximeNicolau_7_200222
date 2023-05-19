@@ -12,10 +12,6 @@ import Container from '@mui/material/Container';
 import FormControl from '@mui/material/FormControl';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -102,7 +98,7 @@ export default function Login() {
 					Bienvenue sur JoinUs
 				</Typography>
 				<Typography variant="body2" color="text.secondary">
-					Entrez, et détendez-vous!
+					Entrez, et détendez-vous.
 				</Typography>
 			</Stack>
 			<Box
@@ -138,7 +134,7 @@ export default function Login() {
 							}}
 							value={email}
 							label="Email"
-							sx={{ mb: 5 }}
+							sx={{ mb: 4 }}
 							error={wrongId !== ''}
 							helperText={wrongId}
 						/>
@@ -157,27 +153,43 @@ export default function Login() {
 							}}
 							value={password}
 							label="Mot de passe"
-							sx={{ mb: 5 }}
+							sx={{ mb: 4 }}
 							error={wrongId !== ''}
 							helperText={wrongId}
 						/>
 						<Button variant="contained" type="submit" onClick={handleSubmit}>
 							Se connecter
 						</Button>
-						<ListItem key="signup">
-							<ListItemButton component={Link} to="/signup">
-								<ListItemIcon sx={{ color: '#FD2D01' }}>
-									<EmojiPeopleIcon />
-								</ListItemIcon>
-								<ListItemText
-									sx={{ color: '#FD2D01' }}
-									primary="Pas encore inscrit? C'est par ici!"
-								/>
-							</ListItemButton>
-						</ListItem>
+
+						<Button
+							component={Link}
+							to="/signup"
+							sx={{ color: '#CB8EC8', mt: 3 }}
+							startIcon={<EmojiPeopleIcon />}
+						>
+							Pas encore inscrit? C'est pas ici!
+						</Button>
 					</FormControl>
 				</Container>
 			</Box>
 		</Stack>
 	);
 }
+
+/* <Stack
+sx={{ display: 'flex', justifyContent: 'center' }}
+display="flex"
+justifyContent="center"
+>
+<ListItem key="signup">
+	<ListItemButton component={Link} to="/signup">
+		<ListItemIcon sx={{ color: '#90CAF9' }}>
+			<EmojiPeopleIcon />
+		</ListItemIcon>
+		<ListItemText
+			sx={{ color: '#CB8EC8' }}
+			primary="Pas encore inscrit? C'est par ici!"
+		/>
+	</ListItemButton>
+</ListItem>
+</Stack> */
